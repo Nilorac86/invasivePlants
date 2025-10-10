@@ -15,15 +15,11 @@ public class Plant {
     @Column(name = "plant_id")
     private Long plantId;
 
+    @Lob
     @Column(name = "photo_before", columnDefinition = "mediumblob")
     private byte[] photoBefore;  // PROBLEM
 
-    // ALTER TABLE plants
-    //MODIFY COLUMN photo_before MEDIUMBLOB; = matchar entities perfekt men kräver förändring i databas
-
-    // @Column(name = "photo_before", length = 500)   ANDRA ALTERNATIVET osäker men slipper ändra i databas
-    // private String photoBefore;
-
+    @Lob
     @Column(name = "photo_after", columnDefinition = "mediumblob")
     private byte[] photoAfter;  // PROBLEM
 

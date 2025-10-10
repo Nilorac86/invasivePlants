@@ -22,8 +22,8 @@ public class UserReward {
     @JoinColumn(name = "reward_id")
     private Reward reward;
 
-    @Column(name = "awarded_at")
-    private LocalDateTime awardedAt;
+    //@Column(name = "awarded_at")
+    //private LocalDateTime awardedAt;
 
     // Constructors
     public UserReward() {
@@ -33,7 +33,7 @@ public class UserReward {
         this.user = user;
         this.reward = reward;
         this.id = new UserRewardId(user.getUserId(), reward.getRewardId());
-        this.awardedAt = LocalDateTime.now();
+        //this.awardedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
@@ -61,11 +61,11 @@ public class UserReward {
         this.reward = reward;
     }
 
-    public LocalDateTime getAwardedAt() {
+    /*public LocalDateTime getAwardedAt() {
         return awardedAt;
     }
 
     public void setAwardedAt(LocalDateTime awardedAt) {
         this.awardedAt = awardedAt;
-    }
+    }*/
 }

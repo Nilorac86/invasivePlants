@@ -18,15 +18,16 @@ public class Species {
     @Column(columnDefinition = "longtext")
     private String description;
 
-    @Column(length = 255)
+    @Column(name = "status" ,length = 255)
     private String speciesStatus;
 
-    @Column(name = "biological_characteristics", columnDefinition = "longtext")
+    @Column(name = "biological_charecteristics", columnDefinition = "longtext")
     private String biologicalCharacteristics;
 
     @Column(name = "plant-handling", columnDefinition = "longtext")
     private String plantHandling;
 
+    @Lob
     @Column(columnDefinition = "mediumblob")
     private byte[] photo;
 
