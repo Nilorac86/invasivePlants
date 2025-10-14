@@ -15,16 +15,16 @@ import java.util.Set;
         @Column(name = "user_id")
         private Long userId;
 
-        @Column(name = "first-name", length = 100)
+        @Column(name = "first_name", length = 100)
         private String firstName;
 
-        @Column(name = "last-name", length = 100)
+        @Column(name = "last_name", length = 100)
         private String lastName;
 
-        @Column(length = 255)
+        @Column(name = "email", length = 255)
         private String email;
 
-        @Column(length = 255)
+        @Column(name = "password", length = 255)
         private String password;
 
         @Column(name = "phonenumber", length = 50)
@@ -39,6 +39,9 @@ import java.util.Set;
         @ManyToOne
         @JoinColumn(name = "role_id")
         private Role role;
+
+        @Column (name = "enable")
+        private Boolean enable;
 
         // Relationship to rewards
         @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -127,5 +130,13 @@ import java.util.Set;
 
         public void setUserRewards(Set<UserReward> userRewards) {
             this.userRewards = userRewards;
+        }
+
+        public Boolean getEnable() {
+            return enable;
+        }
+
+        public void setEnable(Boolean enable) {
+            this.enable = enable;
         }
     }

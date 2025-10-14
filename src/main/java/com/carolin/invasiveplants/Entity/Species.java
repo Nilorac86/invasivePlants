@@ -12,8 +12,8 @@ public class Species {
     @Column(name = "species_id")
     private Long speciesId;
 
-    @Column(length = 255)
-    private String name;
+    @Column(name = "species_name",length = 255)
+    private String species_name;
 
     @Column(columnDefinition = "longtext")
     private String description;
@@ -24,7 +24,7 @@ public class Species {
     @Column(name = "biological_charecteristics", columnDefinition = "longtext")
     private String biologicalCharacteristics;
 
-    @Column(name = "plant-handling", columnDefinition = "longtext")
+    @Column(name = "plant_handling", columnDefinition = "longtext")
     private String plantHandling;
 
     @Lob
@@ -48,11 +48,11 @@ public class Species {
     }
 
     public String getName() {
-        return name;
+        return species_name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.species_name = species_name;
     }
 
     public String getDescription() {

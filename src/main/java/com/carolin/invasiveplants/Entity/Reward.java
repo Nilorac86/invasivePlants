@@ -9,25 +9,34 @@ public class Reward {
     @Column(name = "reward_id")
     private Long rewardId;
 
+    @Column(name = "points")
     private Integer points;
 
-    @Column(name = "reward-depending-on-points", columnDefinition = "int")
-    private Integer rewardDependingOn;
+    @Column(name = "reward_title")
+    private String rewardTitle;
 
     @Column(columnDefinition = "mediumtext")
     private String description;
 
+    @Column(name = "reward_amount")
+    private Integer rewardAmount;
+
     // Constructors
+
     public Reward() {
     }
 
-    public Reward(Integer points, Integer rewardDependingOn, String description) {
+    public Reward(Long rewardId, Integer points, String rewardTitle, String description, Integer rewardAmount) {
+        this.rewardId = rewardId;
         this.points = points;
-        this.rewardDependingOn = rewardDependingOn;
+        this.rewardTitle = rewardTitle;
         this.description = description;
+        this.rewardAmount = rewardAmount;
     }
 
-    // Getters and Setters
+// Getters and Setters
+
+
     public Long getRewardId() {
         return rewardId;
     }
@@ -44,12 +53,12 @@ public class Reward {
         this.points = points;
     }
 
-    public Integer getRewardDependingOn() {
-        return rewardDependingOn;
+    public String getRewardTitle() {
+        return rewardTitle;
     }
 
-    public void setRewardDependingOn(Integer rewardDependingOn) {
-        this.rewardDependingOn = rewardDependingOn;
+    public void setRewardTitle(String rewardTitle) {
+        this.rewardTitle = rewardTitle;
     }
 
     public String getDescription() {
@@ -60,4 +69,11 @@ public class Reward {
         this.description = description;
     }
 
+    public Integer getRewardAmount() {
+        return rewardAmount;
+    }
+
+    public void setRewardAmount(Integer rewardAmount) {
+        this.rewardAmount = rewardAmount;
+    }
 }

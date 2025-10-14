@@ -7,7 +7,7 @@ import jakarta.persistence.EnumType;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "plants")
+@Table(name = "reporting_plants")
 public class Plant {
 
     @Id
@@ -17,11 +17,11 @@ public class Plant {
 
     @Lob
     @Column(name = "photo_before", columnDefinition = "mediumblob")
-    private byte[] photoBefore;  // PROBLEM
+    private byte[] photoBefore;
 
     @Lob
     @Column(name = "photo_after", columnDefinition = "mediumblob")
-    private byte[] photoAfter;  // PROBLEM
+    private byte[] photoAfter;
 
     @Enumerated(EnumType.STRING)
     private PlantStatus status;
@@ -45,17 +45,21 @@ public class Plant {
     @Column(name = "date_time")
     private LocalDateTime dateTime;
 
+    @Column(name = "count")
+    private Integer count;
+
     // Constructors
     public Plant() {
     }
 
-    public Plant(byte[] photoBefore, PlantStatus status, Species species, Location location, User reportedBy, LocalDateTime dateTime) {
+    public Plant(byte[] photoBefore, PlantStatus status, Species species, Location location, User reportedBy, LocalDateTime dateTime, int count) {
         this.photoBefore = photoBefore;
         this.status = status;
         this.species = species;
         this.location = location;
         this.reportedBy = reportedBy;
         this.dateTime = dateTime;
+        this.count = count;
     }
 
     // Getters and Setters
@@ -129,5 +133,13 @@ public class Plant {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

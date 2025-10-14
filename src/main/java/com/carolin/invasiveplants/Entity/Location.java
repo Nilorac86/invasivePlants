@@ -24,6 +24,17 @@ public class Location {
     @Column(name = "adress", length = 255)
     private String address;
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    @Column(name = "city", length = 255)
+    private String city;
+
     @OneToMany(mappedBy = "location")
     private List<Plant> plants;
 
@@ -31,10 +42,11 @@ public class Location {
     public Location() {
     }
 
-    public Location(BigDecimal latitude, BigDecimal longitude, String address) {
+    public Location(BigDecimal latitude, BigDecimal longitude, String address, String city) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.address = address;
+        this.city = city;
     }
 
     // Getters and Setters
