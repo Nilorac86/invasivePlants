@@ -35,7 +35,20 @@ public class Species {
     private List<Plant> plants;
 
     // Constructors
-    public void species() {
+    public Species() {
+    }
+
+
+    public Species(Long speciesId, String species_name, String description, String speciesStatus,
+                   String biologicalCharacteristics, String plantHandling, byte[] photo, List<Plant> plants) {
+        this.speciesId = speciesId;
+        this.species_name = species_name;
+        this.description = description;
+        this.speciesStatus = speciesStatus;
+        this.biologicalCharacteristics = biologicalCharacteristics;
+        this.plantHandling = plantHandling;
+        this.photo = photo;
+        this.plants = plants;
     }
 
     // Getters and Setters
@@ -47,11 +60,11 @@ public class Species {
         this.speciesId = speciesId;
     }
 
-    public String getName() {
+    public String getSpeciesName() {
         return species_name;
     }
 
-    public void setName(String name) {
+    public void setSpeciesName(String name) {
         this.species_name = species_name;
     }
 
