@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,7 +30,7 @@ public class SpeciesService {
         try{
             List<Species> speciesList = speciesRepository.findAll();
 
-            //strukturerad logg
+            //structured logg
             logger.info(
                     "action=getAllSpecies status=SUCCESS count={} message='Fetched all species successfully'",
                     speciesList.size());
@@ -40,7 +39,7 @@ public class SpeciesService {
 
         }catch (Exception e){
 
-            //strukturerad logg
+            //structured logg
             logger.error(
                     "action=getAllSpecies status=FAIL error='{}' message='Failed to fetch species from database'",
                     e.getMessage(),
