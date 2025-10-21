@@ -9,11 +9,11 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Hitta användare via email
+    // Find user through email
     Optional<User> findByEmail(String email);
 
 
-    //kollar om email finns i databasen..
+    //If email exist in database.
     boolean existsByEmail(String email);
 
 }

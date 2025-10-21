@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@RestController  // <- Gör klassen till en REST API controller (returnerar JSON automatiskt)
-@RequestMapping("/auth") // <- Alla endpoints i denna klass börjar med /auth
-@CrossOrigin(origins = "http://localhost:3000") // <- Tillåt requests från React frontend
+@RestController // Making class to RestAPI controller (returning JSON)
+@RequestMapping("/auth") // Every endpoint in class starts with /auth
+@CrossOrigin(origins = "http://localhost:3000") // Able to request from React frontend
 public class AuthController {
 
 //    private final JwtUtil jwtUtil;
@@ -23,7 +23,7 @@ public class AuthController {
         this.authService = authService;
     }
 
-    // Kommenterat ut för test
+    // Commented out for testing
     //    public AuthController(JwtUtil jwtUtil, LoginRequestDTO loginRequestDTO) {
 //        this.jwtUtil = jwtUtil;
 //        this.loginRequestDTO = loginRequestDTO;
@@ -32,8 +32,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
 
-        // anropar service med användarens input
-        //inte färdig!!!!!! (se carolin sida)
+        // Fetches service with user input
         Map<String, String> tokens = authService.login(
                 loginRequestDTO.getEmail(),
                 loginRequestDTO.getPassword()

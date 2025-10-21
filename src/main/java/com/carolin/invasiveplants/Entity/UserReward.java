@@ -22,7 +22,7 @@ public class UserReward {
     @JoinColumn(name = "reward_id")
     private Reward reward;
 
-    //@Column(name = "awarded_at")
+    //@Column(name = "awarded_at") // If we want to implement
     //private LocalDateTime awardedAt;
 
     // Constructors
