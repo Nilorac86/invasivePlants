@@ -30,10 +30,12 @@ public class AuthService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+
         // Kontrollerar om lösenordet stämmer med användarens lagrade om inte får användaren ett felmeddelande.
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("\"Invalid credentials\"");
         }
+
 
         // Genererar en ny JWT token för den användaren.
         String accessToken = jwtUtil.generateToken(user);
