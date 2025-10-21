@@ -19,11 +19,11 @@ public class JwtUtil {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    // hämtar hemlig nyckel som nu kommer från application.properties
+    // Fetches secret key from Application.properties
     @Value("${app.jwtSecret:mySecretKey}")
     private String jwtSecret;
 
-    // Giltig 1h
+    // Valid 1 hour
     @Value("3600000")
     private int jwtExpirationMs;
 
@@ -38,7 +38,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    // Låser upp token med hemlig nyckel
+    // Unlocks token with secret key
     public String getUsernameFromToken(String token) {
 
         return Jwts.parser()
@@ -49,7 +49,7 @@ public class JwtUtil {
 
     }
 
-    // Validering av token som returnerar token true om den är validerad annars loggar den felmeddelande.
+    // Validate token that returns token true, if its validated. Otherwise logging error.
     public boolean validateToken(String token) {
 
         try{

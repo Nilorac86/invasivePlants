@@ -26,7 +26,7 @@ public class SecurityConfig  {
 
     }
 
-    // Utan att hasha lösenord. Metoden behövs för att lägga till jwt i serviceklassen
+    // Without hashed password. Method needed to add JWT in Service
     @Bean
     public PasswordEncoder passwordEncoder() {
         return org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance();
