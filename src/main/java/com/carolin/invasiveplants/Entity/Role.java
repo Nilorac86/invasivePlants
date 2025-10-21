@@ -10,10 +10,7 @@ public class Role {
     private Long roleId;
 
     @Column(length = 45)
-    private String user;
-
-    @Column(length = 45)
-    private String admin;
+    private String role;
 
     // Constructors
     public Role() {
@@ -28,22 +25,11 @@ public class Role {
         this.roleId = roleId;
     }
 
-    public String getUser() {
-        return user;
+    public String getRoleName() {
+        return role;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setRoleName(String role) {
+        this.role = role;
     }
-
-    public String getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(String admin) {
-        this.admin = admin;
-    }
-
-
-
 }
