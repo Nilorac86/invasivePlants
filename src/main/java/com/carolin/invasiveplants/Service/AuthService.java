@@ -6,7 +6,7 @@ import com.carolin.invasiveplants.Repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+
 import java.util.Map;
 
 @Service
@@ -23,25 +23,25 @@ public class AuthService {
     }
 
 
-    // Metod för login som genererar token.
+    // Method to generate token
     public Map<String, String> login (String email,String password) {
 
-        // Hämtar användare baserat på email
+        // Fetches users from email
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
 
-        // Kontrollerar om lösenordet stämmer med användarens lagrade om inte får användaren ett felmeddelande.
+        // Controlls if password matches with the users stored password otherwise error.
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("\"Invalid credentials\"");
         }
 
 
-        // Genererar en ny JWT token för den användaren.
+        // Generates a JWT Token for the user.
         String accessToken = jwtUtil.generateToken(user);
 
 
-        // Listar den genererade token, email och användarens roll.
+        // A list for the generated token, email and the users roll.
         return Map.of(
                 "accessToken", accessToken,
                 "email", user.getEmail(),

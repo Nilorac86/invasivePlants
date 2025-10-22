@@ -1,6 +1,8 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
 import PlantCards from "./PlantCards";
+import Login from './components/Login';
+/* import logo from './logo.svg';
 
 function App() {
   const [data, setData] = useState(null);
@@ -27,3 +29,31 @@ function App() {
 }
 
 export default App;
+
+App.js
+ */
+
+
+import React, { useState } from "react";
+import Login from "./components/Login";
+
+function App() {
+  const [user, setUser] = useState(null);
+
+  const handleLoginSuccess = (userData) => {
+    setUser(userData);
+  };
+
+  return (
+    <div>
+      {user ? (
+        <h2>Välkommen, {user.email}!</h2>
+      ) : (
+        <Login onLoginSuccess={handleLoginSuccess} />
+      )}
+    </div>
+  );
+}
+
+export default App;
+
