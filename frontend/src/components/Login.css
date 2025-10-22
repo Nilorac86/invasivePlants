@@ -1,0 +1,36 @@
+.login{
+background-color: aqua;
+flex-direction: row;
+height: 500px;
+text-align: center;
+width: 100%;
+}
+
+
+.login-form{
+  background-color: blueviolet;
+  flex-direction: row;
+  height: 50%;
+  width: 70%;
+}
+
+.login-form input{
+
+    border: #99b7d2;
+    flex-direction: column;
+}
+
+.login-form button{
+    background-color: rgb(244, 243, 241);
+    text-align: center;
+    
+}
+
+.login-form button:hover {
+  background-color: #99b7d2;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
