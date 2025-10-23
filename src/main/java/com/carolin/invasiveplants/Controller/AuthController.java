@@ -3,6 +3,8 @@ package com.carolin.invasiveplants.Controller;
 import com.carolin.invasiveplants.JwtAuth.JwtUtil;
 import com.carolin.invasiveplants.RequestDTO.LoginRequestDTO;
 import com.carolin.invasiveplants.Service.AuthService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +31,8 @@ public class AuthController {
 //        this.loginRequestDTO = loginRequestDTO;
 //    }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+    @PostMapping("/login") //@Valid needed for GlobalExceptionHandler
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO) {
 
         // Fetches service with user input
         Map<String, String> tokens = authService.login(
