@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { loginUser } from "../service/LoginService";
 import './Login.css';
 
 
 function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState(""); // Store users input.
   const [password, setPassword] = useState(""); // Store users input.
-  const [error, setError] = useState(""); //Store error from backend if something or if fetch went wrong.
+  const [error] = useState(""); //Store error from backend if something or if fetch went wrong.
 
 /*   const loginUser = (email, password) => {
     // POST request to backend, email and password as requestbody
@@ -74,7 +75,7 @@ return(
           type="submit">
               Logga in
           </button>
-
+          {error && <div className="error">{error}</div>}
       </form>
     </div>
 )
