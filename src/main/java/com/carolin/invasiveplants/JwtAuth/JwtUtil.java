@@ -1,17 +1,10 @@
 package com.carolin.invasiveplants.JwtAuth;
-
-import com.carolin.invasiveplants.Entity.Role;
 import com.carolin.invasiveplants.Entity.User;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.security.SignatureException;
 import java.util.Date;
 
 @Component
@@ -38,7 +31,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    // Unlocks token with secret key
+    // Get username (email) from token
     public String getUsernameFromToken(String token) {
 
         return Jwts.parser()
@@ -47,6 +40,24 @@ public class JwtUtil {
                 .getBody()
                 .getSubject();
 
+    }
+
+    // Get role from token
+    public String getRoleFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("roles", String.class);
+    }
+
+    // Get expiration time from token
+    public long getExpirationTimeFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getExpiration().getTime();
     }
 
     // Validate token that returns token true, if its validated. Otherwise logging error.
