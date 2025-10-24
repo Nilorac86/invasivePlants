@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { loginUser } from "../service/LoginService";
 import './Login.css';
+
 
 function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState(""); // Store users input.
   const [password, setPassword] = useState(""); // Store users input.
-  const [error, setError] = useState(""); //Store error from backend if something or if fetch went wrong.
+  const [error] = useState(""); //Store error from backend if something or if fetch went wrong.
 
-  const loginUser = (email, password) => {
+/*   const loginUser = (email, password) => {
     // POST request to backend, email and password as requestbody
     fetch("http://localhost:8080/auth/login", {
       method: "POST",
@@ -19,7 +21,6 @@ function Login({ onLoginSuccess }) {
       credentials: "include" // Includes a cookie 
     })
 
-    
 
     //Contverts the answer from backend to JavaScript objekt.
       .then((response) => response.json())
@@ -35,7 +36,7 @@ function Login({ onLoginSuccess }) {
         console.log("Error logging in:", error);
         setError("Something went wrong");
       });
- };
+ }; */
 
 
 // Event that prevent form from reload the users input
@@ -74,7 +75,7 @@ return(
           type="submit">
               Logga in
           </button>
-
+          {error && <div className="error">{error}</div>}
       </form>
     </div>
 )
