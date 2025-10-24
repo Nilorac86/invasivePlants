@@ -1,36 +1,67 @@
-.login{
-background-color: aqua;
-flex-direction: row;
-height: 500px;
-text-align: center;
-width: 100%;
+/* Bakgrund och helsida */
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #fdf6f0, #f8e8dd);
+  font-family: "Poppins", sans-serif;
 }
 
-
-.login-form{
-  background-color: blueviolet;
-  flex-direction: row;
-  height: 50%;
-  width: 70%;
+/* Själva loginrutan */
+.login-form {
+  background-color: #fff8f4;
+  border: 1px solid #e8d8cc;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(180, 140, 100, 0.15);
+  padding: 40px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.login-form input{
-
-    border: #99b7d2;
-    flex-direction: column;
+/* Rubriken */
+.login h1 {
+  color: #7b5e57;
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
-.login-form button{
-    background-color: rgb(244, 243, 241);
-    text-align: center;
-    
+/* Inputfälten */
+.login-form input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #d8b7a6;
+  border-radius: 10px;
+  background-color: #fffaf7;
+  color: #5a423a;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-form input:focus {
+  border-color: #c99f8a;
+  box-shadow: 0 0 5px rgba(201, 159, 138, 0.4);
+}
+
+/* Knappen */
+.login-form button {
+  background-color: #e8cfc4;
+  color: #4d3b34;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
 }
 
 .login-form button:hover {
-  background-color: #99b7d2;
-}
-
-.error {
-  color: red;
-  margin-top: 10px;
+  background-color: #d6b7a7;
+  transform: translateY(-2px);
 }
