@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/plants/info").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/profile").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/plants/info").permitAll())
+                        .requestMatchers(HttpMethod.POST, "/auth/logout").authenticated())
 
                 // Adds jwt token before standard loginfilter runs.
                 // For control of expiration token before every request.
