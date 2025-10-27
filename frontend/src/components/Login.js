@@ -1,20 +1,50 @@
 import React, { useState } from "react";
 import { loginUser } from "../service/LoginService";
 import './Login.css';
+import { useNavigate } from "react-router-dom";
 
 
 function Login({ onLoginSuccess }) {
   const [email, setEmail] = useState(""); // Store users input.
   const [password, setPassword] = useState(""); // Store users input.
-  const [error] = useState(""); //Store error from backend if something or if fetch went wrong.
+  const [error, setError] = useState(""); //Store error from backend if something or if fetch went wrong.
 
+  
+  //Varible to set navigate to another page.
+  const navigate = useNavigate();
 
 
 // Event that prevent form from reload the users input
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault(); 
-    loginUser(email, password);
-}
+
+
+  if (!email || !password) {
+    setError("Fyll i både e-post och lösenord");
+    return;
+  }
+
+    try {
+      const res = await loginUser(email, password);
+      console.log("Login successful:", res);
+
+    
+        // Navigates to profilePage after successfull login.
+        if (onLoginSuccess) onLoginSuccess(res.user);
+        navigate('/profile');
+    
+    } catch (err) {
+        console.error(err);
+           if (err.message === "Invalid credential"){
+            setError(" Wrong email or password")
+        } else {
+            setError(" Something went wrong, try again");
+        
+          
+          }
+        }
+    }
+  
 
 return(
     <div className="login"> 
@@ -22,6 +52,7 @@ return(
             Logga in
         </h1>
 
+      {/* Login form, that takes users input to login */}
       <form className="login-form"
           onSubmit={handleSubmit}>
           <input
@@ -29,28 +60,31 @@ return(
               placeholder="Email"
               // Connect inputfield to react state
               value = {email}
-              onChange={(e) => setEmail (e.target.value)}/>
-          
+              onChange={(e) => setEmail (e.target.value)}/> {/* Sets user email input */}
+            
 
           <input
               type="password"
               placeholder="Password"
               // Connect inputfield to react state
               value = {password}
-              onChange={(e) => setPassword (e.target.value)}/> 
+              onChange={(e) => setPassword (e.target.value)}/> {/* Sets user password input */}
+            
               
-          
-
+              {/* Button to submit login form */}
           <button 
           className = "login-button"
           type="submit">
               Logga in
           </button>
+          {/* Fetches error message from backend */}
           {error && <div className="error">{error}</div>}
       </form>
     </div>
 )
 }
+
+/* Export the login funktion */
 export default Login;
 
 
