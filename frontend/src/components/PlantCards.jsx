@@ -2,6 +2,7 @@
 import React from "react";
 import "./PlantCards.css";
 
+
 function PlantCards({ data }) {
   const handleMoreInfo = (plant) => {
     alert(`More info about ${plant.speciesName}`);
