@@ -1,5 +1,4 @@
-//import React, { useState, useEffect } from "react";
-//import Login from "../components/Login";
+
 
 export const loginUser = async (email, password) => {
   try {
@@ -10,7 +9,7 @@ export const loginUser = async (email, password) => {
       credentials: "include", // Include cookie (for httpOnly)
     });
 
-    // Del with error from backend (401)
+    // Deal with error from backend (401)
     if (!response.ok) {
       const errData = await response.json();
       throw new Error(errData.message || "Login failed");

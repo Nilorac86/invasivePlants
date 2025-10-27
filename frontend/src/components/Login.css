@@ -1,4 +1,4 @@
-/* Bakgrund och helsida */
+/* Background loginpage */
 .login {
   display: flex;
   flex-direction: column;
@@ -9,7 +9,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* Själva loginrutan */
+/* The login form */
 .login-form {
   background-color: #fff8f4;
   border: 1px solid #e8d8cc;
@@ -22,14 +22,14 @@
   align-items: center;
 }
 
-/* Rubriken */
+/* Headline */
 .login h1 {
   color: #7b5e57;
   font-size: 2rem;
   margin-bottom: 20px;
 }
 
-/* Inputfälten */
+/* Input feilds */
 .login-form input {
   width: 100%;
   padding: 10px 12px;

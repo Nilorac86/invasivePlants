@@ -1,4 +1,4 @@
-// src/Pages/PlantCardspage.js
+
 
 import React, { useState, useEffect } from "react";
 import { fetchPlantInfo } from "../service/PlantCardsService";
