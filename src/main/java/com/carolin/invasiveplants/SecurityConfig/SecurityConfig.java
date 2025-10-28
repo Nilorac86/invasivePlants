@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -39,7 +38,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/plants/info").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/profile").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/auth/logout").authenticated())
+                        .requestMatchers(HttpMethod.POST, "/auth/logout").authenticated()
+
+                        //Closed endpoints
+                        .requestMatchers("/reportedPlants/form").hasRole("USER"))
 
                 // Adds jwt token before standard loginfilter runs.
                 // For control of expiration token before every request.

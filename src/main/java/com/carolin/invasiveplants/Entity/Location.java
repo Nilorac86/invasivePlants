@@ -49,6 +49,13 @@ public class Location {
         this.city = city;
     }
 
+    // constructor used in the ReportPlantFormService
+    public Location(BigDecimal latitude, BigDecimal longitude, String city) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.city = city;
+    }
+
     // Getters and Setters
     public Long getLocationId() {
         return locationId;
