@@ -18,21 +18,12 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true") // Able to request from React frontend
 public class AuthController {
 
-//    private final JwtUtil jwtUtil;
-//    private final LoginRequestDTO loginRequestDTO;
-
     private final AuthService authService;
 
 
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
-
-    // Commented out for testing
-    //    public AuthController(JwtUtil jwtUtil, LoginRequestDTO loginRequestDTO) {
-//        this.jwtUtil = jwtUtil;
-//        this.loginRequestDTO = loginRequestDTO;
-//    }
 
     @PostMapping("/login") //@Valid needed for GlobalExceptionHandler
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO, HttpServletResponse response) {
@@ -46,12 +37,12 @@ public class AuthController {
 
         //Create HttpOnly cookie for JWT (inaccessible from JavaScript, prevents XSS attacks)
         ResponseCookie jwtCookie = ResponseCookie.from("jwt", tokens.get("accessToken"))
-         .httpOnly(true)
-                .secure(false)  // true for HTTPS in production
-                .path("/")
-                .maxAge(3600)  // 1 timme
-                .sameSite("None")
-                .build(); // 1 hour
+                .httpOnly(true) // JavaScript cannot read cookie - protection against xss
+                .secure(false)  // true = HTTPS required, false = HTTP allowed (ok for local testing)
+                .path("/")   // the cookie applies to the entire domain
+                .maxAge(3600)  // 3600 seconds = 1 hour
+                .sameSite("None")  // allows cross-site request (necessary if frontend on other port)
+                .build();
 
 
         // Adds cookie to the response header
@@ -73,6 +64,8 @@ public class AuthController {
      */
     @PostMapping("/logout")
     public ResponseEntity<?> logout(
+            //fetch cookie named "jwt" and put value in the token variable. This is then used in JwtUtil for validation and get userinfo.
+            //@CookieValue is needed for protected endpoints (logged in user).
             @CookieValue(name = "jwt", required = false) String token,
             HttpServletResponse response) {
 
@@ -81,11 +74,11 @@ public class AuthController {
 
         // Remove cookie by setting maxAge to 0 and set empty value
         ResponseCookie deleteCookie = ResponseCookie.from("jwt", "")
-                .httpOnly(true)
-                .secure(false)
-                .path("/")
-                .maxAge(0)
-                .sameSite("None")
+                .httpOnly(true)   // JavaScript cannot read cookie - protection against xss
+                .secure(false)  // true = HTTPS required, false = HTTP allowed (ok for local testing)
+                .path("/")  // the cookie applies to the entire domain
+                .maxAge(0) // deletes cookie immedietly (make it expire)
+                .sameSite("None") // allows cross-site request (necessary if frontend on other port)
                 .build();
 
         response.addHeader(HttpHeaders.SET_COOKIE, deleteCookie.toString());
@@ -102,6 +95,7 @@ public class AuthController {
      */
     @GetMapping("/profile")
     public ResponseEntity<?> getCurrentUser(
+            //Spring reads cookie named "jwt" automatically and puts value in the token variable
             @CookieValue(name = "jwt", required = false) String token) {
 
         if (token == null) {
