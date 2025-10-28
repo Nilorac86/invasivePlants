@@ -9,16 +9,20 @@ export const loginUser = async (email, password) => {
       credentials: "include", // Include cookie (for httpOnly)
     });
 
+
+    const data = await response.json();
+
     // Deal with error from backend (401)
     if (!response.ok) {
-      const errData = await response.json();
-      throw new Error(errData.message || "Login failed");
+      
+      throw data;
     }
+    
+    return data;
 
-    // Return answer as JavaScript-object
-    return await response.json();
-  } catch (err) {
-    console.error("Login error:", err);
-    throw err;
+  
+  } catch (error) {
+    console.error("Login error:", error);
+    throw error;
   }
 };
