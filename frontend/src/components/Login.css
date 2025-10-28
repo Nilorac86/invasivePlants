@@ -1,4 +1,4 @@
-/* Background loginpage */
+/* Background login */
 .login {
   display: flex;
   flex-direction: column;
@@ -64,4 +64,8 @@
 .login-form button:hover {
   background-color: #d6b7a7;
   transform: translateY(-2px);
+}
+
+.error {
+  color:#d54444
 }
