@@ -21,10 +21,10 @@ public class ReportPlantFormRequestDTO {
     @NotNull(message="You have to have added what kind of plant you are reporting")
     private Long speciesId;
 
-    @NotNull(message="You have to add a latitude nr to make an report")
+    @NotNull(message="You have to add a latitude to make an report")
     private BigDecimal latitude;
 
-    @NotNull(message="You have to add a longitude nr to make an report")
+    @NotNull(message="You have to add a longitude to make an report")
     private BigDecimal longitude;
 
     @NotBlank(message ="You have to add a city, in what area the plant is found")
