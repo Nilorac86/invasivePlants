@@ -19,6 +19,7 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
 
+        // Checking cookies from the request
         String jwtCookie = null;
         if (request.getCookies() != null) {
             for ( Cookie cookie : request.getCookies()) {
@@ -28,11 +29,13 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
                 }
             }
         }
+        // Validates cookie, if it do not exist it will set 401
         if (jwtCookie == null || !jwtUtil.validateToken(jwtCookie)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }
 
+        // Save it as a request as email.
         String email= jwtUtil.getUsernameFromToken(jwtCookie);
         request.setAttribute("email", email);
         return true;
