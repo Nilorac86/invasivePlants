@@ -2,6 +2,7 @@ package com.carolin.invasiveplants.Controller;
 
 import com.carolin.invasiveplants.ExceptionHandler.ApiException;
 import com.carolin.invasiveplants.RequestDTO.LoginRequestDTO;
+import com.carolin.invasiveplants.SecurityConfig.CookieUtil;
 import com.carolin.invasiveplants.Service.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -19,10 +20,12 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+    private final CookieUtil cookieUtil;
 
+    public AuthController(AuthService authService, CookieUtil cookieUtil) {
 
-    public AuthController(AuthService authService) {
         this.authService = authService;
+        this.cookieUtil = cookieUtil;
     }
 
     @PostMapping("/login") //@Valid needed for GlobalExceptionHandler
@@ -34,16 +37,8 @@ public class AuthController {
                 loginRequestDTO.getPassword()
         );
 
-
-        //Create HttpOnly cookie for JWT (inaccessible from JavaScript, prevents XSS attacks)
-        ResponseCookie jwtCookie = ResponseCookie.from("jwt", tokens.get("accessToken"))
-                .httpOnly(true) // JavaScript cannot read cookie - protection against xss
-                .secure(false)  // true = HTTPS required, false = HTTP allowed (ok for local testing)
-                .path("/")   // the cookie applies to the entire domain
-                .maxAge(3600)  // 3600 seconds = 1 hour
-                .sameSite("None")  // allows cross-site request (necessary if frontend on other port)
-                .build();
-
+        // Create JWT cookie using the utility
+        ResponseCookie jwtCookie = cookieUtil.createJwtCookie(tokens.get("accessToken"));
 
         // Adds cookie to the response header
         return ResponseEntity.ok()
@@ -52,16 +47,9 @@ public class AuthController {
                         "message", "Login successful",
                         "email", tokens.get("email"),
                         "role", tokens.get("role")
-
         ));
-
     }
 
-    /**
-     * Handles user logout.
-     * Deletes the JWT cookie by setting Max-Age = 0.
-     * Service method (logout) can later blacklist tokens if needed.
-     */
     @PostMapping("/logout")
     public ResponseEntity<?> logout(
             //fetch cookie named "jwt" and put value in the token variable. This is then used in JwtUtil for validation and get userinfo.
@@ -72,25 +60,18 @@ public class AuthController {
         // Logout via service
         authService.logout(token);
 
-        // Remove cookie by setting maxAge to 0 and set empty value
-        ResponseCookie deleteCookie = ResponseCookie.from("jwt", "")
-                .httpOnly(true)   // JavaScript cannot read cookie - protection against xss
-                .secure(false)  // true = HTTPS required, false = HTTP allowed (ok for local testing)
-                .path("/")  // the cookie applies to the entire domain
-                .maxAge(0) // deletes cookie immedietly (make it expire)
-                .sameSite("None") // allows cross-site request (necessary if frontend on other port)
-                .build();
+        // Delete JWT cookie using the utility
+        ResponseCookie deleteCookie = cookieUtil.deleteJwtCookie();
 
-        response.addHeader(HttpHeaders.SET_COOKIE, deleteCookie.toString());
-
-        return ResponseEntity.ok(Map.of("message", "Logged out successfully"));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, deleteCookie.toString())
+                .body(Map.of("message", "Logged out successfully"));
     }
 
     /**
      * Returns info about the currently logged-in user - right now just email and role.
      * Throws ApiException(UNAUTHORIZED) if token is missing or invalid.
-     *
-     * 🔹 In the future, this endpoint can serve as a "Profile Page" backend endpoint,
+     *  In the future, this endpoint can serve as a "Profile Page" backend endpoint,
      *     if expanded with user details like name, role, points, and rating.
      */
     @GetMapping("/profile")
