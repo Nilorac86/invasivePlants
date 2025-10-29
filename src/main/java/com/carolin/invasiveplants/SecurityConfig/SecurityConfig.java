@@ -39,6 +39,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth/profile").authenticated()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/reportedPlants/listAllReportedPlants").permitAll()
 
                         //Closed endpoints
                         .requestMatchers("/reportedPlants/form").hasRole("USER"))
