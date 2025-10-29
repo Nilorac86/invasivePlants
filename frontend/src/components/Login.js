@@ -28,10 +28,17 @@ const handleSubmit = async (e) => {
       const res = await loginUser(email, password);
       console.log("Login successful:", res);
 
-    
-        // Navigates to profilePage after successfull login.
-        if (onLoginSuccess) onLoginSuccess(res.user);
-        navigate('/profile');
+      // Send response data to parent and navigate to profile
+      if (onLoginSuccess) {
+        onLoginSuccess(res);
+        console.log("onLoginSuccess called"); // Debug purpose
+      }
+      
+      // Check if cookie was set
+      console.log("Cookies after login:", document.cookie);
+      
+      // Navigates to profilePage after successful login
+      navigate('/profile');
     
     } catch (err) {
         console.error(err);
