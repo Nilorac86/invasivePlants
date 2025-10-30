@@ -12,11 +12,16 @@ export const loginUser = async (email, password) => {
       credentials: "include", // Include cookie (for httpOnly)
     });
 
+
+    const data = await response.json();
+
     // Deal with error from backend (401)
     if (!response.ok) {
-      const errData = await response.json();
-      throw new Error(errData.message || "Login failed");
+      
+      throw data;
     }
+    
+    return data;
 
     const data = await response.json();
     
@@ -47,5 +52,9 @@ export const logoutUser = async () => {
   } catch (err) {
     console.error("Logout error:", err);
     throw err;
+  
+  } catch (error) {
+    console.error("Login error:", error);
+    throw error;
   }
 };
