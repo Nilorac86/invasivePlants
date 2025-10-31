@@ -14,101 +14,96 @@ function Login({ onLoginSuccess }) {
 
 // Event that prevent form from reload the users input
 const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     setErrors({}); // Resets previous errormessages.
-    
+     setGeneralError("");
 
 
-      try {
-          const res = await loginUser(email, password);
-          if (onLoginSuccess) onLoginSuccess(res.user);
-              navigate("/profile");
-          } catch (error) {
-              console.log("Error from backend:", error);
+    try {
+        // Call backend to log in
+        const res = await loginUser(email, password);
 
-              // Convert backend strings to object for frontend use.
-          if (error.details) {
-              const formatted = {};
+        // Notify parent and navigate to profile
+        if (onLoginSuccess) onLoginSuccess(res.user);
+        console.log("onLoginSuccess called"); //debug
 
-          error.details.forEach(detail => { // For each detail from backend
+        // Debug cookie info
+        console.log("Cookies after login:", document.cookie); //debug
 
-          if (detail.includes(":")) { // If the answer inclueds ":" then it splits field and message and takes away extra space.
-          const [field, message] = detail.split(":").map(s => s.trim());
-          formatted[field] = message; //Object formatted creates a key "field", and puts the value to message.
+        navigate("/profile");
 
-      // Send response data to parent and navigate to profile
-      if (onLoginSuccess) {
-        onLoginSuccess(res);
-        console.log("onLoginSuccess called"); // Debug purpose
-      }
-      
-      // Check if cookie was set
-      console.log("Cookies after login:", document.cookie);
-      
-      // Navigates to profilePage after successful login
-      navigate('/profile');
-    
-    } catch (err) {
-        console.error(err);
-           if (err.message === "Invalid credential"){
-            setError(" Wrong email or password")
-        } else {
-          formatted.password = detail; // If backend sends anything without ":" it´s sets error message under passwordfield.
-        }
-     });
+    } catch (error) {
+        console.log("Error from backend:", error);
 
-        setErrors(formatted); // Sets error state in react and the error message show under the specific field.
-  }
-      // Sets general error message like "user not found". 
-      else if (error.message) {
-          setGeneralError(error.message);
-      } else {
-          setGeneralError("Something went wrong"); // Frontend message if no message from backend.
-      }
+        // Convert backend strings to object for frontend use.
+        if (error.details) {
+            const formatted = {};
+
+            error.details.forEach(detail => { // For each detail from backend
+
+                if (detail.includes(":")) { // If the answer inclueds ":" then it splits field and message and takes away extra space.
+                    const [field, message] = detail.split(":").map(s => s.trim());
+                    formatted[field] = message; //Object formatted creates a key "field", and puts the value to message.
+                } else {
+                    // Generic error goes under password
+                    formatted.password = detail;
+                }
+            });
+
+            setErrors(formatted); // Sets error state in react and the error message show under the specific field.
+
+            // Handle invalid credentials or user not found
+            }  else if (error.message === "Invalid credentials") {
+                      setGeneralError("Wrong email or password");
+
+            // Sets general error message like "user not found".
+            } else if (error.message) {
+                    setGeneralError(error.message);
+            } else {
+                    setGeneralError("Something went wrong"); // Frontend message if no message from backend.
+                }
+            }
+
+        };
+
+        return (
+            <div className="login">
+                <h1>
+                    Logga in
+                </h1>
+
+                {/* Login form, that takes users input to login */}
+                <form className="login-form"
+                      onSubmit={handleSubmit}>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        // Connect inputfield to react state
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}/> {/* Sets user email input */}
+                    {errors.email && <div className="error"> {errors.email} </div>}
+
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        // Connect inputfield to react state
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}/> {/* Sets user password input */}
+                    {errors.password && <div className="error"> {errors.password} </div>}
+                    {generalError && <div className="error">{generalError}</div>}
+
+                    {/* Button to submit login form */}
+                    <button
+                        className="login-button"
+                        type="submit">
+                        Logga in
+                    </button>
+
+                </form>
+            </div>
+        )
     }
-   
-}
 
-
-return(
-    <div className="login"> 
-        <h1>
-            Logga in
-        </h1>
-
-      {/* Login form, that takes users input to login */}
-      <form className="login-form"
-          onSubmit={handleSubmit}>
-          <input
-              type="email"
-              placeholder="Email"
-              // Connect inputfield to react state
-              value = {email}
-              onChange={(e) => setEmail (e.target.value)}/> {/* Sets user email input */}
-              {errors.email && <div className="error"> {errors.email} </div>}
-            
-          <input
-              type="password"
-              placeholder="Password"
-              // Connect inputfield to react state
-              value = {password}
-              onChange={(e) => setPassword (e.target.value)}/> {/* Sets user password input */}
-              {errors.password && <div className="error"> {errors.password} </div>}
-              {generalError && <div className="error">{generalError}</div>}
-
-              {/* Button to submit login form */}
-          <button 
-          className = "login-button"
-          type="submit">
-              Logga in
-          </button>
-        
-      </form>
-    </div>
-)
-}
-
-/* Export the login funktion */
-export default Login;
-
+    /* Export the login funktion */
+    export default Login;
 
