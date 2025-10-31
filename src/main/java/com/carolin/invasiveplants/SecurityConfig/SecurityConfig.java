@@ -27,7 +27,7 @@ public class SecurityConfig {
         http
 
 
-                .cors(cors -> {}) // enable default CORS configuration from the bean above
+                .cors(cors -> {}) // enable default CORS configuration from the bean below
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No JSESSIONID is created, all authentication via JWT in every request
@@ -68,8 +68,10 @@ public class SecurityConfig {
                         .allowedOrigins("http://localhost:3000") //what domain can communicate with the server
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") //what HTTP method frontend can use
                         .allowedHeaders("*")
+                        .exposedHeaders("Set-Cookie")
                         .allowCredentials(true); // needed to send cookies
             }
+
         };
     }
 }
