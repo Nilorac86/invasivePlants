@@ -17,13 +17,12 @@ export const loginUser = async (email, password) => {
 
     // Deal with error from backend (401)
     if (!response.ok) {
-      
       throw data;
     }
     
-    return data;
+    // return data;
 
-    const data = await response.json();
+     // const data = await response.json();
     
     // Store user info in localStorage if needed
     if (data.email) {
@@ -31,11 +30,12 @@ export const loginUser = async (email, password) => {
     }
 
     return data;
+
   } catch (err) {
     console.error("Login error:", err);
     throw err;
-  };
-}
+  }
+};
 
 export const logoutUser = async () => {
   try {
@@ -47,14 +47,12 @@ export const logoutUser = async () => {
     if (!response.ok) {
       throw new Error("Logout failed");
     }
+
     //Returns answer as Json-object + catch error 
     return await response.json();
+
   } catch (err) {
     console.error("Logout error:", err);
     throw err;
-  
-  } catch (error) {
-    console.error("Login error:", error);
-    throw error;
   }
 };
