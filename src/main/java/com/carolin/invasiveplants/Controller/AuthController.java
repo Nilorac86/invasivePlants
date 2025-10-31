@@ -29,7 +29,8 @@ public class AuthController {
     }
 
     @PostMapping("/login") //@Valid needed for GlobalExceptionHandler
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO, HttpServletResponse response) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO,
+                                   @RequestParam(required = false) String redirect, HttpServletResponse response) {
 
         //  Delegates authentication to the service layer
         Map<String, String> tokens = authService.login(
@@ -46,7 +47,9 @@ public class AuthController {
                 .body(Map.of(
                         "message", "Login successful",
                         "email", tokens.get("email"),
-                        "role", tokens.get("role")
+                        "role", tokens.get("role"),
+                        "redirect", redirect != null ? redirect : "/profile"
+                  
         ));
     }
 
