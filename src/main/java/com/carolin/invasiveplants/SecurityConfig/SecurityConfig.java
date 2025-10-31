@@ -27,7 +27,7 @@ public class SecurityConfig {
         http
 
 
-                .cors(cors -> {}) // enable default CORS configuration from the bean above
+                .cors(cors -> {}) // enable default CORS configuration from the bean below
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No JSESSIONID is created, all authentication via JWT in every request
@@ -59,17 +59,19 @@ public class SecurityConfig {
     }
 
     //Allows frontend to send cookies and authenticated requests
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**")
-//                        .allowedOrigins("http://localhost:3000") //what domain can communicate with the server
-//                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") //what HTTP method frontend can use
-//                        .allowedHeaders("*")
-//                        .allowCredentials(true); // needed to send cookies
-//            }
-//        };
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000") //what domain can communicate with the server
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") //what HTTP method frontend can use
+                        .allowedHeaders("*")
+                        .exposedHeaders("Set-Cookie")
+                        .allowCredentials(true); // needed to send cookies
+            }
 
+        };
+    }
 }
