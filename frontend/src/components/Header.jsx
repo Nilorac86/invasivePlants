@@ -1,10 +1,23 @@
 
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { logoutUser } from "../service/LoginService";
 import "./Header.css";
 
-function Header({ user }) {
+function Header({ user, onLogout }) {
+  const navigate = useNavigate();
+  
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      onLogout(); //clear user state in App
+      navigate("/"); //redirect to home page
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
+
   return (
     <header className="app-header">
       <div className="logo">
@@ -13,7 +26,12 @@ function Header({ user }) {
       {/* Not loggde in button if loggd in hello and the name, maybe needs to change later*/}
       <nav className="nav-link">
         {user ? (
-          <span>Hej,{user.name}</span>
+          <div className="user-menu">
+          <span>Hej, {user.email}</span> {/* user.name till user.email */}
+          <button onClick={handleLogout} className="logout-btn">
+            Logga ut
+          </button>
+          </div>
         ) : (
           <Link to="/login">
             <button>Login</button>

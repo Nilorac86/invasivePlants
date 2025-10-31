@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PlantCardsPage from "./Pages/PlantCardsPage";
 import LoginPage from "./Pages/LoginPage";
@@ -12,12 +12,17 @@ function App() {
   const [user, setUser] = useState(null);
 
   const handleLoginSuccess = (userData) => {
+    console.log("App handleLoginSuccess with:", userData); // Debug purpose
     setUser(userData);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
   };
 
   return (
     <Router>
-      <Header user={user} />
+      <Header user={user} onLogout={handleLogout} setUser={setUser} />
       <Routes>
         <Route path ="/" element={<PlantCardsPage />} />
         <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />}

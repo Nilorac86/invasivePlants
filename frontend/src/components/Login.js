@@ -36,6 +36,22 @@ const handleSubmit = async (e) => {
           const [field, message] = detail.split(":").map(s => s.trim());
           formatted[field] = message; //Object formatted creates a key "field", and puts the value to message.
 
+      // Send response data to parent and navigate to profile
+      if (onLoginSuccess) {
+        onLoginSuccess(res);
+        console.log("onLoginSuccess called"); // Debug purpose
+      }
+      
+      // Check if cookie was set
+      console.log("Cookies after login:", document.cookie);
+      
+      // Navigates to profilePage after successful login
+      navigate('/profile');
+    
+    } catch (err) {
+        console.error(err);
+           if (err.message === "Invalid credential"){
+            setError(" Wrong email or password")
         } else {
           formatted.password = detail; // If backend sends anything without ":" it´s sets error message under passwordfield.
         }
