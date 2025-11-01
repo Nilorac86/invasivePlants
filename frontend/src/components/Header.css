@@ -31,6 +31,21 @@
   color: white;
 }
 
+.loginbtn{
+   padding: 8px 16px;
+  background-color: #ad898c;
+  border: 1px solid black;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.loginbtn:hover{
+  background-color: #906a6d;
+}
+
 .logout-btn {
   padding: 8px 16px;
   background-color: #dc3545;

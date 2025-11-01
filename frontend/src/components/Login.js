@@ -24,7 +24,8 @@ const handleSubmit = async (e) => {
         const res = await loginUser(email, password);
 
         // Notify parent and navigate to profile
-        if (onLoginSuccess) onLoginSuccess(res.user);
+        console.log("Logging in user:", res);
+        if (onLoginSuccess) onLoginSuccess(res)
         console.log("onLoginSuccess called"); //debug
 
         // Debug cookie info

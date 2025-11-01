@@ -5,6 +5,7 @@ import PlantCardsPage from "./Pages/PlantCardsPage";
 import LoginPage from "./Pages/LoginPage";
 import Header from "./components/Header";
 import ProfilePage from "./Pages/ProfilePage";
+import ReportedPlantsPage from "./Pages/ReportedPlantsPage";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     setUser(userData);
   };
 
+  // called after logout
   const handleLogout = () => {
     setUser(null);
   };
@@ -24,10 +26,13 @@ function App() {
     <Router>
       <Header user={user} onLogout={handleLogout} setUser={setUser} />
       <Routes>
-        <Route path ="/" element={<PlantCardsPage />} />
-        <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
+        <Route path="/" element={<PlantCardsPage />} />
+        <Route path="/reportedPlants" element={<ReportedPlantsPage />} />
+        <Route
+          path="/login"
+          element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
         />
-        <Route path ="/profile" element={<ProfilePage userId={user?.id}/>} />
+        <Route path="/profile" element={<ProfilePage userId={user?.id} />} />
       </Routes>
     </Router>
   );

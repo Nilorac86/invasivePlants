@@ -36,13 +36,16 @@ public class SecurityConfig {
 
                         //Open endpoints
                         .requestMatchers(HttpMethod.GET, "/plants/info").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/reportedPlants/listAllReportedPlants").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+
+                        //Protected endpoints
                         .requestMatchers(HttpMethod.GET, "/auth/profile").authenticated()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/reportedPlants/listAllReportedPlants").permitAll()
+                        .requestMatchers("/reportedPlants/form").hasRole("USER")
 
-                        //Closed endpoints
-                        .requestMatchers("/reportedPlants/form").hasRole("USER"))
+                // everything else
+                        .anyRequest().permitAll())
 
                 // Adds jwt token before standard loginfilter runs.
                 // For control of expiration token before every request.

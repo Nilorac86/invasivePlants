@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/reportedPlants")
 public class ReportPlantController {
 
@@ -27,7 +28,7 @@ public class ReportPlantController {
         this.listReportedPlantService = listReportedPlantService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @PostMapping("/form")
     @PreAuthorize("isAuthenticated()")// ensure only logged-in users can call this endpoint
     public ResponseEntity<ReportPlantFormResponseDTO> createReport(
@@ -38,7 +39,7 @@ public class ReportPlantController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @GetMapping("/listAllReportedPlants")
     public ResponseEntity<List<ListReportedPlantsResponseDTO>> getAllPlants(){
 

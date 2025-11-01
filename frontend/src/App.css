@@ -1,4 +1,9 @@
- .App {
+:root{
+  --background-color: #999494; /* petra picked */
+  --carlin-background: linear-gradient(to bottom right, #fdf6f0, #f8e8dd);
+}
+
+.App {
   text-align: center;
 }
 
@@ -11,6 +16,12 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+body {
+  background-color: var(--background-color); /*background color all pages*/
+  margin: 0;
+  font-family: sans-serif;
 }
 
 .App-header {
