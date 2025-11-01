@@ -6,6 +6,7 @@ import { logoutUser } from "../service/LoginService";
 import "./Header.css";
 
 function Header({ user, onLogout }) {
+  console.log("Header render, user:", user);
   const navigate = useNavigate();
   
   const handleLogout = async () => {
@@ -34,7 +35,7 @@ function Header({ user, onLogout }) {
           </div>
         ) : (
           <Link to="/login">
-            <button>Login</button>
+            <button className="loginbtn">Login</button>
           </Link>
         )}
       </nav>
