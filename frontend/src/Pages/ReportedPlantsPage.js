@@ -13,7 +13,7 @@ function ReportedPlantsPage() {
   }, []);
 
   return (
-    <div className="ReportedPlants">
+    <div className="App">
       <h2>Reported Invasiv Plants</h2>
       {data ? <ListReportedPlants data = {data} /> : "Laddar..."}
     </div>
