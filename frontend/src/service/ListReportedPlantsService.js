@@ -8,7 +8,7 @@ export async function fetchReportedPlants() {
       method:'GET',
       credentials: 'include'
       }
-    );
+     );
 
     if (!response.ok) {
       throw new Error("Failed to fetch plants: ${response.status}");
