@@ -16,7 +16,7 @@ function PlantCards({ data, isLoggedIn }) { //uppdatera isLoggedIn
       }
       console.log("Report plant button clicked:", plant.speciesName);
       alert(`Report plant button clicked! ${plant.speciesName}`);
-      //Läggatill navigering till /reportform här senare, {state: { plant } })
+      //adding navigation to /reportform here later, {state: { plant } })
   };
 
   //data is an array of plants objects fetsched from backend
