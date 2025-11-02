@@ -2,10 +2,22 @@
 import React from "react";
 import "./PlantCards.css";
 
-function PlantCards({ data }) {
+function PlantCards({ data, isLoggedIn }) { //uppdatera isLoggedIn
+    console.log("isLoggedIn in PlantCards:", isLoggedIn);
+
   const handleMoreInfo = (plant) => {
     alert(`More info about ${plant.speciesName}`);
     // or navigate to another page, open a modal, etc.
+  };
+
+  const handleReport = (plant) => {
+      if (!isLoggedIn) {
+          alert("Du måste logga in för att rapportera växter!");
+          return;
+      }
+      console.log("Report plant button clicked:", plant.speciesName);
+      alert(`Report plant button clicked! ${plant.speciesName}`);
+      //Läggatill navigering till /reportform här senare, {state: { plant } })
   };
 
   //data is an array of plants objects fetsched from backend
@@ -39,6 +51,13 @@ function PlantCards({ data }) {
             >
               More Info
             </button>
+
+              <button
+                  className={`more-info-btn ${!isLoggedIn ? 'disabled' : ''}`}
+                  onClick={() => handleReport(plant)}
+              >
+                  Report plant
+              </button>
           </div>
         </div>
       ))}

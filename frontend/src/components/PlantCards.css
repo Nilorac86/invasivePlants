@@ -70,3 +70,13 @@
 .more-info-btn:hover {
   background-color: #30534f; /* darker on hover */
 }
+
+.more-info-btn.disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.more-info-btn.disabled:hover {
+    background-color: #cccccc;
+}

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { fetchPlantInfo } from "../service/PlantCardsService";
 import PlantCards from "../components/PlantCards";
 
-function PlantCardsPage() {
+function PlantCardsPage({ isLoggedIn }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ function PlantCardsPage() {
   return (
     <div className="App">
       <h2>Invasiva Växter</h2>
-      {data ? <PlantCards data={data} /> : "Laddar..."}
+      {data ? <PlantCards data={data}  isLoggedIn={isLoggedIn} /> : "Laddar..."}
     </div>
   );
 }

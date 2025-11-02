@@ -22,7 +22,9 @@ function Header({ user, onLogout }) {
   return (
     <header className="app-header">
       <div className="logo">
+          <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
         <h1>Invasive Plants App</h1>
+          </Link>
       </div>
       {/* Not loggde in button if loggd in hello and the name, maybe needs to change later*/}
       <nav className="nav-link">
