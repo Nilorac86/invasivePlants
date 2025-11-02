@@ -56,7 +56,8 @@
   flex: 1;
 }
 
-.more-info-btn {
+.more-info-btn,
+.report-btn {
   padding: 8px 20px; /* button size */
   background-color: #4d6a7c; /* button color */
   color: white; /* text color */
@@ -67,16 +68,17 @@
   transition: background-color 0.2s ease;
 }
 
-.more-info-btn:hover {
+.more-info-btn:hover,
+.report-btn:hover {
   background-color: #30534f; /* darker on hover */
 }
 
-.more-info-btn.disabled {
+.report-btn.disabled {
     background-color: #cccccc;
     cursor: not-allowed;
     opacity: 0.6;
 }
 
-.more-info-btn.disabled:hover {
+.report-btn.disabled:hover {
     background-color: #cccccc;
 }

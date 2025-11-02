@@ -4,7 +4,6 @@ import "./PlantCards.css";
 
 function PlantCards({ data, isLoggedIn }) { //uppdatera isLoggedIn
     console.log("isLoggedIn in PlantCards:", isLoggedIn);
-
   const handleMoreInfo = (plant) => {
     alert(`More info about ${plant.speciesName}`);
     // or navigate to another page, open a modal, etc.
@@ -53,7 +52,7 @@ function PlantCards({ data, isLoggedIn }) { //uppdatera isLoggedIn
             </button>
 
               <button
-                  className={`more-info-btn ${!isLoggedIn ? 'disabled' : ''}`}
+                  className={`report-btn ${!isLoggedIn ? 'disabled' : ''}`}
                   onClick={() => handleReport(plant)}
               >
                   Report plant
