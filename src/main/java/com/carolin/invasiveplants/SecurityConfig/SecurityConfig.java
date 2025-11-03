@@ -26,6 +26,9 @@ public class SecurityConfig {
 
         http
 
+                .requiresChannel(channel -> channel
+                        .anyRequest() // Every request i requierd to use https. Needed to add this to make it work.
+                )
 
                 .cors(cors -> {}) // enable default CORS configuration from the bean below
                 .csrf(csrf -> csrf.disable())
