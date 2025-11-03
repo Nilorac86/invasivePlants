@@ -26,7 +26,7 @@ function App() {
     <Router>
       <Header user={user} onLogout={handleLogout} setUser={setUser} />
       <Routes>
-        <Route path="/" element={<PlantCardsPage />} />
+        <Route path="/" element={<PlantCardsPage isLoggedIn={!!user} />} />
         <Route path="/reportedPlants" element={<ReportedPlantsPage />} />
         <Route
           path="/login"

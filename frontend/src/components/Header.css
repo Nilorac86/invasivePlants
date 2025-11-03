@@ -7,16 +7,32 @@
   color: white;
 }
 
-.nav-links button {
+.logo-link {
+    text-decoration: none;
+    color: white;
+}
+
+.logo-link:hover {
+    color: #95d5b2;;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-link button {
   background-color: white;
   color: #2d6a4f;
   border: none;
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
+    margin: 4px;
 }
 
-.nav-links button:hover {
+.nav-link button:hover {
   background-color: #95d5b2;
 }
 
