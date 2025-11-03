@@ -2,22 +2,12 @@
 
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { logoutUser } from "../service/LoginService";
+import { handleLogout } from "../service/Logoutservice";
 import "./Header.css";
 
 function Header({ user, onLogout }) {
   console.log("Header render, user:", user);
   const navigate = useNavigate();
-  
-  const handleLogout = async () => {
-    try {
-      await logoutUser();
-      onLogout(); //clear user state in App
-      navigate("/"); //redirect to home page
-    } catch (err) {
-      console.error("Logout failed:", err);
-    }
-  };
 
   return (
     <header className="app-header">
@@ -42,7 +32,10 @@ function Header({ user, onLogout }) {
               </Link>
 
           <span>Hej, {user.email}</span> {/* user.name till user.email */}
-          <button onClick={handleLogout} className="logout-btn">
+          <button
+              onClick={() => handleLogout(onLogout, navigate)}
+              className="logout-btn"
+            >
             Logga ut
           </button>
           </div>
