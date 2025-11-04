@@ -6,6 +6,7 @@ import LoginPage from "./Pages/LoginPage";
 import Header from "./components/Header";
 import ProfilePage from "./Pages/ProfilePage";
 import ReportedPlantsPage from "./Pages/ReportedPlantsPage";
+import ReportPlantFormPage from "./Pages/ReportPlantFormPage";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
         />
         <Route path="/profile" element={<ProfilePage userId={user?.id} />} />
+          <Route path="/reportform" element={<ReportPlantFormPage />} />
       </Routes>
     </Router>
   );
