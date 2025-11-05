@@ -21,6 +21,7 @@ public class SpeciesBasicInfoMapper {
         }
 
         return new SpeciesBasicInfoResponse(
+                species.getSpeciesId(),
                 species.getSpeciesName(),
                 species.getPhoto(),
                 species.getDescription());

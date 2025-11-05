@@ -6,6 +6,7 @@ import LoginPage from "./Pages/LoginPage";
 import Header from "./components/Header";
 import ProfilePage from "./Pages/ProfilePage";
 import ReportedPlantsPage from "./Pages/ReportedPlantsPage";
+import ReportPlantFormPage from "./Pages/ReportPlantFormPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 
@@ -35,6 +36,8 @@ function App() {
           path="/login"
           element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
         />
+        <Route path="/profile" element={<ProfilePage userId={user?.id} />} />
+          <Route path="/reportform" element={<ReportPlantFormPage />} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
       </Routes>
     </Router>

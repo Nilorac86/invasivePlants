@@ -1,18 +1,18 @@
 package com.carolin.invasiveplants.Controller;
 
 import com.carolin.invasiveplants.Entity.User;
-import com.carolin.invasiveplants.RequestDTO.ReportPlantFormRequestDTO;
 import com.carolin.invasiveplants.ResponseDTO.ListReportedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.ReportPlantFormResponseDTO;
 import com.carolin.invasiveplants.Service.ListReportedPlantService;
 import com.carolin.invasiveplants.Service.ReportPlantFormService;
-import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -28,14 +28,34 @@ public class ReportPlantController {
         this.listReportedPlantService = listReportedPlantService;
     }
 
-
+    /**
+     * Creates a new plant report with photo upload.
+     *
+     * NOTE: This endpoint uses @RequestParam instead of @RequestBody with DTO because:
+     * 1. We need to accept file uploads (MultipartFile for the photo)
+     * 2. JSON format (@RequestBody) cannot handle binary file data efficiently
+     * 3. multipart/form-data (used by @RequestParam) allows sending both text fields
+     *    AND files in the same request
+     * 4. Frontend sends data as FormData, which is the standard way to upload files
+     *
+     * All validation and data conversion is handled in the Service layer.
+     * String parameters are parsed to correct types (Long, BigDecimal, Integer) there.
+     */
     @PostMapping("/form")
-    @PreAuthorize("isAuthenticated()")// ensure only logged-in users can call this endpoint
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ReportPlantFormResponseDTO> createReport(
-            @RequestBody @Valid ReportPlantFormRequestDTO dto,
-            @AuthenticationPrincipal User user){ // logged-in user injected
+            @RequestParam("speciesId") String speciesId,
+            @RequestParam("latitude") String latitude,
+            @RequestParam("longitude") String longitude,
+            @RequestParam("city") String city,
+            @RequestParam("count") String count,
+            @RequestParam(value = "photoBefore", required = false) MultipartFile photoBefore,
+            @AuthenticationPrincipal User user) throws IOException {
 
-        ReportPlantFormResponseDTO response = reportPlantFormService.createRaport(dto,user);
+        ReportPlantFormResponseDTO response = reportPlantFormService.createReport(
+                speciesId, latitude, longitude, city, count, photoBefore, user
+        );
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

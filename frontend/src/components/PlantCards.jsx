@@ -1,9 +1,12 @@
 // PlantCards.jsx
 import React from "react";
 import "./PlantCards.css";
+import { useNavigate } from "react-router-dom";
 
-function PlantCards({ data, isLoggedIn }) { //uppdatera isLoggedIn
+function PlantCards({ data, isLoggedIn }) {
+    const navigate = useNavigate();
     console.log("isLoggedIn in PlantCards:", isLoggedIn);
+
   const handleMoreInfo = (plant) => {
     alert(`More info about ${plant.speciesName}`);
     // or navigate to another page, open a modal, etc.
@@ -14,9 +17,7 @@ function PlantCards({ data, isLoggedIn }) { //uppdatera isLoggedIn
           alert("Du måste logga in för att rapportera växter!");
           return;
       }
-      console.log("Report plant button clicked:", plant.speciesName);
-      alert(`Report plant button clicked! ${plant.speciesName}`);
-      //adding navigation to /reportform here later, {state: { plant } })
+      navigate("/reportform", { state: { plant } });
   };
 
   //data is an array of plants objects fetsched from backend
