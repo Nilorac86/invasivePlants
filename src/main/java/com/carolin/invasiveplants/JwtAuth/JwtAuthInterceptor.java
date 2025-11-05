@@ -16,6 +16,7 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
         this.jwtUtil = jwtUtil;
     }
 
+    // Verify that user is authenticated before it returns protected data.
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
 

@@ -48,8 +48,7 @@ public class AuthController {
                         "message", "Login successful",
                         "email", tokens.get("email"),
                         "role", tokens.get("role"),
-                        "redirect", redirect != null ? redirect : "/profile"
-                  
+                        "redirect", redirect != null ? redirect : "/profile" // For frontend to use when redirect to that page the user was unable to go to.
         ));
     }
 

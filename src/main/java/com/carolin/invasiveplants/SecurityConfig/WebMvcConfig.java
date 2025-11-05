@@ -28,6 +28,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
 
+    // It´s a filter that every path goes through with every request except exclude patterns.
+    // Every public path needs to be put in the excludePathPatterns.
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtAuthInterceptor)

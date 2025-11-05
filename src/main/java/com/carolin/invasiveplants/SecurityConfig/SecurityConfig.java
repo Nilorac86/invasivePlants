@@ -26,6 +26,9 @@ public class SecurityConfig {
 
         http
 
+                .requiresChannel(channel -> channel
+                        .anyRequest() // Every request i requierd to use https. Needed to add this to make it work.
+                )
 
                 .cors(cors -> {}) // enable default CORS configuration from the bean below
                 .csrf(csrf -> csrf.disable())
@@ -38,10 +41,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/plants/info").permitAll()
                         .requestMatchers(HttpMethod.GET, "/reportedPlants/listAllReportedPlants").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
 
                         //Protected endpoints
                         .requestMatchers(HttpMethod.GET, "/auth/profile").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/auth/logout").authenticated()
                         .requestMatchers("/reportedPlants/form").hasRole("USER")
 
                 // everything else
