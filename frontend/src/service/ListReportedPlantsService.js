@@ -3,7 +3,7 @@
 export async function fetchReportedPlants() {
   try {
     const response = await fetch(
-      "http://localhost:8080/reportedPlants/listAllReportedPlants",
+      "http://localhost:8080/reportedplants/listallreportedplants",
       { 
       method:'GET',
       credentials: 'include'

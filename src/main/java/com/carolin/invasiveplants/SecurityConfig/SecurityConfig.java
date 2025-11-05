@@ -39,13 +39,13 @@ public class SecurityConfig {
 
                         //Open endpoints
                         .requestMatchers(HttpMethod.GET, "/plants/info").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/reportedPlants/listAllReportedPlants").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/reportedplants/listallreportedplants").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
 
                         //Protected endpoints
                         .requestMatchers(HttpMethod.GET, "/auth/profile").authenticated()
-                        .requestMatchers("/reportedPlants/form").hasRole("USER")
+                        .requestMatchers("/reportedplants/form").hasRole("USER")
 
                 // everything else
                         .anyRequest().permitAll())
