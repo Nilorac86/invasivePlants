@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/reportedPlants")
+@RequestMapping("/reportedplants")
 public class ReportPlantController {
 
     private final ReportPlantFormService reportPlantFormService;
@@ -60,8 +60,7 @@ public class ReportPlantController {
     }
 
 
-
-    @GetMapping("/listAllReportedPlants")
+    @GetMapping("/listallreportedplants")
     public ResponseEntity<List<ListReportedPlantsResponseDTO>> getAllPlants(){
 
         List<ListReportedPlantsResponseDTO> listReportedPlantsResponseDTOS = listReportedPlantService.getAllReportedPlants();
