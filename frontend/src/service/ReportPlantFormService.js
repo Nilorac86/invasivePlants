@@ -1,7 +1,7 @@
 // src/service/ReportPlantFormService.js
 export async function reportPlant(formData) {
     try {
-        const response = await fetch("http://localhost:8080/reportedPlants/form", {
+        const response = await fetch("http://localhost:8080/reportedplants/form", {
             method: "POST",
             credentials: "include", // send JWT-cookie
             body: formData,
