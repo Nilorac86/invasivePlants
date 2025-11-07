@@ -12,15 +12,24 @@ function PlantCards({ data, isLoggedIn }) {
     // or navigate to another page, open a modal, etc.
   };
 
-  const handleReport = (plant) => {
-      if (!isLoggedIn) {
-          alert("Du måste logga in för att rapportera växter!");
-          return;
-      }
-      navigate("/reportform", { state: { plant } });
-  };
+    const handleReport = (plant) => {
+        if (!isLoggedIn) {
+            // Hämta aktuell plats (PlantCards är på "/")
+            const redirectUrl = `/login?redirect=/`;
 
-  //data is an array of plants objects fetsched from backend
+            alert("Du måste logga in för att rapportera växter!");
+
+            // Skicka användaren till login-sidan med redirect
+            navigate(redirectUrl);
+            return;
+        }
+
+        // Om inloggad, gå direkt till rapportformuläret med plant-data
+        navigate("/reportform", { state: { plant } });
+    };
+
+
+    //data is an array of plants objects fetsched from backend
   return (
     <div className="card-container">
       {data.map((plant, idx) => (
