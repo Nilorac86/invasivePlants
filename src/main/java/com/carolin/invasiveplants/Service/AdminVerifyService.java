@@ -18,16 +18,20 @@ public class AdminVerifyService {
         this.plantRepository = plantRepository;
     }
 
-    //service update the old status to a new status on the reported plant
+    //service update the old status to a new status on the removed plant
     public void updateReportedPlantsStatus(Long id, PlantStatus newStatus){
 
-        Plant reportedPlant = plantRepository.findById(id)
-                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Reported plant not found"));
+        Plant removedPlant = plantRepository.findById(id)
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Removed plant not found"));
 
-        PlantStatus oldStatus = reportedPlant.getStatus();
-        reportedPlant.setStatus(newStatus);
+        //double check so it really is reported as REMOVED before changing status
+        if(removedPlant.getStatus() != PlantStatus.REMOVED) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Only plants with status 'REMOVED' can be verified or declined");
+        }
 
-        plantRepository.save(reportedPlant);
+        removedPlant.setStatus(newStatus);
+        plantRepository.save(removedPlant);
     }
 
 }
