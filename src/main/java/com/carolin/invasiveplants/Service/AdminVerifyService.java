@@ -30,7 +30,7 @@ public class AdminVerifyService {
     //service update the old status to a new status on the removed plant
     public void updateReportedPlantsStatus(Long id, PlantStatus newStatus){
 
-        Plant removedPlant = plantRepository.findById(id)
+        Plant removedPlant = plantRepository.findByIdWithRemovedBy(id)
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Removed plant not found"));
 
         //double check so it really is reported as REMOVED before changing status
