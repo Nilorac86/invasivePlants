@@ -12,7 +12,7 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="notification_id")
-    private Long id;
+    private Long notificationId;
 
     @Column(name = "message" , length = 225)
     private String message;
@@ -35,8 +35,8 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(Long id, String message, boolean read, NotificationType notificationType, LocalDateTime time, User user) {
-        this.id = id;
+    public Notification(Long notificationId, String message, boolean read, NotificationType notificationType, LocalDateTime time, User user) {
+        this.notificationId = notificationId;
         this.message = message;
         this.read = read;
         this.notificationType = notificationType;
@@ -44,12 +44,12 @@ public class Notification {
         this.user = user;
     }
 
-    public Long getId() {
-        return id;
+    public Long getNotificationId() {
+        return notificationId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setNotificationId(Long notificationId) {
+        this.notificationId = notificationId;
     }
 
     public String getMessage() {
