@@ -1,5 +1,7 @@
 package com.carolin.invasiveplants.JwtAuth;
 
+import com.carolin.invasiveplants.Entity.User;
+import com.carolin.invasiveplants.Repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -22,11 +24,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final TokenBlacklistService tokenBlacklistService;
+    private final UserRepository userRepository;
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil, TokenBlacklistService tokenBlacklistService) {
+    public JwtAuthenticationFilter(JwtUtil jwtUtil, TokenBlacklistService tokenBlacklistService, UserRepository userRepository) {
         this.jwtUtil = jwtUtil;
         this.tokenBlacklistService = tokenBlacklistService;
 
+        this.userRepository = userRepository;
     }
 
     /** Filters every request once.
@@ -56,13 +60,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String email = jwtUtil.getUsernameFromToken(jwt);
                 String role = jwtUtil.getRoleFromToken(jwt);
 
+                User user = userRepository.findByEmail(email)
+                        .orElseThrow(() -> new RuntimeException("User not found"));
+
                 // Convert role string into Spring Security authority object
                 GrantedAuthority authority = new SimpleGrantedAuthority(role);
                 List<GrantedAuthority> authorities = Collections.singletonList(authority);
 
                 // Create an authentication token for the current user
                 UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(email, null, authorities);
+                        new UsernamePasswordAuthenticationToken(user, null, authorities);
 
                 // Set details and store in security context
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

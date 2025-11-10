@@ -30,7 +30,8 @@ public class SecurityConfig {
                         .anyRequest() // Every request i requierd to use https. Needed to add this to make it work.
                 )
 
-                .cors(cors -> {}) // enable default CORS configuration from the bean below
+                .cors(cors -> {
+                }) // enable default CORS configuration from the bean below
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No JSESSIONID is created, all authentication via JWT in every request
@@ -41,16 +42,18 @@ public class SecurityConfig {
                         //remember to also add them in WebMvcConfig
                         .requestMatchers(HttpMethod.GET, "/plants/info").permitAll()
                         .requestMatchers(HttpMethod.GET, "/reportedplants/listallreportedplants").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/reportedplants/listremovedplants").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
 
                         //Protected endpoints
                         .requestMatchers(HttpMethod.GET, "/auth/profile").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/reported-plant/remove-form").authenticated()
                         .requestMatchers("/reportedplants/form").hasRole("USER")
                         .requestMatchers("/notifications").hasRole("USER")
                         .requestMatchers("/admin/verify").hasRole("ADMIN")
 
-                // everything else
+                        // everything else
                         .anyRequest().permitAll())
 
                 // Adds jwt token before standard loginfilter runs.
@@ -66,20 +69,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance();
     }
-
-    //Allows frontend to send cookies and authenticated requests
-//    @Bean
-//    public WebMvcConfigurer corsConfigurer() {
-//        return new WebMvcConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**")
-//                        .allowedOrigins("http://localhost:3000") //what domain can communicate with the server
-//                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") //what HTTP method frontend can use
-//                        .allowedHeaders("*")
-//                        .allowCredentials(true); // needed to send cookies
-//            }
-//
-//        };
-//    }
 }
