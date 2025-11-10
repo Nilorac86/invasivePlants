@@ -42,16 +42,16 @@ public class ListReportedPlantService {
             return listReportedPlantsmapper.toDto(reportedPlantList);
 
     }
+
     /**
      * Retrieves all plants with status REMOVED from the database.
-     *
-     * @return list of deleted plants mapped to DTOs
-     * @throws ApiException if no deleted plants are found
+     * @return list of removed plants mapped to DTOs
+     * @throws ApiException if no removed  plants are found
      */
     public List<ListRemovedPlantsResponseDTO> getAllRemovedPlants() {
         List<Plant> removedPlants = plantRepository.findByStatus(PlantStatus.REMOVED);
 
-        // If no deleted plants are found, throw custom API exception (handled globally)
+        // If no removed plants are found, throw API exception
         if (removedPlants == null || removedPlants.isEmpty()) {
             throw new ApiException("No removed plants found in the database.", HttpStatus.NOT_FOUND);
         }
