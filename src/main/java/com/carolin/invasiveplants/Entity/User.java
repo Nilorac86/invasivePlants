@@ -2,7 +2,9 @@ package com.carolin.invasiveplants.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -46,6 +48,10 @@ import java.util.Set;
         // Relationship to rewards
         @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
         private Set<UserReward> userRewards = new HashSet<>();
+
+        // Relationship to notification
+        @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<Notification> notifications = new ArrayList<>();
 
         // Constructors
         public User() {

@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         //Open endpoints
+                        //remember to also add them in WebMvcConfig
                         .requestMatchers(HttpMethod.GET, "/plants/info").permitAll()
                         .requestMatchers(HttpMethod.GET, "/reportedplants/listallreportedplants").permitAll()
                         .requestMatchers(HttpMethod.GET, "/reportedplants/listremovedplants").permitAll()
@@ -49,6 +50,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/auth/profile").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/reported-plant/remove-form").authenticated()
                         .requestMatchers("/reportedplants/form").hasRole("USER")
+                        .requestMatchers("/notifications").hasRole("USER")
+                        .requestMatchers("/admin/verify").hasRole("ADMIN")
 
                         // everything else
                         .anyRequest().permitAll())
