@@ -37,7 +37,7 @@ function App() {
           element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
         />
         <Route path="/profile" element={<ProfilePage userId={user?.id} />} />
-          <Route path="/reportform" element={<ReportPlantFormPage />} />
+          <Route path="/reportform" element={<ProtectedRoute><ReportPlantFormPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
       </Routes>
     </Router>

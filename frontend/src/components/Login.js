@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { loginUser } from "../service/LoginService";
 import './Login.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 function Login({ onLoginSuccess }) {
@@ -10,6 +10,7 @@ function Login({ onLoginSuccess }) {
   const [errors, setErrors] = useState({}); //Store error from backend if something went wrong.
   const [generalError, setGeneralError] = useState("");
   const navigate = useNavigate(); //Varible to set navigate to another page.
+    const location = useLocation();
 
 
 // Event that prevent form from reload the users input
@@ -28,10 +29,12 @@ const handleSubmit = async (e) => {
         if (onLoginSuccess) onLoginSuccess(res)
         console.log("onLoginSuccess called"); //debug
 
-        // Debug cookie info
-        console.log("Cookies after login:", document.cookie); //debug
+        // Get redirect-parameter from URL
+        const params = new URLSearchParams(location.search);
+        const redirect = params.get("redirect");
 
-        navigate("/profile");
+        console.log("Redirect parameter:", redirect); // 🔍 Debug
+        navigate(redirect || "/profile"); //  Go to redirect OR profile
 
     } catch (error) {
         console.log("Error from backend:", error);
