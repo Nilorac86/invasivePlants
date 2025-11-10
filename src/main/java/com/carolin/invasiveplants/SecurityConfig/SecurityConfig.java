@@ -41,6 +41,7 @@ public class SecurityConfig {
                         //Open endpoints
                         .requestMatchers(HttpMethod.GET, "/plants/info").permitAll()
                         .requestMatchers(HttpMethod.GET, "/reportedplants/listallreportedplants").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/reportedplants/listremovedplants").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
 

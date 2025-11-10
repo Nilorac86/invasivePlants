@@ -1,6 +1,7 @@
 package com.carolin.invasiveplants.Controller;
 
 import com.carolin.invasiveplants.Entity.User;
+import com.carolin.invasiveplants.ResponseDTO.ListRemovedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.ListReportedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.ReportPlantFormResponseDTO;
 import com.carolin.invasiveplants.Service.ListReportedPlantService;
@@ -66,5 +67,13 @@ public class ReportPlantController {
         List<ListReportedPlantsResponseDTO> listReportedPlantsResponseDTOS = listReportedPlantService.getAllReportedPlants();
 
         return ResponseEntity.ok(listReportedPlantsResponseDTOS);
+    }
+
+    @GetMapping("/listremovedplants")
+    public ResponseEntity<List<ListRemovedPlantsResponseDTO>> getAllRemovedPlants(){
+
+        List<ListRemovedPlantsResponseDTO> listRemovedPlantsResponseDTOS = listReportedPlantService.getAllRemovedPlants();
+
+        return ResponseEntity.ok(listRemovedPlantsResponseDTOS);
     }
 }
