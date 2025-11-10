@@ -1,6 +1,8 @@
 package com.carolin.invasiveplants.RequestDTO;
 
 import jakarta.persistence.Lob;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +15,8 @@ public class PlantRemovalReportRequestDto {
     @Size(max = 5_000_000, message = "Image must not exceed 5MB")
     private MultipartFile photoAfter;
 
+    @NotNull(message = "Amount of plants is required")
+    @Min(value =1, message ="At least one plant is required to report a removal")
     private Integer removedCount;
 
 

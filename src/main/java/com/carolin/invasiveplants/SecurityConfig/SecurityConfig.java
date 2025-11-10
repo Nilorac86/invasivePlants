@@ -46,6 +46,7 @@ public class SecurityConfig {
 
                         //Protected endpoints
                         .requestMatchers(HttpMethod.GET, "/auth/profile").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/reported-plant/remove-form").authenticated()
                         .requestMatchers("/reportedplants/form").hasRole("USER")
 
                         // everything else

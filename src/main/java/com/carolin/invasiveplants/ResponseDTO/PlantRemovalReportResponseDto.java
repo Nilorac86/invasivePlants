@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class PlantRemovalReportResponseDto {
 
+
     private Long plantId;
 
     private String Species_name;
