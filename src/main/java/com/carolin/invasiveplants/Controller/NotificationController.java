@@ -33,16 +33,11 @@ public class NotificationController  {
     // GET notifications - fetch notifications for the current logged-in user
     @GetMapping
     public ResponseEntity<List<NotificationResponseDTO>> getUserNotifications(
-            Principal principal){
+            @AuthenticationPrincipal User currentUser){
 
-        if(principal== null){
+        if(currentUser== null){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
-        String email = principal.getName();//email
-
-        User currentUser = userRepository.findByEmail(email)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         List<NotificationResponseDTO> notification = notificationService.getNotificationForUser(currentUser);
 
