@@ -3,7 +3,7 @@ package com.carolin.invasiveplants.Controller;
 import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.ResponseDTO.ListReportedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.ReportPlantFormResponseDTO;
-import com.carolin.invasiveplants.Service.ReportedPlantService;
+import com.carolin.invasiveplants.Service.ReportPlantService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,10 +19,10 @@ import java.util.List;
 @RequestMapping("/report-plant")
 public class ReportPlantController {
 
-    private final ReportedPlantService reportPlantFormService;
-    private final ReportedPlantService reportedPlantService;
+    private final ReportPlantService reportPlantFormService;
+    private final ReportPlantService reportedPlantService;
 
-    public ReportPlantController(ReportedPlantService reportPlantFormService, ReportedPlantService listReportedPlantService) {
+    public ReportPlantController(ReportPlantService reportPlantFormService, ReportPlantService listReportedPlantService) {
         this.reportPlantFormService = reportPlantFormService;
         this.reportedPlantService = listReportedPlantService;
     }

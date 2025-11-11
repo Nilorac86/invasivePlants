@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class ReportedPlantService {
+public class ReportPlantService {
 
     private static final long MAX_FILE_SIZE = 5_000_000; // 5MB max for pictures
     private static final int MAX_CITY_LENGTH = 30; // Max 30 tecken för stad
@@ -35,10 +35,10 @@ public class ReportedPlantService {
     private final LocationRepository locationRepository;
     private final ListReportedPlantsmapper listReportedPlantsmapper;
 
-    public ReportedPlantService(ReportPlantFormMapping reportPlantFormMapping,
-                                SpeciesRepository speciesRepository,
-                                PlantRepository plantsRepository,
-                                LocationRepository locationRepository, ListReportedPlantsmapper listReportedPlantsmapper) {
+    public ReportPlantService(ReportPlantFormMapping reportPlantFormMapping,
+                              SpeciesRepository speciesRepository,
+                              PlantRepository plantsRepository,
+                              LocationRepository locationRepository, ListReportedPlantsmapper listReportedPlantsmapper) {
         this.reportPlantFormMapping = reportPlantFormMapping;
         this.speciesRepository = speciesRepository;
         this.plantRepository = plantsRepository;
