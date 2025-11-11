@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @Service
-public class PlantService {
+public class RemovePlantService {
 
     private static final long MAX_FILE_SIZE = 5_000_000; // 5MB max for pictures
 
@@ -27,7 +27,7 @@ public class PlantService {
 
 
 
-    public PlantService(PlantRepository plantRepository, PlantRemovalReportMapper plantRemovalReportMapper, UserRepository userRepository) {
+    public RemovePlantService(PlantRepository plantRepository, PlantRemovalReportMapper plantRemovalReportMapper, UserRepository userRepository) {
         this.plantRepository = plantRepository;
         this.plantRemovalReportMapper = plantRemovalReportMapper;
         this.userRepository = userRepository;
