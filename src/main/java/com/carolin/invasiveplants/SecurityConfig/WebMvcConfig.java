@@ -38,9 +38,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/auth/login",
                         "/auth/logout",
                         "/plants/info",
-                        "/reportedplants/listallreportedplants",
+                        "/remove-plant/list",
                         "/error",
-                        "/reportedplants/listremovedplants"
+                        "/report-plant/list"
                 );
     }
 

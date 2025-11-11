@@ -2,7 +2,7 @@ package com.carolin.invasiveplants.Controller;
 
 import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.RequestDTO.AdminVerifyRequestDTO;
-import com.carolin.invasiveplants.Service.AdminVerifyService;
+import com.carolin.invasiveplants.Service.AdminService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final AdminVerifyService adminVerifyService;
+    private final AdminService adminVerifyService;
 
-    public AdminController(AdminVerifyService adminVerifyService) {
+    public AdminController(AdminService adminVerifyService) {
         this.adminVerifyService = adminVerifyService;
     }
 
+// ################################ ADMIN VERIFY REMOVED PLANT #############################################
 
     @PutMapping("/verify")
     @PreAuthorize("hasRole('ADMIN')") // make sure only users with role admin get access

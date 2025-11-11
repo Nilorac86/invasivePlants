@@ -1,11 +1,9 @@
 package com.carolin.invasiveplants.Controller;
 
 import com.carolin.invasiveplants.Entity.User;
-import com.carolin.invasiveplants.ResponseDTO.ListRemovedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.ListReportedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.ReportPlantFormResponseDTO;
-import com.carolin.invasiveplants.Service.ListReportedPlantService;
-import com.carolin.invasiveplants.Service.ReportPlantFormService;
+import com.carolin.invasiveplants.Service.ReportedPlantService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,17 +16,20 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/reportedplants")
+@RequestMapping("/report-plant")
 public class ReportPlantController {
 
-    private final ReportPlantFormService reportPlantFormService;
-    private final ListReportedPlantService listReportedPlantService;
+    private final ReportedPlantService reportPlantFormService;
+    private final ReportedPlantService reportedPlantService;
 
-    public ReportPlantController(ReportPlantFormService reportPlantFormService, ListReportedPlantService listReportedPlantService) {
+    public ReportPlantController(ReportedPlantService reportPlantFormService, ReportedPlantService listReportedPlantService) {
         this.reportPlantFormService = reportPlantFormService;
-        this.listReportedPlantService = listReportedPlantService;
+        this.reportedPlantService = listReportedPlantService;
     }
 
+
+
+    // ############################  REPORT PLANT FORM ################################################
     /**
      * Creates a new plant report with photo upload.
      *
@@ -61,19 +62,14 @@ public class ReportPlantController {
     }
 
 
-    @GetMapping("/listallreportedplants")
+    // ############################### REPORT PLANT LIST ############################################
+
+    @GetMapping("/list")
     public ResponseEntity<List<ListReportedPlantsResponseDTO>> getAllPlants(){
 
-        List<ListReportedPlantsResponseDTO> listReportedPlantsResponseDTOS = listReportedPlantService.getAllReportedPlants();
+        List<ListReportedPlantsResponseDTO> listReportedPlantsResponseDTOS = reportedPlantService.getAllReportedPlants();
 
         return ResponseEntity.ok(listReportedPlantsResponseDTOS);
     }
 
-    @GetMapping("/listremovedplants")
-    public ResponseEntity<List<ListRemovedPlantsResponseDTO>> getAllRemovedPlants(){
-
-        List<ListRemovedPlantsResponseDTO> listRemovedPlantsResponseDTOS = listReportedPlantService.getAllRemovedPlants();
-
-        return ResponseEntity.ok(listRemovedPlantsResponseDTOS);
-    }
 }

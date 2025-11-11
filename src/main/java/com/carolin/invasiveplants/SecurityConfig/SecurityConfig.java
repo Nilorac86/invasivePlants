@@ -39,7 +39,7 @@ public class SecurityConfig {
                         //Open endpoints
                         //remember to also add them in WebMvcConfig
                         .requestMatchers(HttpMethod.GET, "/plants/info").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/report-plant/listallreportedplants").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/report-plant/list").permitAll()
                         .requestMatchers(HttpMethod.GET, "/report-plant/listremovedplants").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()

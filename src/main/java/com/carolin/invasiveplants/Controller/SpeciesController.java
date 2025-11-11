@@ -22,6 +22,8 @@ public class SpeciesController {
     }
 
 
+    // #################################### PLANT LIST ####################################################
+
     @GetMapping("/info")
     public ResponseEntity<List<SpeciesBasicInfoResponse>> getAllSpecies() {
 

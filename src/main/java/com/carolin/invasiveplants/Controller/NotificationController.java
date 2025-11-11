@@ -30,6 +30,8 @@ public class NotificationController  {
         this.userRepository = userRepository;
     }
 
+    // ################################# NOTIFICATION LIST ##########################################
+
     // GET notifications - fetch notifications for the current logged-in user
     @GetMapping
     public ResponseEntity<List<NotificationResponseDTO>> getUserNotifications(

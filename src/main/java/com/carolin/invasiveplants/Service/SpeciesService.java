@@ -26,6 +26,8 @@ public class SpeciesService {
 
     }
 
+    // ################################## SPECIES LIST ####################################################
+
     public List<SpeciesBasicInfoResponse> getAllSpecies() {
         try {
             // fetches all species from database

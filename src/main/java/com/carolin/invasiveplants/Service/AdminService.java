@@ -6,8 +6,6 @@ import com.carolin.invasiveplants.Enum.NotificationType;
 import com.carolin.invasiveplants.Enum.PlantStatus;
 import com.carolin.invasiveplants.Repository.NotificationRepository;
 import com.carolin.invasiveplants.Repository.PlantRepository;
-import com.carolin.invasiveplants.RequestDTO.AdminVerifyRequestDTO;
-import jakarta.annotation.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,15 +15,18 @@ import java.time.LocalDateTime;
 
 @Service
 @Transactional
-public class AdminVerifyService {
+public class AdminService {
 
     private final PlantRepository plantRepository;
     private final NotificationRepository notificationRepository;
 
-    public AdminVerifyService(PlantRepository plantRepository, NotificationRepository notificationRepository) {
+    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository) {
         this.plantRepository = plantRepository;
         this.notificationRepository = notificationRepository;
     }
+
+
+    // ##################################### ADMIN VERIFY REMOVED PLANT #######################################
 
     //service update the old status to a new status on the removed plant
     public void updateReportedPlantsStatus(Long id, PlantStatus newStatus){
