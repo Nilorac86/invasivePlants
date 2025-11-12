@@ -94,8 +94,8 @@ public class RemovePlantService {
 
     /**
      * Retrieves all plants with status REMOVED from the database.
-     * @return list of removed plants mapped to DTOs
-     * @throws ApiException if no removed  plants are found
+     * throws ApiException if no removed  plants are found
+     *  return list of removed plants mapped to DTOs
      */
     public List<ListRemovedPlantsResponseDTO> getAllRemovedPlants() {
         List<Plant> removedPlants = plantRepository.findByStatus(PlantStatus.REMOVED);
