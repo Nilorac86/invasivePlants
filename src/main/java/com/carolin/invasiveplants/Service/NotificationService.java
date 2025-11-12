@@ -28,17 +28,24 @@ public class NotificationService {
 
         List<Notification> notifications = notificationRepository.findByUserAndReadFalse(currentUser);
 
-        // mark as read
-        // message will only show one time, when the user enter there profile page.
-        notifications.forEach(notification -> {
-            notification.setRead(true);
-        });
-
-        notificationRepository.saveAll(notifications);
-
+        // DO NOT mark read
         return notifications.stream()
                 .map(notificationMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    // Mark a notification as read by the user
+    public void markNotificationsAsRead(Long notificationId, User currentUser){
+
+        Notification notification = notificationRepository.findById(notificationId)
+                .orElseThrow(()-> new RuntimeException("Notification not found"));
+
+        if(!notification.getUser().getUserId().equals(currentUser.getUserId())){
+            throw new RuntimeException("Unautorized");
+        }
+
+        notification.setRead(true);
+        notificationRepository.save(notification);
     }
 
 }

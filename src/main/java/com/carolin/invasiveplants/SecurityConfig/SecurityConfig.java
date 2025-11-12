@@ -51,6 +51,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/reported-plant/remove-form").authenticated()
                         .requestMatchers("/reportedplants/form").hasRole("USER")
                         .requestMatchers("/notifications").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT,"/notifications/**").hasRole("USER")
                         .requestMatchers("/admin/verify").hasRole("ADMIN")
 
                         // everything else
