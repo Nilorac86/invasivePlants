@@ -28,6 +28,8 @@ public class AuthController {
         this.cookieUtil = cookieUtil;
     }
 
+    // ###################################### LOGIN #########################################################
+
     @PostMapping("/login") //@Valid needed for GlobalExceptionHandler
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO loginRequestDTO,
                                    @RequestParam(required = false) String redirect, HttpServletResponse response) {
@@ -52,6 +54,9 @@ public class AuthController {
         ));
     }
 
+
+    // #################################### LOGOUT ###########################################################
+
     @PostMapping("/logout")
     public ResponseEntity<?> logout(
             //fetch cookie named "jwt" and put value in the token variable. This is then used in JwtUtil for validation and get userinfo.
@@ -70,6 +75,8 @@ public class AuthController {
                 .body(Map.of("message", "Logged out successfully"));
     }
 
+
+    // ################################ PROFILE #######################################################
     /**
      * Returns info about the currently logged-in user - right now just email and role.
      * Throws ApiException(UNAUTHORIZED) if token is missing or invalid.

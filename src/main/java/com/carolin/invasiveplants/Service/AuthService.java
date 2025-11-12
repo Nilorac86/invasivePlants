@@ -28,6 +28,8 @@ public class AuthService {
     }
 
 
+    // #################################### LOGIN #########################################################
+
     // Method to generate token * Authenticates user by email and password.
     //Throws ApiException with appropriate status if user not found or password invalid.
     public Map<String, String> login (String email,String password) {
@@ -56,6 +58,7 @@ public class AuthService {
     }
 
 
+// ########################################## GET USER FROM TOKEN ############################################
 
      // Retrieves user info from valid JWT token. Throws ApiException if token is invalid, expired, or user not found.
     public Map<String, String> getUserFromToken(String token) {
@@ -79,6 +82,9 @@ public class AuthService {
 
         );
     }
+
+
+    // ################################## LOGOUT ###################################################
     // Logout with tokenblacklist
     public void logout(String token) {
         if (token == null || token.isEmpty()) {

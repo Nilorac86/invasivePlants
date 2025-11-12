@@ -4,9 +4,11 @@ import com.carolin.invasiveplants.Entity.Plant;
 import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.Enum.PlantStatus;
 import com.carolin.invasiveplants.ExceptionHandler.ApiException;
+import com.carolin.invasiveplants.Mapper.ListRemovedPlantsMapper;
 import com.carolin.invasiveplants.Mapper.PlantRemovalReportMapper;
 import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.UserRepository;
+import com.carolin.invasiveplants.ResponseDTO.ListRemovedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.PlantRemovalReportResponseDto;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
@@ -15,23 +17,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
-public class PlantService {
+public class RemovePlantService {
 
     private static final long MAX_FILE_SIZE = 5_000_000; // 5MB max for pictures
 
     private final PlantRepository plantRepository;
     private final PlantRemovalReportMapper plantRemovalReportMapper;
     private final UserRepository userRepository;
+    private final ListRemovedPlantsMapper listRemovedPlantsMapper;
 
 
 
-    public PlantService(PlantRepository plantRepository, PlantRemovalReportMapper plantRemovalReportMapper, UserRepository userRepository) {
+    public RemovePlantService(PlantRepository plantRepository, PlantRemovalReportMapper plantRemovalReportMapper, UserRepository userRepository, ListRemovedPlantsMapper listRemovedPlantsMapper) {
         this.plantRepository = plantRepository;
         this.plantRemovalReportMapper = plantRemovalReportMapper;
         this.userRepository = userRepository;
+        this.listRemovedPlantsMapper = listRemovedPlantsMapper;
     }
+
+    // ############################### REMOVED PLANTS FORM #####################################################
 
     // Method for plant removal
     @Transactional
@@ -81,4 +88,27 @@ public class PlantService {
         // Return the resposeDto from the mapper, what the user gets to see.
         return plantRemovalReportMapper.toResponseDto(plant);
     }
+
+
+    // ############################### LIST REMOVED PLANTS #######################################################
+
+    /**
+     * Retrieves all plants with status REMOVED from the database.
+     * throws ApiException if no removed  plants are found
+     *  return list of removed plants mapped to DTOs
+     */
+    public List<ListRemovedPlantsResponseDTO> getAllRemovedPlants() {
+        List<Plant> removedPlants = plantRepository.findByStatus(PlantStatus.REMOVED);
+
+        // If no removed plants are found, throw API exception
+        if (removedPlants == null || removedPlants.isEmpty()) {
+            throw new ApiException("No removed plants found in the database.", HttpStatus.NOT_FOUND);
+        }
+
+        // Map to DTOs and return the list
+        return listRemovedPlantsMapper.toDto(removedPlants);
+    }
+
+
+
 }

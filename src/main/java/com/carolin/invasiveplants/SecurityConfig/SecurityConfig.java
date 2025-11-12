@@ -9,8 +9,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class SecurityConfig {
@@ -41,15 +39,15 @@ public class SecurityConfig {
                         //Open endpoints
                         //remember to also add them in WebMvcConfig
                         .requestMatchers(HttpMethod.GET, "/plants/info").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/reportedplants/listallreportedplants").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/reportedplants/listremovedplants").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/report-plant/list").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/report-plant/listremovedplants").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
 
                         //Protected endpoints
                         .requestMatchers(HttpMethod.GET, "/auth/profile").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/reported-plant/remove-form").authenticated()
-                        .requestMatchers("/reportedplants/form").hasRole("USER")
+                        .requestMatchers(HttpMethod.PUT, "/remove-plant/form").authenticated()
+                        .requestMatchers("/report-plant/form").hasRole("USER")
                         .requestMatchers("/notifications").hasRole("USER")
                         .requestMatchers("/admin/verify").hasRole("ADMIN")
 

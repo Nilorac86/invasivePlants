@@ -6,10 +6,12 @@ import com.carolin.invasiveplants.Entity.Species;
 import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.Enum.PlantStatus;
 import com.carolin.invasiveplants.ExceptionHandler.ApiException;
+import com.carolin.invasiveplants.Mapper.ListReportedPlantsmapper;
 import com.carolin.invasiveplants.Mapper.ReportPlantFormMapping;
 import com.carolin.invasiveplants.Repository.LocationRepository;
 import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.SpeciesRepository;
+import com.carolin.invasiveplants.ResponseDTO.ListReportedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.ReportPlantFormResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,27 +21,49 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
-public class ReportPlantFormService {
+public class ReportPlantService {
 
     private static final long MAX_FILE_SIZE = 5_000_000; // 5MB max for pictures
     private static final int MAX_CITY_LENGTH = 30; // Max 30 tecken för stad
 
     private final ReportPlantFormMapping reportPlantFormMapping;
     private final SpeciesRepository speciesRepository;
-    private final PlantRepository plantsRepository;
+    private final PlantRepository plantRepository;
     private final LocationRepository locationRepository;
+    private final ListReportedPlantsmapper listReportedPlantsmapper;
 
-    public ReportPlantFormService(ReportPlantFormMapping reportPlantFormMapping,
-                                  SpeciesRepository speciesRepository,
-                                  PlantRepository plantsRepository,
-                                  LocationRepository locationRepository) {
+    public ReportPlantService(ReportPlantFormMapping reportPlantFormMapping,
+                              SpeciesRepository speciesRepository,
+                              PlantRepository plantsRepository,
+                              LocationRepository locationRepository, ListReportedPlantsmapper listReportedPlantsmapper) {
         this.reportPlantFormMapping = reportPlantFormMapping;
         this.speciesRepository = speciesRepository;
-        this.plantsRepository = plantsRepository;
+        this.plantRepository = plantsRepository;
         this.locationRepository = locationRepository;
+        this.listReportedPlantsmapper = listReportedPlantsmapper;
     }
+
+    // ############################# LIST REPORTED PLANTS #########################################
+
+    public List<ListReportedPlantsResponseDTO> getAllReportedPlants(){
+
+        List<Plant> reportedPlantList = plantRepository.findAll();
+
+        // If list is empty, throw error
+        if(reportedPlantList == null || reportedPlantList.isEmpty()) {
+            throw new ApiException("No reported plants was found in the database", HttpStatus.NOT_FOUND);
+        }
+
+        //Mapping entities to DTO and returns them
+        return listReportedPlantsmapper.toDto(reportedPlantList);
+
+    }
+
+
+    // ################################## FORM REPORT PLANTS ############################################
 
     @Transactional
     public ReportPlantFormResponseDTO createReport(
@@ -68,7 +92,7 @@ public class ReportPlantFormService {
 
         // create and save report with collected data
         Plant report = createPlantReport(count, location, photoBytes, species, user);
-        plantsRepository.save(report);
+        plantRepository.save(report);
 
         //return to frontend
         return reportPlantFormMapping.toResponseDTO(report);
@@ -189,4 +213,6 @@ public class ReportPlantFormService {
         report.setDateTime(LocalDateTime.now());
         return report;
     }
+
+
 }

@@ -23,6 +23,8 @@ public class NotificationService {
         this.notificationRepository = notificationRepository;
     }
 
+    // ################################## NOTIFICATION LIST ##################################################
+
     //Get all notifications for the current user
     public List<NotificationResponseDTO> getNotificationForUser(User currentUser){
 
