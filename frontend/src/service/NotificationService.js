@@ -1,7 +1,8 @@
 // src/service/NotificationService.js
 
-import { apiGet } from "../util/Api";
+import { apiGet, apiPut } from "../util/Api";
 
+//Fetch all notifications
 export async function fetchUserNotifications(){
 
     try{
@@ -11,4 +12,15 @@ export async function fetchUserNotifications(){
         throw error;
     }
 
+}
+
+//Mark a notification as read
+export async function markNotificationAsRead(notificationId) {
+  try {
+    //replace {id} with the actual notification id
+    return await apiPut(`/notifications/${notificationId}/read`);
+  } catch (error) {
+    console.error("error marking notification as read: ", error);
+    throw error;
+  }
 }
