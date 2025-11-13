@@ -49,10 +49,10 @@ public class AdminVerifyService {
 
         //sending the user that removed plant a message depending on admin, approve or decline
         if (newStatus == PlantStatus.VERIFIED){
-            notification.setMessage("Your removed plant has been verified! You have earned points");
+            notification.setMessage("Din rapporterade borttagna växt har nu verifierats! Du har tjänat poäng.");
             notification.setNotificationType(NotificationType.SUCCESS);
         } else if (newStatus == PlantStatus.REGISTERED) {
-            notification.setMessage("Your removed plant report was declined.");
+            notification.setMessage("Din rapport om borttagen växt har avslagits.");
             notification.setNotificationType(NotificationType.WARNING);
         }
 
