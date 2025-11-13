@@ -34,6 +34,7 @@ public class ListRemovedPlantsMapper {
                 plant.getSpecies().getSpeciesName(),
                 userName,
                 plant.getDateTime(),
+                plant.getPhotoBefore(),
                 plant.getPhotoAfter());
     }
 
