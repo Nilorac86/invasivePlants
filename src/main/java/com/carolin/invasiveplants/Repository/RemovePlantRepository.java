@@ -1,12 +1,16 @@
 package com.carolin.invasiveplants.Repository;
 
-import com.carolin.invasiveplants.Entity.Location;
 import com.carolin.invasiveplants.Entity.RemovedPlant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface RemovePlantReository extends JpaRepository<RemovedPlant, Long> {
+public interface RemovePlantRepository extends JpaRepository<RemovedPlant, Long> {
+
+    Optional<RemovedPlant> findByReportedPlantId(Long reportedPlantId);
+
 }
 
 
