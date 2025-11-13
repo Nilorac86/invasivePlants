@@ -29,9 +29,9 @@ public class RemovedPlant {
     @Column(name="count")
     private Integer count;
 
-
+    @ManyToOne
     @JoinColumn (name = "reported_plant_id")
-    private Long reportedPlantId;
+    private Plant reportedPlant;
 
 
     @ManyToOne
@@ -42,17 +42,15 @@ public class RemovedPlant {
     public RemovedPlant() {
     }
 
-    public RemovedPlant(Long removedPlantId, byte[] photoAfter, PlantStatus status, LocalDateTime removedAt,
-                        Integer count, Long reportedPlantId, User removedBy) {
+    public RemovedPlant(Long removedPlantId, byte[] photoAfter, PlantStatus status, LocalDateTime removedAt, Integer count, Plant reportedPlant, User removedBy) {
         this.removedPlantId = removedPlantId;
         this.photoAfter = photoAfter;
         this.status = status;
         this.removedAt = removedAt;
         this.count = count;
-        this.reportedPlantId = reportedPlantId;
+        this.reportedPlant = reportedPlant;
         this.removedBy = removedBy;
     }
-
 
     public Long getRemovedPlantId() {
         return removedPlantId;
@@ -94,12 +92,12 @@ public class RemovedPlant {
         this.count = count;
     }
 
-    public Long getReportedPlantId() {
-        return reportedPlantId;
+    public Plant getReportedPlant() {
+        return reportedPlant;
     }
 
-    public void setReportedPlantId(Long reportedPlantId) {
-        this.reportedPlantId = reportedPlantId;
+    public void setReportedPlant(Plant reportedPlant) {
+        this.reportedPlant = reportedPlant;
     }
 
     public User getRemovedBy() {

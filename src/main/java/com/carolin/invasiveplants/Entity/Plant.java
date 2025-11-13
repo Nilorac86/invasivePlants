@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "reporting_plants")
@@ -33,6 +35,9 @@ public class Plant {
     @ManyToOne
     @JoinColumn(name = "reported_by_user_id")
     private User reportedBy;
+
+    @OneToMany(mappedBy = "reportedPlant")
+    private List<RemovedPlant> removedPlants = new ArrayList<>();
 
     @Column(name = "date_time")
     private LocalDateTime dateTime;
