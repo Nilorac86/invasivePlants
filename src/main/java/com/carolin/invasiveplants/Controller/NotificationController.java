@@ -8,17 +8,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RequestMapping("/notifications")
 public class NotificationController  {
 
@@ -44,5 +41,18 @@ public class NotificationController  {
         List<NotificationResponseDTO> notification = notificationService.getNotificationForUser(currentUser);
 
         return ResponseEntity.ok(notification);
+    }
+
+    //User can mark a notification as read so it goes away from the top of page
+    @PutMapping("/{id}/read")
+    public ResponseEntity<Void>markRead(@PathVariable Long id, @AuthenticationPrincipal User currentUser){
+
+        if(currentUser == null){
+            System.out.println("no authenticated user!");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        notificationService.markNotificationsAsRead(id,currentUser);
+        return ResponseEntity.ok().build();
     }
 }
