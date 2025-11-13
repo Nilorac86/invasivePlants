@@ -15,11 +15,20 @@ function RemovedPlant ({plants}) {
         <div className="card-container">
             {plants.map((plant) => (
                 <div className="card" key = {plant.plantName + plant.date}>
-                    
+                        <div className="photo-container">
+
+                         <p>Foto vid rapportering</p>
+                        <img className="plant-photo"
+                            src={`data:image/jpeg;base64,${plant.photoBefore}`}
+                            alt={plant.plantName}
+                        />
+
+                        <p>Foto efter borttagning</p>
                         <img className="plant-photo"
                             src={`data:image/jpeg;base64,${plant.photoAfter}`}
                             alt={plant.plantName}
                         />
+                        </div>
 
                         <div className="remove-info">
                             <p>Växt: {plant.plantName}</p>
@@ -28,9 +37,6 @@ function RemovedPlant ({plants}) {
 
 
                     </div>
-
-                    
-
                           
             ))};
          
