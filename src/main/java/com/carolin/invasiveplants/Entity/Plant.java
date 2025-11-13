@@ -19,10 +19,6 @@ public class Plant {
     @Column(name = "photo_before", columnDefinition = "mediumblob")
     private byte[] photoBefore;
 
-    @Lob
-    @Column(name = "photo_after", columnDefinition = "mediumblob")
-    private byte[] photoAfter;
-
     @Enumerated(EnumType.STRING)
     private PlantStatus status;
 
@@ -33,10 +29,6 @@ public class Plant {
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
-
-    @ManyToOne
-    @JoinColumn(name = "removed_by_user_id")
-    private User removedBy;
 
     @ManyToOne
     @JoinColumn(name = "reported_by_user_id")
@@ -79,14 +71,6 @@ public class Plant {
         this.photoBefore = photoBefore;
     }
 
-    public byte[] getPhotoAfter() {
-        return photoAfter;
-    }
-
-    public void setPhotoAfter(byte[] photoAfter) {
-        this.photoAfter = photoAfter;
-    }
-
     public PlantStatus getStatus() {
         return status;
     }
@@ -109,14 +93,6 @@ public class Plant {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public User getRemovedBy() {
-        return removedBy;
-    }
-
-    public void setRemovedBy(User removedBy) {
-        this.removedBy = removedBy;
     }
 
     public User getReportedBy() {
