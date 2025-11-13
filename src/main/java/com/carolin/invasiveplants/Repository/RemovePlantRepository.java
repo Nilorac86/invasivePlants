@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface RemovePlantRepository extends JpaRepository<RemovedPlant, Long> {
 
-    Optional<RemovedPlant> findByReportedPlantId(Long reportedPlantId);
+    Optional<RemovedPlant> findByReportedPlant_PlantId(Long reportedPlantId);
 
 }
 

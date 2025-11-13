@@ -41,7 +41,7 @@ public class AdminService {
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reported plant not found"));
 
         //Find the removed plant associated with the reported plant
-        RemovedPlant removedPlant = removePlantRepository.findByReportedPlantId(id)
+        RemovedPlant removedPlant = removePlantRepository.findByReportedPlant_PlantId(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "removed plant record not found"));
 
 
@@ -53,6 +53,28 @@ public class AdminService {
 
         removedPlant.setStatus(newStatus);
         removePlantRepository.save(removedPlant);
+
+        //Update reportedPlant status depending on new status and count logic
+        if(newStatus == PlantStatus.REGISTERED){
+
+            //admin decline/reset removal
+            reportedPlant.setStatus(PlantStatus.REGISTERED);
+        }else if (newStatus == PlantStatus.VERIFIED){
+
+            //check if all removed or partly removed
+            int totalCount = reportedPlant.getCount();
+            int removedCount = removedPlant.getCount();
+
+            if(removedCount >= totalCount){
+                //All removed
+                reportedPlant.setStatus(PlantStatus.REMOVED);
+            }else{
+                //Partly removed
+                reportedPlant.setStatus(PlantStatus.PARTLYREMOVED);
+            }
+        }
+
+        plantRepository.save(reportedPlant);
 
         //Notification for user who removed the plant
         User removedByUser= removedPlant.getRemovedBy();

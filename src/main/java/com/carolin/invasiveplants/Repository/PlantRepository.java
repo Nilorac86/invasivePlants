@@ -13,10 +13,6 @@ import java.util.List;
 @Repository
 public interface PlantRepository extends JpaRepository<Plant, Long> {
 
-    @Query("SELECT p FROM Plant p LEFT JOIN FETCH p.removedBy WHERE p.plantId = :id")
-    Optional<Plant> findByIdWithRemovedBy(@Param("id")Long id);
-
-
     // Fetch all plants with status = REMOVED
     List<Plant> findByStatus(PlantStatus status);
 }
