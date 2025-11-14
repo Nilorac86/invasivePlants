@@ -28,7 +28,7 @@ public class RemovePlantService {
 
     private final PlantRepository plantRepository;
     private final RemovePlantRepository removePlantRepository;
-    //private final PlantRemovalReportMapper plantRemovalReportMapper;
+    private final PlantRemovalReportMapper plantRemovalReportMapper;
     private final UserRepository userRepository;
     private final ListRemovedPlantsMapper listRemovedPlantsMapper;
 
@@ -37,7 +37,7 @@ public class RemovePlantService {
     public RemovePlantService(PlantRepository plantRepository, RemovePlantRepository removePlantRepository, PlantRemovalReportMapper plantRemovalReportMapper, UserRepository userRepository, ListRemovedPlantsMapper listRemovedPlantsMapper) {
         this.plantRepository = plantRepository;
         this.removePlantRepository = removePlantRepository;
-        //this.plantRemovalReportMapper = plantRemovalReportMapper;
+        this.plantRemovalReportMapper = plantRemovalReportMapper;
         this.userRepository = userRepository;
         this.listRemovedPlantsMapper = listRemovedPlantsMapper;
     }
