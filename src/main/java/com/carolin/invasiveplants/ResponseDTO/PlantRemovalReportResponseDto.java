@@ -1,47 +1,54 @@
 package com.carolin.invasiveplants.ResponseDTO;
 
+import com.carolin.invasiveplants.Enum.PlantStatus;
+
 import java.time.LocalDateTime;
 
 public class PlantRemovalReportResponseDto {
 
+    private String speciesName;
 
-    private Long plantId;
-
-    private String Species_name;
+    private byte[] photoBefore;
 
     private byte[] photoAfter;
 
-    private String status;
+    private PlantStatus status;
 
     private LocalDateTime removedAt;
+
+    private Integer count;
+
+    private Long reportedPlant;
 
 
     public PlantRemovalReportResponseDto() {
     }
 
-    public PlantRemovalReportResponseDto(Long plantId, String species_name, byte[] photoAfter, String status,
-                                         LocalDateTime removedAt) {
-        this.plantId = plantId;
-        Species_name = species_name;
+    public PlantRemovalReportResponseDto(String speciesName, byte[] photoBefore, byte[] photoAfter, PlantStatus status,
+                                         LocalDateTime removedAt, Integer count, Long reportedPlant) {
+        this.speciesName = speciesName;
+        this.photoBefore = photoBefore;
         this.photoAfter = photoAfter;
         this.status = status;
         this.removedAt = removedAt;
+        this.count = count;
+        this.reportedPlant = reportedPlant;
     }
 
-    public Long getPlantId() {
-        return plantId;
+    public String getSpeciesName() {
+        return speciesName;
     }
 
-    public void setPlantId(Long plantId) {
-        this.plantId = plantId;
+    public void setSpeciesName(String speciesName) {
+        this.speciesName = speciesName;
     }
 
-    public String getSpecies_name() {
-        return Species_name;
+    public byte[] getPhotoBefore() {
+        return photoBefore;
     }
 
-    public void setSpecies_name(String species_name) {
-        Species_name = species_name;
+    public void setPhotoBefore(byte[] photoBefore) {
+        this.photoBefore = photoBefore;
     }
 
     public byte[] getPhotoAfter() {
@@ -60,12 +67,27 @@ public class PlantRemovalReportResponseDto {
         this.status = status;
     }
 
-
     public LocalDateTime getRemovedAt() {
         return removedAt;
     }
 
     public void setRemovedAt(LocalDateTime removedAt) {
         this.removedAt = removedAt;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Long getReportedPlant() {
+        return reportedPlant;
+    }
+
+    public void setReportedPlant(Long reportedPlant) {
+        this.reportedPlant = reportedPlant;
     }
 }
