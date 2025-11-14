@@ -28,17 +28,16 @@ public class RemovePlantService {
 
     private final PlantRepository plantRepository;
     private final PlantRemovalReportMapper plantRemovalReportMapper;
-    //private final ListRemovedPlantsMapper listRemovedPlantsMapper;
+    private final ListRemovedPlantsMapper listRemovedPlantsMapper;
     private final RemovePlantRepository removePlantRepository;
 
-
-
-    public RemovePlantService(PlantRepository plantRepository, PlantRemovalReportMapper plantRemovalReportMapper,/* ListRemovedPlantsMapper listRemovedPlantsMapper,*/ RemovePlantRepository removePlantRepository) {
+    public RemovePlantService(PlantRepository plantRepository, PlantRemovalReportMapper plantRemovalReportMapper, ListRemovedPlantsMapper listRemovedPlantsMapper, RemovePlantRepository removePlantRepository) {
         this.plantRepository = plantRepository;
         this.plantRemovalReportMapper = plantRemovalReportMapper;
-        //this.listRemovedPlantsMapper = listRemovedPlantsMapper;
+        this.listRemovedPlantsMapper = listRemovedPlantsMapper;
         this.removePlantRepository = removePlantRepository;
     }
+
 
     // ############################### REMOVED PLANTS FORM #####################################################
 
@@ -114,7 +113,8 @@ public class RemovePlantService {
      *  return list of removed plants mapped to DTOs
      */
     public List<ListRemovedPlantsResponseDTO> getAllRemovedPlants() {
-        List<Plant> removedPlants = plantRepository.findByStatus(PlantStatus.REMOVED);
+
+        List<RemovedPlant> removedPlants = plantRepository.findByStatus(PlantStatus.REMOVED);
 
         // If no removed plants are found, throw API exception
         if (removedPlants == null || removedPlants.isEmpty()) {
