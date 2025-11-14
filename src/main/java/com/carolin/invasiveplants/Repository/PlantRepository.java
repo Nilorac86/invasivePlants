@@ -15,6 +15,7 @@ import java.util.List;
 public interface PlantRepository extends JpaRepository<Plant, Long> {
 
 
-    List<RemovedPlant> findByStatus(PlantStatus plantStatus);
+    // Fetch all plants with status = REMOVED
+    List<RemovedPlant> findByStatus(PlantStatus status);
 
 }

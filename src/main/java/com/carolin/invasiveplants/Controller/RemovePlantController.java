@@ -52,12 +52,12 @@ public class RemovePlantController {
 
     // ############################ LIST REMOVED PLANTS ##################################################
 
-//    @GetMapping("/list")
-//    public ResponseEntity<List<ListRemovedPlantsResponseDTO>> getAllRemovedPlants(){
-//
-//        List<ListRemovedPlantsResponseDTO> listRemovedPlantsResponseDTOS = removePlantService.getAllRemovedPlants();
-//
-//        return ResponseEntity.ok(listRemovedPlantsResponseDTOS);
-//    }
+    @GetMapping("/list")
+    public ResponseEntity<List<ListRemovedPlantsResponseDTO>> getAllRemovedPlants(){
+
+        List<ListRemovedPlantsResponseDTO> listRemovedPlantsResponseDTOS = removePlantService.getAllRemovedPlants();
+
+        return ResponseEntity.ok(listRemovedPlantsResponseDTOS);
+    }
 }
 

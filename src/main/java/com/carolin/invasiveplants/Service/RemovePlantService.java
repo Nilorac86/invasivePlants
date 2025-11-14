@@ -112,9 +112,10 @@ public class RemovePlantService {
      * throws ApiException if no removed  plants are found
      *  return list of removed plants mapped to DTOs
      */
-    public List<ListRemovedPlantsResponseDTO> getAllRemovedPlants() {
 
-        List<RemovedPlant> removedPlants = plantRepository.findByStatus(PlantStatus.REMOVED);
+    public List<ListRemovedPlantsResponseDTO> getAllRemovedPlants(){
+
+        List<RemovedPlant> removedPlants = removePlantRepository.findByStatus(PlantStatus.REMOVED);
 
         // If no removed plants are found, throw API exception
         if (removedPlants == null || removedPlants.isEmpty()) {
