@@ -34,7 +34,7 @@ public class RemovePlantService {
 
 
 
-    public RemovePlantService(PlantRepository plantRepository, RemovePlantRepository removePlantRepository, /*PlantRemovalReportMapper plantRemovalReportMapper,*/ UserRepository userRepository, ListRemovedPlantsMapper listRemovedPlantsMapper) {
+    public RemovePlantService(PlantRepository plantRepository, RemovePlantRepository removePlantRepository, PlantRemovalReportMapper plantRemovalReportMapper, UserRepository userRepository, ListRemovedPlantsMapper listRemovedPlantsMapper) {
         this.plantRepository = plantRepository;
         this.removePlantRepository = removePlantRepository;
         //this.plantRemovalReportMapper = plantRemovalReportMapper;
