@@ -48,38 +48,5 @@ public class ListRemovedPlantsMapper {
                 .collect(Collectors.toList());
 
     }
-    /*
-    public ListRemovedPlantsResponseDTO toDTO (Plant plant){
-        if (plant == null) return null;
 
-        String userName = "Unknown";
-
-        // Check so that user is not null
-        if (plant.getRemovedBy() != null) {
-            String firstName = plant.getRemovedBy().getFirstName() != null
-                    ? plant.getRemovedBy().getFirstName()
-                    : "";
-            String lastName = plant.getRemovedBy().getLastName() != null
-                    ? plant.getRemovedBy().getLastName()
-                    : "";
-
-            userName = (firstName + " " + lastName).trim();
-        }
-
-
-        return new ListRemovedPlantsResponseDTO(
-                plant.getSpecies().getSpeciesName(),
-                userName,
-                plant.getDateTime(),
-                plant.getPhotoAfter());
-    }
-
-    public List<ListRemovedPlantsResponseDTO> toDto(List<Plant> removedPlants) {
-        if (removedPlants == null || removedPlants.isEmpty()) return Collections.emptyList();
-
-        return removedPlants.stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-
-    }*/
 }

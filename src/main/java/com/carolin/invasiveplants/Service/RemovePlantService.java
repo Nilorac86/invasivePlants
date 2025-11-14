@@ -1,12 +1,14 @@
 package com.carolin.invasiveplants.Service;
 
 import com.carolin.invasiveplants.Entity.Plant;
+import com.carolin.invasiveplants.Entity.RemovedPlant;
 import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.Enum.PlantStatus;
 import com.carolin.invasiveplants.ExceptionHandler.ApiException;
 import com.carolin.invasiveplants.Mapper.ListRemovedPlantsMapper;
 import com.carolin.invasiveplants.Mapper.PlantRemovalReportMapper;
 import com.carolin.invasiveplants.Repository.PlantRepository;
+import com.carolin.invasiveplants.Repository.RemovePlantRepository;
 import com.carolin.invasiveplants.Repository.UserRepository;
 import com.carolin.invasiveplants.ResponseDTO.ListRemovedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.PlantRemovalReportResponseDto;
@@ -25,15 +27,17 @@ public class RemovePlantService {
     private static final long MAX_FILE_SIZE = 5_000_000; // 5MB max for pictures
 
     private final PlantRepository plantRepository;
-    private final PlantRemovalReportMapper plantRemovalReportMapper;
+    private final RemovePlantRepository removePlantRepository;
+    //private final PlantRemovalReportMapper plantRemovalReportMapper;
     private final UserRepository userRepository;
     private final ListRemovedPlantsMapper listRemovedPlantsMapper;
 
 
 
-    public RemovePlantService(PlantRepository plantRepository, PlantRemovalReportMapper plantRemovalReportMapper, UserRepository userRepository, ListRemovedPlantsMapper listRemovedPlantsMapper) {
+    public RemovePlantService(PlantRepository plantRepository, RemovePlantRepository removePlantRepository, /*PlantRemovalReportMapper plantRemovalReportMapper,*/ UserRepository userRepository, ListRemovedPlantsMapper listRemovedPlantsMapper) {
         this.plantRepository = plantRepository;
-        this.plantRemovalReportMapper = plantRemovalReportMapper;
+        this.removePlantRepository = removePlantRepository;
+        //this.plantRemovalReportMapper = plantRemovalReportMapper;
         this.userRepository = userRepository;
         this.listRemovedPlantsMapper = listRemovedPlantsMapper;
     }
@@ -92,13 +96,15 @@ public class RemovePlantService {
 
     // ############################### LIST REMOVED PLANTS #######################################################
 
-    /**
+    /*
      * Retrieves all plants with status REMOVED from the database.
      * throws ApiException if no removed  plants are found
      *  return list of removed plants mapped to DTOs
      */
-    public List<ListRemovedPlantsResponseDTO> getAllRemovedPlants() {
-        List<Plant> removedPlants = plantRepository.findByStatus(PlantStatus.REMOVED);
+
+    public List<ListRemovedPlantsResponseDTO> getAllRemovedPlants(){
+
+        List<RemovedPlant> removedPlants = removePlantRepository.findByStatus(PlantStatus.REMOVED);
 
         // If no removed plants are found, throw API exception
         if (removedPlants == null || removedPlants.isEmpty()) {
@@ -108,7 +114,5 @@ public class RemovePlantService {
         // Map to DTOs and return the list
         return listRemovedPlantsMapper.toDto(removedPlants);
     }
-
-
 
 }
