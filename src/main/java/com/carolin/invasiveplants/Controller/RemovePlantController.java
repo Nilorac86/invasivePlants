@@ -5,6 +5,7 @@ import com.carolin.invasiveplants.RequestDTO.PlantRemovalReportRequestDto;
 import com.carolin.invasiveplants.ResponseDTO.ListRemovedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.PlantRemovalReportResponseDto;
 import com.carolin.invasiveplants.Service.RemovePlantService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,14 +32,14 @@ public class RemovePlantController {
 // ########################## REMOVE PLANT FORM ##########################################################
 
     // Plant removal method uses modelattribute to handle multiple input (text, file(photo))
-    @PutMapping("/form")
+    @PostMapping("/form")
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<PlantRemovalReportResponseDto> removePlants(
+    public ResponseEntity<PlantRemovalReportResponseDto> removePlants(@Valid
             @ModelAttribute PlantRemovalReportRequestDto plantRemovalReportRequestDto,
             @AuthenticationPrincipal User user) throws IOException {
 
         // ResponeDto to send back to frontend.
-        PlantRemovalReportResponseDto response = removePlantService.updatePlantReportAfterRemoval(
+        PlantRemovalReportResponseDto response = removePlantService.removePlantForm(
                 plantRemovalReportRequestDto.getPlantId(),
                 plantRemovalReportRequestDto.getPhotoAfter(),
                 plantRemovalReportRequestDto.getRemovedCount(),
@@ -51,12 +52,12 @@ public class RemovePlantController {
 
     // ############################ LIST REMOVED PLANTS ##################################################
 
-    @GetMapping("/list")
-    public ResponseEntity<List<ListRemovedPlantsResponseDTO>> getAllRemovedPlants(){
-
-        List<ListRemovedPlantsResponseDTO> listRemovedPlantsResponseDTOS = removePlantService.getAllRemovedPlants();
-
-        return ResponseEntity.ok(listRemovedPlantsResponseDTOS);
-    }
+//    @GetMapping("/list")
+//    public ResponseEntity<List<ListRemovedPlantsResponseDTO>> getAllRemovedPlants(){
+//
+//        List<ListRemovedPlantsResponseDTO> listRemovedPlantsResponseDTOS = removePlantService.getAllRemovedPlants();
+//
+//        return ResponseEntity.ok(listRemovedPlantsResponseDTOS);
+//    }
 }
 

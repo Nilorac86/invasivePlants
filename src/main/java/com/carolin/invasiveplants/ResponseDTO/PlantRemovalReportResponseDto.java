@@ -59,11 +59,11 @@ public class PlantRemovalReportResponseDto {
         this.photoAfter = photoAfter;
     }
 
-    public String getStatus() {
+    public PlantStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(PlantStatus status) {
         this.status = status;
     }
 

@@ -9,7 +9,6 @@ import com.carolin.invasiveplants.Mapper.ListRemovedPlantsMapper;
 import com.carolin.invasiveplants.Mapper.PlantRemovalReportMapper;
 import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.RemovePlantRepository;
-import com.carolin.invasiveplants.Repository.UserRepository;
 import com.carolin.invasiveplants.ResponseDTO.ListRemovedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.PlantRemovalReportResponseDto;
 import jakarta.transaction.Transactional;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,26 +27,24 @@ public class RemovePlantService {
     private static final long MAX_FILE_SIZE = 5_000_000; // 5MB max for pictures
 
     private final PlantRepository plantRepository;
-    private final RemovePlantRepository removePlantRepository;
     private final PlantRemovalReportMapper plantRemovalReportMapper;
-    private final UserRepository userRepository;
-    private final ListRemovedPlantsMapper listRemovedPlantsMapper;
+    //private final ListRemovedPlantsMapper listRemovedPlantsMapper;
+    private final RemovePlantRepository removePlantRepository;
 
 
 
-    public RemovePlantService(PlantRepository plantRepository, RemovePlantRepository removePlantRepository, PlantRemovalReportMapper plantRemovalReportMapper, UserRepository userRepository, ListRemovedPlantsMapper listRemovedPlantsMapper) {
+    public RemovePlantService(PlantRepository plantRepository, PlantRemovalReportMapper plantRemovalReportMapper,/* ListRemovedPlantsMapper listRemovedPlantsMapper,*/ RemovePlantRepository removePlantRepository) {
         this.plantRepository = plantRepository;
-        this.removePlantRepository = removePlantRepository;
         this.plantRemovalReportMapper = plantRemovalReportMapper;
-        this.userRepository = userRepository;
-        this.listRemovedPlantsMapper = listRemovedPlantsMapper;
+        //this.listRemovedPlantsMapper = listRemovedPlantsMapper;
+        this.removePlantRepository = removePlantRepository;
     }
 
     // ############################### REMOVED PLANTS FORM #####################################################
 
     // Method for plant removal
     @Transactional
-    public PlantRemovalReportResponseDto updatePlantReportAfterRemoval(Long plantId,
+    public PlantRemovalReportResponseDto removePlantForm(Long plantId,
                                                                        MultipartFile photoAfter, Integer removedCount,
                                                                        @AuthenticationPrincipal User user) throws IOException {
 
@@ -72,39 +70,51 @@ public class RemovePlantService {
             throw new ApiException("Image size cannot exceed 5MB, ", HttpStatus.BAD_REQUEST);
         }
 
-        // Converts the multipartfile to byte for the database to save.
-        plant.setPhotoAfter(photoAfter.getBytes());
 
         int remainingCount = plant.getCount() - removedCount;
         if (remainingCount < 0) {
             throw new ApiException("You cannot remove more plants than reported", HttpStatus.BAD_REQUEST);
         }
 
-        // Sets the information from the form
         plant.setCount(remainingCount);
-        plant.setPlantId(plantId);
-        plant.setRemovedBy(user); // Sets user automatic
-        plant.setStatus(PlantStatus.REMOVED); // Change status
+
+        if (remainingCount == 0) {
+            plant.setStatus(PlantStatus.VERIFIED);
+
+            } else {
+                plant.setStatus(PlantStatus.PARTLYREMOVED);// If reported plant is partly removed status is set as partly removed.
+        }
+
+            plantRepository.save(plant); // Update information in reported plant table.
+
+        // Sets the information from the form
+        RemovedPlant removedPlant = new RemovedPlant();
+
+            removedPlant.setPhotoAfter(photoAfter.getBytes()); // Converts the multipartfile to byte for the database to save.
+            removedPlant.setStatus(PlantStatus.REMOVED);
+            removedPlant.setCount(removedCount);
+            removedPlant.setRemovedBy(user); // Sets current user
+            removedPlant.setRemovedAt(LocalDateTime.now());
+            removedPlant.setReportedPlant(plant);
+
 
         // Saves the information user put in to the form.
-        plantRepository.save(plant);
+        removePlantRepository.save(removedPlant);
 
         // Return the resposeDto from the mapper, what the user gets to see.
-        return plantRemovalReportMapper.toResponseDto(plant);
+        return plantRemovalReportMapper.toResponseDto(removedPlant);
     }
 
 
     // ############################### LIST REMOVED PLANTS #######################################################
 
-    /*
+    /**
      * Retrieves all plants with status REMOVED from the database.
      * throws ApiException if no removed  plants are found
      *  return list of removed plants mapped to DTOs
      */
-
-    public List<ListRemovedPlantsResponseDTO> getAllRemovedPlants(){
-
-        List<RemovedPlant> removedPlants = removePlantRepository.findByStatus(PlantStatus.REMOVED);
+    public List<ListRemovedPlantsResponseDTO> getAllRemovedPlants() {
+        List<Plant> removedPlants = plantRepository.findByStatus(PlantStatus.REMOVED);
 
         // If no removed plants are found, throw API exception
         if (removedPlants == null || removedPlants.isEmpty()) {
@@ -114,5 +124,7 @@ public class RemovePlantService {
         // Map to DTOs and return the list
         return listRemovedPlantsMapper.toDto(removedPlants);
     }
+
+
 
 }
