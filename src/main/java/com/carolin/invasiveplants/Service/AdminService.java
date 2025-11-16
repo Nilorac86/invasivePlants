@@ -6,6 +6,7 @@ import com.carolin.invasiveplants.Entity.RemovedPlant;
 import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.Enum.NotificationType;
 import com.carolin.invasiveplants.Enum.PlantStatus;
+import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import com.carolin.invasiveplants.Repository.NotificationRepository;
 import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.RemovePlantRepository;
@@ -34,7 +35,7 @@ public class AdminService {
     // ##################################### ADMIN VERIFY REMOVED PLANT #######################################
 
     //service update the old status to a new status on the removed plant
-    public void updateReportedPlantsStatus(Long id, PlantStatus newStatus){
+    public void updateReportedPlantsStatus(Long id, RemovePlantStatus newStatus){
 
         //Find the reported plant by ID, throw 404 if not found
         Plant reportedPlant = plantRepository.findById(id)
@@ -46,28 +47,32 @@ public class AdminService {
 
 
         //double check so it really is reported as REMOVED before changing status
-        if(removedPlant.getStatus() != PlantStatus.REMOVED) {
+        if(removedPlant.getStatus() != RemovePlantStatus.PENDING) {
             throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Only plants with status 'REMOVED' can be verified or declined");
+                    HttpStatus.BAD_REQUEST, "Only plants with status 'PENDING' can be verified or declined");
         }
 
         removedPlant.setStatus(newStatus);
         removePlantRepository.save(removedPlant);
 
         //Update reportedPlant status depending on new status and count logic
-        if(newStatus == PlantStatus.REGISTERED){
-
+        if(newStatus == RemovePlantStatus.REJECTED){
             //admin decline/reset removal
             reportedPlant.setStatus(PlantStatus.REGISTERED);
-        }else if (newStatus == PlantStatus.VERIFIED){
+
+            int restoredCount = reportedPlant.getCount() + removedPlant.getCount();
+            reportedPlant.setCount(restoredCount);
+
+        }else if (newStatus == RemovePlantStatus.APPROVED){
 
             //check if all removed or partly removed
             int totalCount = reportedPlant.getCount();
             int removedCount = removedPlant.getCount();
 
+
             if(removedCount >= totalCount){
                 //All removed
-                reportedPlant.setStatus(PlantStatus.REMOVED);
+                reportedPlant.setStatus(PlantStatus.VERIFIED);
             }else{
                 //Partly removed
                 reportedPlant.setStatus(PlantStatus.PARTLYREMOVED);
@@ -85,10 +90,17 @@ public class AdminService {
         notification.setTime(LocalDateTime.now());
 
         //sending the user that removed plant a message depending on admin, approve or decline
-        if (newStatus == PlantStatus.VERIFIED){
-            notification.setMessage("Din rapporterade borttagna växt har nu verifierats! Du har tjänat poäng.");
+        if (newStatus == RemovePlantStatus.APPROVED){
+
+            if(reportedPlant.getStatus() == PlantStatus.VERIFIED) {
+                notification.setMessage("Din rapporterade borttagna växt har nu verifierats! Du har tjänat poäng.");
+
+            } else {
+                notification.setMessage("Admin har godkänt din borttagningsrapport (delvis borttagen planta).");
+            }
             notification.setNotificationType(NotificationType.SUCCESS);
-        } else if (newStatus == PlantStatus.REGISTERED) {
+
+        } else if (newStatus == RemovePlantStatus.REJECTED) {
             notification.setMessage("Din rapport om borttagen växt godkändes inte.");
             notification.setNotificationType(NotificationType.WARNING);
         }
