@@ -2,6 +2,7 @@ package com.carolin.invasiveplants.Entity;
 
 
 import com.carolin.invasiveplants.Enum.PlantStatus;
+import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -21,7 +22,7 @@ public class RemovedPlant {
 
     @Column(name="status")
     @Enumerated(EnumType.STRING)
-    private PlantStatus status;
+    private RemovePlantStatus status;
 
     @Column(name = "date_time")
     private LocalDateTime removedAt;
@@ -42,7 +43,7 @@ public class RemovedPlant {
     public RemovedPlant() {
     }
 
-    public RemovedPlant(Long removedPlantId, byte[] photoAfter, PlantStatus status, LocalDateTime removedAt, Integer count, Plant reportedPlant, User removedBy) {
+    public RemovedPlant(Long removedPlantId, byte[] photoAfter, RemovePlantStatus status, LocalDateTime removedAt, Integer count, Plant reportedPlant, User removedBy) {
         this.removedPlantId = removedPlantId;
         this.photoAfter = photoAfter;
         this.status = status;
@@ -68,11 +69,11 @@ public class RemovedPlant {
         this.photoAfter = photoAfter;
     }
 
-    public PlantStatus getStatus() {
+    public RemovePlantStatus getStatus() {
         return status;
     }
 
-    public void setStatus(PlantStatus status) {
+    public void setStatus(RemovePlantStatus status) {
         this.status = status;
     }
 
