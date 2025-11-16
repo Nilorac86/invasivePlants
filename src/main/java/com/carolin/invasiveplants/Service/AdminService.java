@@ -46,7 +46,7 @@ public class AdminService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "removed plant record not found"));
 
 
-        //double check so it really is reported as REMOVED before changing status
+        //double check so it really is reported as PENDING before changing status
         if (removedPlant.getStatus() != RemovePlantStatus.PENDING) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Only plants with status 'PENDING' can be verified or declined");
@@ -57,9 +57,20 @@ public class AdminService {
 
         //Update reportedPlant status depending on new status and count logic
         if (newStatus == RemovePlantStatus.REJECTED) {
-            //admin reject/reset removal, count is added again in reportingPlant. And turn status to REGISTERED.
+
+            //admin reject/reset removal, count is added again in reportingPlant. And turn status to REGISTERED or
+            // PARTLYREMOVED depending on what count was when post was made.
             reportedPlant.setCount(reportedPlant.getCount() + removedPlant.getCount());
-            reportedPlant.setStatus(PlantStatus.REGISTERED);
+
+           // Determin correct status based on remaining count
+           if(reportedPlant.getCount() == reportedPlant.getOrginalCount()){
+               // mo plants have been removed att all
+               reportedPlant.setStatus(PlantStatus.REGISTERED);
+           }else{
+               // some removal are approved from before
+               reportedPlant.setStatus(PlantStatus.PARTLYREMOVED);
+           }
+
 
             // If removal is approved status changes depending on if its removed or partlyremoved
         } else if (newStatus == RemovePlantStatus.APPROVED) {
@@ -85,12 +96,7 @@ public class AdminService {
         //sending the user that removed plant a message depending on admin, approve or decline
         if (newStatus == RemovePlantStatus.APPROVED){
 
-            if(reportedPlant.getStatus() == PlantStatus.VERIFIED) {
-                notification.setMessage("Din rapporterade borttagna växt har nu verifierats! Du har tjänat poäng.");
-
-            } else {
-                notification.setMessage("Admin har godkänt din borttagningsrapport (delvis borttagen planta).");
-            }
+            notification.setMessage("Din rapporterade borttagna växt har nu verifierats! Du har tjänat poäng.");
             notification.setNotificationType(NotificationType.SUCCESS);
 
         } else if (newStatus == RemovePlantStatus.REJECTED) {
