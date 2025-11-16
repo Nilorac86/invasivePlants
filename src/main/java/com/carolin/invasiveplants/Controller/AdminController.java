@@ -29,6 +29,7 @@ public class AdminController {
 
         adminVerifyService.updateReportedPlantsStatus(
                 requestDTO.getReportedPlantId(),
+                requestDTO.getRemovedPlantId(),
                 requestDTO.getPlantStatus()
         );
 
