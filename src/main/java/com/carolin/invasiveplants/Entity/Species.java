@@ -13,7 +13,7 @@ public class Species {
     private Long speciesId;
 
     @Column(name = "species_name",length = 255)
-    private String species_name;
+    private String speciesName;
 
     @Column(columnDefinition = "longtext")
     private String description;
@@ -42,7 +42,7 @@ public class Species {
     public Species(Long speciesId, String species_name, String description, String speciesStatus,
                    String biologicalCharacteristics, String plantHandling, byte[] photo, List<Plant> plants) {
         this.speciesId = speciesId;
-        this.species_name = species_name;
+        this.speciesName = species_name;
         this.description = description;
         this.speciesStatus = speciesStatus;
         this.biologicalCharacteristics = biologicalCharacteristics;
@@ -61,11 +61,11 @@ public class Species {
     }
 
     public String getSpeciesName() {
-        return species_name;
+        return speciesName;
     }
 
     public void setSpeciesName(String name) {
-        this.species_name = species_name;
+        this.speciesName = speciesName;
     }
 
     public String getDescription() {

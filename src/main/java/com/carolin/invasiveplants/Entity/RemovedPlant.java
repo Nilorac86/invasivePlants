@@ -1,0 +1,111 @@
+package com.carolin.invasiveplants.Entity;
+
+
+import com.carolin.invasiveplants.Enum.PlantStatus;
+import com.carolin.invasiveplants.Enum.RemovePlantStatus;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "removed_plants")
+public class RemovedPlant {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name ="removed_plant_id")
+    private Long removedPlantId;
+
+    @Lob
+    @Column(name= "photo_after", columnDefinition = "mediumblob")
+    private byte[] photoAfter;
+
+    @Column(name="status")
+    @Enumerated(EnumType.STRING)
+    private RemovePlantStatus status;
+
+    @Column(name = "date_time")
+    private LocalDateTime removedAt;
+
+    @Column(name="count")
+    private Integer count;
+
+    @ManyToOne
+    @JoinColumn (name = "reported_plant_id")
+    private Plant reportedPlant;
+
+
+    @ManyToOne
+    @JoinColumn(name = "removed_by_user_id")
+    private User removedBy;
+
+
+    public RemovedPlant() {
+    }
+
+    public RemovedPlant(Long removedPlantId, byte[] photoAfter, RemovePlantStatus status, LocalDateTime removedAt, Integer count, Plant reportedPlant, User removedBy) {
+        this.removedPlantId = removedPlantId;
+        this.photoAfter = photoAfter;
+        this.status = status;
+        this.removedAt = removedAt;
+        this.count = count;
+        this.reportedPlant = reportedPlant;
+        this.removedBy = removedBy;
+    }
+
+    public Long getRemovedPlantId() {
+        return removedPlantId;
+    }
+
+    public void setRemovedPlantId(Long removedPlantId) {
+        this.removedPlantId = removedPlantId;
+    }
+
+    public byte[] getPhotoAfter() {
+        return photoAfter;
+    }
+
+    public void setPhotoAfter(byte[] photoAfter) {
+        this.photoAfter = photoAfter;
+    }
+
+    public RemovePlantStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(RemovePlantStatus status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getRemovedAt() {
+        return removedAt;
+    }
+
+    public void setRemovedAt(LocalDateTime removedAt) {
+        this.removedAt = removedAt;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Plant getReportedPlant() {
+        return reportedPlant;
+    }
+
+    public void setReportedPlant(Plant reportedPlant) {
+        this.reportedPlant = reportedPlant;
+    }
+
+    public User getRemovedBy() {
+        return removedBy;
+    }
+
+    public void setRemovedBy(User removedBy) {
+        this.removedBy = removedBy;
+    }
+}

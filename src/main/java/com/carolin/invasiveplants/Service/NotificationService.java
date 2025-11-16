@@ -36,6 +36,9 @@ public class NotificationService {
                 .collect(Collectors.toList());
     }
 
+
+    // ################################## NOTIFICATION READ BY USER #######################################
+
     // Mark a notification as read by the user
     public void markNotificationsAsRead(Long notificationId, User currentUser){
 

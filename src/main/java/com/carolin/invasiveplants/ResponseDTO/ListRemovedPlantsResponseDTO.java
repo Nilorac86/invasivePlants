@@ -7,14 +7,13 @@ public class ListRemovedPlantsResponseDTO {
 
     private String plantName;
     private String userName;
-    private LocalDateTime date;
+    private LocalDateTime removedAt;
     private byte[] photoAfter;
 
-
-    public ListRemovedPlantsResponseDTO(String plantName, String userName, LocalDateTime date, byte[] photoAfter) {
+    public ListRemovedPlantsResponseDTO(String plantName, String userName, LocalDateTime removedAt, byte[] photoAfter) {
         this.plantName = plantName;
         this.userName = userName;
-        this.date = date;
+        this.removedAt = removedAt;
         this.photoAfter = photoAfter;
     }
 
@@ -34,12 +33,12 @@ public class ListRemovedPlantsResponseDTO {
         this.userName = userName;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getRemovedAt() {
+        return removedAt;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setRemovedAt(LocalDateTime removedAt) {
+        this.removedAt = removedAt;
     }
 
     public byte[] getPhotoAfter() {

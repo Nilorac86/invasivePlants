@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "reporting_plants")
@@ -19,10 +21,6 @@ public class Plant {
     @Column(name = "photo_before", columnDefinition = "mediumblob")
     private byte[] photoBefore;
 
-    @Lob
-    @Column(name = "photo_after", columnDefinition = "mediumblob")
-    private byte[] photoAfter;
-
     @Enumerated(EnumType.STRING)
     private PlantStatus status;
 
@@ -35,12 +33,11 @@ public class Plant {
     private Location location;
 
     @ManyToOne
-    @JoinColumn(name = "removed_by_user_id")
-    private User removedBy;
-
-    @ManyToOne
     @JoinColumn(name = "reported_by_user_id")
     private User reportedBy;
+
+    @OneToMany(mappedBy = "reportedPlant")
+    private List<RemovedPlant> removedPlants = new ArrayList<>();
 
     @Column(name = "date_time")
     private LocalDateTime dateTime;
@@ -79,14 +76,6 @@ public class Plant {
         this.photoBefore = photoBefore;
     }
 
-    public byte[] getPhotoAfter() {
-        return photoAfter;
-    }
-
-    public void setPhotoAfter(byte[] photoAfter) {
-        this.photoAfter = photoAfter;
-    }
-
     public PlantStatus getStatus() {
         return status;
     }
@@ -109,14 +98,6 @@ public class Plant {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public User getRemovedBy() {
-        return removedBy;
-    }
-
-    public void setRemovedBy(User removedBy) {
-        this.removedBy = removedBy;
     }
 
     public User getReportedBy() {

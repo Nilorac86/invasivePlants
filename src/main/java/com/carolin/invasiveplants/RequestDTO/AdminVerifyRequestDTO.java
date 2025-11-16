@@ -1,25 +1,26 @@
 package com.carolin.invasiveplants.RequestDTO;
 
 import com.carolin.invasiveplants.Enum.PlantStatus;
+import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 
 public class AdminVerifyRequestDTO {
 
     private Long reportedPlantId;
-    private PlantStatus plantStatus;
+    private RemovePlantStatus plantStatus;
 
     public AdminVerifyRequestDTO() {
     }
 
-    public AdminVerifyRequestDTO(PlantStatus plantStatus, Long reportedPlantId) {
+    public AdminVerifyRequestDTO(RemovePlantStatus plantStatus, Long reportedPlantId) {
         this.plantStatus = plantStatus;
         this.reportedPlantId = reportedPlantId;
     }
 
-    public PlantStatus getPlantStatus() {
+    public RemovePlantStatus getPlantStatus() {
         return plantStatus;
     }
 
-    public void setPlantStatus(PlantStatus plantStatus) {
+    public void setPlantStatus(RemovePlantStatus plantStatus) {
         this.plantStatus = plantStatus;
     }
 
