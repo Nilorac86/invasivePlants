@@ -1,6 +1,7 @@
 package com.carolin.invasiveplants.ResponseDTO;
 
 import com.carolin.invasiveplants.Enum.PlantStatus;
+import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +13,7 @@ public class PlantRemovalReportResponseDto {
 
     private byte[] photoAfter;
 
-    private PlantStatus status;
+    private RemovePlantStatus status;
 
     private LocalDateTime removedAt;
 
@@ -24,8 +25,9 @@ public class PlantRemovalReportResponseDto {
     public PlantRemovalReportResponseDto() {
     }
 
-    public PlantRemovalReportResponseDto(String speciesName, byte[] photoBefore, byte[] photoAfter, PlantStatus status,
-                                         LocalDateTime removedAt, Integer count, Long reportedPlant) {
+    public PlantRemovalReportResponseDto(String speciesName, byte[] photoBefore, byte[] photoAfter,
+                                         RemovePlantStatus status, LocalDateTime removedAt, Integer count,
+                                         Long reportedPlant) {
         this.speciesName = speciesName;
         this.photoBefore = photoBefore;
         this.photoAfter = photoAfter;
@@ -59,11 +61,11 @@ public class PlantRemovalReportResponseDto {
         this.photoAfter = photoAfter;
     }
 
-    public PlantStatus getStatus() {
+    public RemovePlantStatus getStatus() {
         return status;
     }
 
-    public void setStatus(PlantStatus status) {
+    public void setStatus(RemovePlantStatus status) {
         this.status = status;
     }
 
