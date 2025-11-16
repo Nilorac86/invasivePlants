@@ -10,6 +10,7 @@ import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import com.carolin.invasiveplants.Repository.NotificationRepository;
 import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.RemovePlantRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,10 @@ public class AdminService {
     //service update the old status to a new status on the removed plant
     public void updateReportedPlantsStatus(Long reportedPlantId, Long removedPlantId, RemovePlantStatus newStatus) {
 
+        if(newStatus == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "new status must be provided");
+        }
+
         //Find the reported plant by ID, throw 404 if not found
         Plant reportedPlant = plantRepository.findById(reportedPlantId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reported plant not found"));
@@ -53,13 +58,9 @@ public class AdminService {
         }
 
         removedPlant.setStatus(newStatus);
-        removePlantRepository.save(removedPlant);
 
-        //Update reportedPlant status depending on new status and count logic
+        //Update reportedPlant status depending on new status and counts
         if (newStatus == RemovePlantStatus.REJECTED) {
-
-            //admin reject/reset removal, count is added again in reportingPlant. And turn status to REGISTERED or
-            // PARTLYREMOVED depending on what count was when post was made.
             reportedPlant.setCount(reportedPlant.getCount() + removedPlant.getCount());
 
            // Determin correct status based on remaining count
@@ -71,10 +72,8 @@ public class AdminService {
                reportedPlant.setStatus(PlantStatus.PARTLYREMOVED);
            }
 
-
             // If removal is approved status changes depending on if its removed or partlyremoved
         } else if (newStatus == RemovePlantStatus.APPROVED) {
-
             if (reportedPlant.getCount() == 0) { // If count is 0 status will be VERIFIED
                 reportedPlant.setStatus(PlantStatus.VERIFIED);
         } else {
@@ -83,7 +82,7 @@ public class AdminService {
 
     }
         // Save the new information in reported plant table.
-        plantRepository.save(reportedPlant);
+        //plantRepository.save(reportedPlant);
 
         //Notification for user who removed the plant
         User removedByUser= removedPlant.getRemovedBy();
@@ -104,7 +103,15 @@ public class AdminService {
             notification.setNotificationType(NotificationType.WARNING);
         }
 
-        notificationRepository.save(notification);
+        try {
+            removePlantRepository.save(removedPlant);
+            plantRepository.save(reportedPlant);
+            notificationRepository.save(notification);
+        } catch (DataIntegrityViolationException e) {
+            // Logga detaljer och kasta om med relevant info
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Database integrity violation: " + e.getMessage(), e);
+        }
+
     }
 
 }
