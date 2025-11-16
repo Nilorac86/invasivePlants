@@ -3,6 +3,7 @@ package com.carolin.invasiveplants.Repository;
 import com.carolin.invasiveplants.Entity.Plant;
 import com.carolin.invasiveplants.Entity.RemovedPlant;
 import com.carolin.invasiveplants.Enum.PlantStatus;
+import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +16,7 @@ public interface RemovePlantRepository extends JpaRepository<RemovedPlant, Long>
     Optional<RemovedPlant> findByReportedPlant_PlantId(Long reportedPlantId);
 
     // Fetch all plants with status = REMOVED
-    List<RemovedPlant> findByStatus(PlantStatus status);
+    List<RemovedPlant> findByStatus(RemovePlantStatus status);
 }
 
 
