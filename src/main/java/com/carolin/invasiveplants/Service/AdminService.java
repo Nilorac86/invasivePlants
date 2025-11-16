@@ -35,14 +35,14 @@ public class AdminService {
     // ##################################### ADMIN VERIFY REMOVED PLANT #######################################
 
     //service update the old status to a new status on the removed plant
-    public void updateReportedPlantsStatus(Long id, RemovePlantStatus newStatus){
+    public void updateReportedPlantsStatus(Long reportedPlantId, Long removedPlantId, RemovePlantStatus newStatus){
 
         //Find the reported plant by ID, throw 404 if not found
-        Plant reportedPlant = plantRepository.findById(id)
+        Plant reportedPlant = plantRepository.findById(reportedPlantId)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reported plant not found"));
 
         //Find the removed plant associated with the reported plant
-        RemovedPlant removedPlant = removePlantRepository.findByReportedPlant_PlantId(id)
+        RemovedPlant removedPlant = removePlantRepository.findById(removedPlantId)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "removed plant record not found"));
 
 
