@@ -45,11 +45,14 @@ public class Plant {
     @Column(name = "count")
     private Integer count;
 
+    @Column(name = "orginal_count")
+    private Integer orginalCount;
+
     // Constructors
     public Plant() {
     }
 
-    public Plant(byte[] photoBefore, PlantStatus status, Species species, Location location, User reportedBy, LocalDateTime dateTime, int count) {
+    public Plant(byte[] photoBefore, PlantStatus status, Species species, Location location, User reportedBy, LocalDateTime dateTime, int count, int orginalCount) {
         this.photoBefore = photoBefore;
         this.status = status;
         this.species = species;
@@ -57,6 +60,7 @@ public class Plant {
         this.reportedBy = reportedBy;
         this.dateTime = dateTime;
         this.count = count;
+        this.orginalCount = orginalCount;
     }
 
     // Getters and Setters
@@ -122,5 +126,13 @@ public class Plant {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public Integer getOrginalCount() {
+        return orginalCount;
+    }
+
+    public void setOrginalCount(Integer orginalCount) {
+        this.orginalCount = orginalCount;
     }
 }
