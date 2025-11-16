@@ -35,19 +35,19 @@ public class AdminService {
     // ##################################### ADMIN VERIFY REMOVED PLANT #######################################
 
     //service update the old status to a new status on the removed plant
-    public void updateReportedPlantsStatus(Long reportedPlantId, Long removedPlantId, RemovePlantStatus newStatus){
+    public void updateReportedPlantsStatus(Long reportedPlantId, Long removedPlantId, RemovePlantStatus newStatus) {
 
         //Find the reported plant by ID, throw 404 if not found
         Plant reportedPlant = plantRepository.findById(reportedPlantId)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reported plant not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reported plant not found"));
 
         //Find the removed plant associated with the reported plant
         RemovedPlant removedPlant = removePlantRepository.findById(removedPlantId)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "removed plant record not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "removed plant record not found"));
 
 
         //double check so it really is reported as REMOVED before changing status
-        if(removedPlant.getStatus() != RemovePlantStatus.PENDING) {
+        if (removedPlant.getStatus() != RemovePlantStatus.PENDING) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Only plants with status 'PENDING' can be verified or declined");
         }
@@ -56,29 +56,22 @@ public class AdminService {
         removePlantRepository.save(removedPlant);
 
         //Update reportedPlant status depending on new status and count logic
-        if(newStatus == RemovePlantStatus.REJECTED){
-            //admin decline/reset removal
+        if (newStatus == RemovePlantStatus.REJECTED) {
+            //admin reject/reset removal, count is added again in reportingPlant. And turn status to REGISTERED.
+            reportedPlant.setCount(reportedPlant.getCount() + removedPlant.getCount());
             reportedPlant.setStatus(PlantStatus.REGISTERED);
 
-            int restoredCount = reportedPlant.getCount() + removedPlant.getCount();
-            reportedPlant.setCount(restoredCount);
+            // If removal is approved status changes depending on if its removed or partlyremoved
+        } else if (newStatus == RemovePlantStatus.APPROVED) {
 
-        }else if (newStatus == RemovePlantStatus.APPROVED){
-
-            //check if all removed or partly removed
-            int totalCount = reportedPlant.getCount();
-            int removedCount = removedPlant.getCount();
-
-
-            if(removedCount >= totalCount){
-                //All removed
+            if (reportedPlant.getCount() == 0) { // If count is 0 status will be VERIFIED
                 reportedPlant.setStatus(PlantStatus.VERIFIED);
-            }else{
-                //Partly removed
-                reportedPlant.setStatus(PlantStatus.PARTLYREMOVED);
+        } else {
+                reportedPlant.setStatus(PlantStatus.PARTLYREMOVED); // If there's count left, it will still be partlyremoved.
             }
-        }
 
+    }
+        // Save the new information in reported plant table.
         plantRepository.save(reportedPlant);
 
         //Notification for user who removed the plant
