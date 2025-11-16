@@ -4,6 +4,7 @@ import com.carolin.invasiveplants.Entity.Plant;
 import com.carolin.invasiveplants.Entity.RemovedPlant;
 import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.Enum.PlantStatus;
+import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import com.carolin.invasiveplants.ExceptionHandler.ApiException;
 import com.carolin.invasiveplants.Mapper.ListRemovedPlantsMapper;
 import com.carolin.invasiveplants.Mapper.PlantRemovalReportMapper;
@@ -78,7 +79,7 @@ public class RemovePlantService {
         plant.setCount(remainingCount);
 
         if (remainingCount == 0) {
-            plant.setStatus(PlantStatus.VERIFIED);
+            plant.setStatus(PlantStatus.REMOVED);
 
             } else {
                 plant.setStatus(PlantStatus.PARTLYREMOVED);// If reported plant is partly removed status is set as partly removed.
@@ -90,7 +91,7 @@ public class RemovePlantService {
         RemovedPlant removedPlant = new RemovedPlant();
 
             removedPlant.setPhotoAfter(photoAfter.getBytes()); // Converts the multipartfile to byte for the database to save.
-            removedPlant.setStatus(PlantStatus.REMOVED);
+            removedPlant.setStatus(RemovePlantStatus.PENDING);
             removedPlant.setCount(removedCount);
             removedPlant.setRemovedBy(user); // Sets current user
             removedPlant.setRemovedAt(LocalDateTime.now());
@@ -115,7 +116,7 @@ public class RemovePlantService {
 
     public List<ListRemovedPlantsResponseDTO> getAllRemovedPlants(){
 
-        List<RemovedPlant> removedPlants = removePlantRepository.findByStatus(PlantStatus.REMOVED);
+        List<RemovedPlant> removedPlants = removePlantRepository.findByStatus(RemovePlantStatus.PENDING);
 
         // If no removed plants are found, throw API exception
         if (removedPlants == null || removedPlants.isEmpty()) {
