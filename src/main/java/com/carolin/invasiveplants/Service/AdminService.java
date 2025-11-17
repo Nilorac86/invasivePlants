@@ -19,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 
 @Service
-@Transactional
 public class AdminService {
 
     private final PlantRepository plantRepository;
@@ -36,20 +35,23 @@ public class AdminService {
     // ##################################### ADMIN VERIFY REMOVED PLANT #######################################
 
     //service update the old status to a new status on the removed plant
-    public void updateReportedPlantsStatus(Long reportedPlantId, Long removedPlantId, RemovePlantStatus newStatus) {
+    @Transactional
+    public void updateReportedPlantsStatus(Long removedPlantId, RemovePlantStatus newStatus) {
 
         if(newStatus == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "new status must be provided");
         }
 
-        //Find the reported plant by ID, throw 404 if not found
-        Plant reportedPlant = plantRepository.findById(reportedPlantId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reported plant not found"));
-
         //Find the removed plant associated with the reported plant
         RemovedPlant removedPlant = removePlantRepository.findById(removedPlantId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "removed plant record not found"));
 
+
+        //Hämtar rapoteradPlant vi relation på removedPlant
+        Plant reportedPlant = removedPlant.getReportedPlant();
+        if(reportedPlant == null){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Associated reported plant not found");
+        }
 
         //double check so it really is reported as PENDING before changing status
         if (removedPlant.getStatus() != RemovePlantStatus.PENDING) {
@@ -57,6 +59,7 @@ public class AdminService {
                     HttpStatus.BAD_REQUEST, "Only plants with status 'PENDING' can be verified or declined");
         }
 
+        // Sätter ny status på RemovedPlant( men sparas senare)
         removedPlant.setStatus(newStatus);
 
         //Update reportedPlant status depending on new status and counts

@@ -28,7 +28,6 @@ public class AdminController {
             @AuthenticationPrincipal User user){
 
         adminVerifyService.updateReportedPlantsStatus(
-                requestDTO.getReportedPlantId(),
                 requestDTO.getRemovedPlantId(),
                 requestDTO.getPlantStatus()
         );
