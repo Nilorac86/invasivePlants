@@ -1,8 +1,11 @@
 package com.carolin.invasiveplants.Controller;
 
 import com.carolin.invasiveplants.Entity.User;
+import com.carolin.invasiveplants.RequestDTO.AdminAddRewardRequestDTO;
 import com.carolin.invasiveplants.RequestDTO.AdminVerifyRequestDTO;
+import com.carolin.invasiveplants.ResponseDTO.AdminAddRewardResponseDTO;
 import com.carolin.invasiveplants.Service.AdminService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,6 +36,19 @@ public class AdminController {
         );
 
         return ResponseEntity.noContent().build();
+    }
+
+    // ##################################### ADMIN ADD A REWARD #######################################
+
+    @PostMapping("/add-reward")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<AdminAddRewardResponseDTO>adminAddReward(
+            @RequestBody @Valid AdminAddRewardRequestDTO requestDTO,
+            @AuthenticationPrincipal User user){
+
+        AdminAddRewardResponseDTO responseDTO = adminVerifyService.adminAddNewReward(requestDTO);
+
+        return ResponseEntity.ok(responseDTO);
     }
 
 }
