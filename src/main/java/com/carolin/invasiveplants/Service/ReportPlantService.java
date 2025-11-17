@@ -204,6 +204,7 @@ public class ReportPlantService {
     private Plant createPlantReport(Integer count, Location location, byte[] photoBytes,
                                     Species species, User user) {
         Plant report = new Plant();
+        report.setOrginalCount(count);
         report.setCount(count);
         report.setLocation(location);
         report.setPhotoBefore(photoBytes);

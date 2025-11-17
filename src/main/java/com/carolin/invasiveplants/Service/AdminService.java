@@ -2,10 +2,15 @@ package com.carolin.invasiveplants.Service;
 
 import com.carolin.invasiveplants.Entity.Notification;
 import com.carolin.invasiveplants.Entity.Plant;
+import com.carolin.invasiveplants.Entity.RemovedPlant;
+import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.Enum.NotificationType;
 import com.carolin.invasiveplants.Enum.PlantStatus;
+import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import com.carolin.invasiveplants.Repository.NotificationRepository;
 import com.carolin.invasiveplants.Repository.PlantRepository;
+import com.carolin.invasiveplants.Repository.RemovePlantRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,50 +19,102 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 
 @Service
-@Transactional
 public class AdminService {
 
     private final PlantRepository plantRepository;
     private final NotificationRepository notificationRepository;
+    private final RemovePlantRepository removePlantRepository;
 
-    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository) {
+    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository) {
         this.plantRepository = plantRepository;
         this.notificationRepository = notificationRepository;
+        this.removePlantRepository = removePlantRepository;
     }
 
 
     // ##################################### ADMIN VERIFY REMOVED PLANT #######################################
 
     //service update the old status to a new status on the removed plant
-    public void updateReportedPlantsStatus(Long id, PlantStatus newStatus){
+    @Transactional
+    public void updateReportedPlantsStatus(Long removedPlantId, RemovePlantStatus newStatus) {
 
-        Plant removedPlant = plantRepository.findByIdWithRemovedBy(id)
-                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "Removed plant not found"));
-
-        //double check so it really is reported as REMOVED before changing status
-        if(removedPlant.getStatus() != PlantStatus.REMOVED) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "Only plants with status 'REMOVED' can be verified or declined");
+        if(newStatus == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "new status must be provided");
         }
 
-        removedPlant.setStatus(newStatus);
-        plantRepository.save(removedPlant);
+        //Find the removed plant associated with the reported plant
+        RemovedPlant removedPlant = removePlantRepository.findById(removedPlantId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "removed plant record not found"));
 
-        //Create and save a notification for the user
+
+        //Hämtar rapoteradPlant vi relation på removedPlant
+        Plant reportedPlant = removedPlant.getReportedPlant();
+        if(reportedPlant == null){
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Associated reported plant not found");
+        }
+
+        //double check so it really is reported as PENDING before changing status
+        if (removedPlant.getStatus() != RemovePlantStatus.PENDING) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Only plants with status 'PENDING' can be verified or declined");
+        }
+
+        // Sätter ny status på RemovedPlant( men sparas senare)
+        removedPlant.setStatus(newStatus);
+
+        //Update reportedPlant status depending on new status and counts
+        if (newStatus == RemovePlantStatus.REJECTED) {
+            reportedPlant.setCount(reportedPlant.getCount() + removedPlant.getCount());
+
+           // Determin correct status based on remaining count
+           if(reportedPlant.getCount() == reportedPlant.getOrginalCount()){
+               // mo plants have been removed att all
+               reportedPlant.setStatus(PlantStatus.REGISTERED);
+           }else{
+               // some removal are approved from before
+               reportedPlant.setStatus(PlantStatus.PARTLYREMOVED);
+           }
+
+            // If removal is approved status changes depending on if its removed or partlyremoved
+        } else if (newStatus == RemovePlantStatus.APPROVED) {
+            if (reportedPlant.getCount() == 0) { // If count is 0 status will be VERIFIED
+                reportedPlant.setStatus(PlantStatus.VERIFIED);
+        } else {
+                reportedPlant.setStatus(PlantStatus.PARTLYREMOVED); // If there's count left, it will still be partlyremoved.
+            }
+
+    }
+        // Save the new information in reported plant table.
+        //plantRepository.save(reportedPlant);
+
+        //Notification for user who removed the plant
+        User removedByUser= removedPlant.getRemovedBy();
+
         Notification notification = new Notification();
-        notification.setUser(removedPlant.getRemovedBy());
+
+        notification.setUser(removedByUser);
         notification.setTime(LocalDateTime.now());
 
         //sending the user that removed plant a message depending on admin, approve or decline
-        if (newStatus == PlantStatus.VERIFIED){
+        if (newStatus == RemovePlantStatus.APPROVED){
+
             notification.setMessage("Din rapporterade borttagna växt har nu verifierats! Du har tjänat poäng.");
             notification.setNotificationType(NotificationType.SUCCESS);
-        } else if (newStatus == PlantStatus.REGISTERED) {
+
+        } else if (newStatus == RemovePlantStatus.REJECTED) {
             notification.setMessage("Din rapport om borttagen växt godkändes inte.");
             notification.setNotificationType(NotificationType.WARNING);
         }
 
-        notificationRepository.save(notification);
+        try {
+            removePlantRepository.save(removedPlant);
+            plantRepository.save(reportedPlant);
+            notificationRepository.save(notification);
+        } catch (DataIntegrityViolationException e) {
+            // Logga detaljer och kasta om med relevant info
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Database integrity violation: " + e.getMessage(), e);
+        }
+
     }
 
 }

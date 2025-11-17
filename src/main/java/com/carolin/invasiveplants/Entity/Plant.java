@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "reporting_plants")
@@ -19,10 +21,6 @@ public class Plant {
     @Column(name = "photo_before", columnDefinition = "mediumblob")
     private byte[] photoBefore;
 
-    @Lob
-    @Column(name = "photo_after", columnDefinition = "mediumblob")
-    private byte[] photoAfter;
-
     @Enumerated(EnumType.STRING)
     private PlantStatus status;
 
@@ -35,12 +33,11 @@ public class Plant {
     private Location location;
 
     @ManyToOne
-    @JoinColumn(name = "removed_by_user_id")
-    private User removedBy;
-
-    @ManyToOne
     @JoinColumn(name = "reported_by_user_id")
     private User reportedBy;
+
+    @OneToMany(mappedBy = "reportedPlant")
+    private List<RemovedPlant> removedPlants = new ArrayList<>();
 
     @Column(name = "date_time")
     private LocalDateTime dateTime;
@@ -48,11 +45,14 @@ public class Plant {
     @Column(name = "count")
     private Integer count;
 
+    @Column(name = "orginal_count")
+    private Integer orginalCount;
+
     // Constructors
     public Plant() {
     }
 
-    public Plant(byte[] photoBefore, PlantStatus status, Species species, Location location, User reportedBy, LocalDateTime dateTime, int count) {
+    public Plant(byte[] photoBefore, PlantStatus status, Species species, Location location, User reportedBy, LocalDateTime dateTime, int count, int orginalCount) {
         this.photoBefore = photoBefore;
         this.status = status;
         this.species = species;
@@ -60,6 +60,7 @@ public class Plant {
         this.reportedBy = reportedBy;
         this.dateTime = dateTime;
         this.count = count;
+        this.orginalCount = orginalCount;
     }
 
     // Getters and Setters
@@ -77,14 +78,6 @@ public class Plant {
 
     public void setPhotoBefore(byte[] photoBefore) {
         this.photoBefore = photoBefore;
-    }
-
-    public byte[] getPhotoAfter() {
-        return photoAfter;
-    }
-
-    public void setPhotoAfter(byte[] photoAfter) {
-        this.photoAfter = photoAfter;
     }
 
     public PlantStatus getStatus() {
@@ -111,14 +104,6 @@ public class Plant {
         this.location = location;
     }
 
-    public User getRemovedBy() {
-        return removedBy;
-    }
-
-    public void setRemovedBy(User removedBy) {
-        this.removedBy = removedBy;
-    }
-
     public User getReportedBy() {
         return reportedBy;
     }
@@ -141,5 +126,13 @@ public class Plant {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public Integer getOrginalCount() {
+        return orginalCount;
+    }
+
+    public void setOrginalCount(Integer orginalCount) {
+        this.orginalCount = orginalCount;
     }
 }

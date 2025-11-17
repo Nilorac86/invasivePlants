@@ -11,8 +11,8 @@ public class PlantRemovalReportRequestDto {
 
     private Long plantId;
 
-    @Lob
-    @Size(max = 5_000_000, message = "Image must not exceed 5MB")
+    // Cannot use annotation with multipartfile.
+    // But the ones that only requires text it will work fine together photo only need other validation.
     private MultipartFile photoAfter;
 
     @NotNull(message = "Amount of plants is required")
@@ -22,11 +22,11 @@ public class PlantRemovalReportRequestDto {
 
 
 
-    public PlantRemovalReportRequestDto(Long plantId, MultipartFile photoAfter, Integer count ) {
+
+    public PlantRemovalReportRequestDto(Long plantId, MultipartFile photoAfter, Integer removedCount ) {
         this.plantId = plantId;
         this.photoAfter = photoAfter;
-        this.removedCount = count;
-
+        this.removedCount = removedCount;
 
     }
 

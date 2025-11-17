@@ -46,7 +46,7 @@ public class SecurityConfig {
 
                         //Protected endpoints
                         .requestMatchers(HttpMethod.GET, "/auth/profile").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/remove-plant/form").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/remove-plant/form").authenticated()
                         .requestMatchers("/report-plant/form").hasRole("USER")
                         .requestMatchers("/notifications").hasRole("USER")
                         .requestMatchers(HttpMethod.PUT,"/notifications/**").hasRole("USER")
