@@ -7,10 +7,8 @@ import Header from "./components/Header";
 import ProfilePage from "./Pages/ProfilePage";
 import ReportedPlantsPage from "./Pages/ReportedPlantsPage";
 import ReportPlantFormPage from "./Pages/ReportPlantFormPage";
+import RemovePlantFormPage from "./Pages/RemovePlantForm";
 import ProtectedRoute from "./components/ProtectedRoute";
-
-
-
 
 function App() {
   
@@ -37,7 +35,8 @@ function App() {
           element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
         />
           <Route path="/reportform" element={<ProtectedRoute><ReportPlantFormPage /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+          <Route path="/removeplant" element={<ProtectedRoute><RemovePlantFormPage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );
