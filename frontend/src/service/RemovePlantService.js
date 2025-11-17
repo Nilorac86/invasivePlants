@@ -14,7 +14,7 @@ export async function sendRemovalReport(formData) {
             }
 
              if (errorData?.details) {
-                throw errorData; // frontend läser .details i ditt formulär
+                throw errorData;
             }
 
             throw new Error("Något gick fel vid borttagning");
