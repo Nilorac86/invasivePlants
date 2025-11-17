@@ -51,6 +51,7 @@ public class SecurityConfig {
                         .requestMatchers("/notifications").hasRole("USER")
                         .requestMatchers(HttpMethod.PUT,"/notifications/**").hasRole("USER")
                         .requestMatchers("/admin/verify").hasRole("ADMIN")
+                        .requestMatchers("/admin/add-reward").hasRole("ADMIN")
 
                         // everything else
                         .anyRequest().permitAll())
