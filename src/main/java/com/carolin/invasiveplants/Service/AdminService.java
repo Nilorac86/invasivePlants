@@ -1,15 +1,16 @@
 package com.carolin.invasiveplants.Service;
 
-import com.carolin.invasiveplants.Entity.Notification;
-import com.carolin.invasiveplants.Entity.Plant;
-import com.carolin.invasiveplants.Entity.RemovedPlant;
-import com.carolin.invasiveplants.Entity.User;
+import com.carolin.invasiveplants.Entity.*;
 import com.carolin.invasiveplants.Enum.NotificationType;
 import com.carolin.invasiveplants.Enum.PlantStatus;
 import com.carolin.invasiveplants.Enum.RemovePlantStatus;
+import com.carolin.invasiveplants.Mapper.AdminAddRewardMapper;
 import com.carolin.invasiveplants.Repository.NotificationRepository;
 import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.RemovePlantRepository;
+import com.carolin.invasiveplants.Repository.RewardRepository;
+import com.carolin.invasiveplants.RequestDTO.AdminAddRewardRequestDTO;
+import com.carolin.invasiveplants.ResponseDTO.AdminAddRewardResponseDTO;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,15 @@ public class AdminService {
     private final NotificationRepository notificationRepository;
     private final RemovePlantRepository removePlantRepository;
 
-    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository) {
+    private final RewardRepository rewardRepository;
+    private final AdminAddRewardMapper adminAddRewardMapper;
+
+    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, AdminAddRewardMapper adminAddRewardMapper) {
         this.plantRepository = plantRepository;
         this.notificationRepository = notificationRepository;
         this.removePlantRepository = removePlantRepository;
+        this.rewardRepository = rewardRepository;
+        this.adminAddRewardMapper = adminAddRewardMapper;
     }
 
 
@@ -115,6 +121,15 @@ public class AdminService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Database integrity violation: " + e.getMessage(), e);
         }
 
+    }
+
+    // ##################################### ADMIN ADD A REWARD #######################################
+
+    public AdminAddRewardResponseDTO adminAddNewReward(AdminAddRewardRequestDTO dto){
+
+        Reward reward = adminAddRewardMapper.mapToEntity(dto);
+        Reward savedReward = rewardRepository.save(reward);
+        return adminAddRewardMapper.responseDTO(savedReward);
     }
 
 }
