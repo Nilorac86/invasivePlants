@@ -5,10 +5,12 @@ import com.carolin.invasiveplants.Enum.NotificationType;
 import com.carolin.invasiveplants.Enum.PlantStatus;
 import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import com.carolin.invasiveplants.Mapper.AdminAddRewardMapper;
+import com.carolin.invasiveplants.Mapper.ListRewardsMapper;
 import com.carolin.invasiveplants.Repository.NotificationRepository;
 import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.RemovePlantRepository;
 import com.carolin.invasiveplants.Repository.RewardRepository;
+import com.carolin.invasiveplants.ResponseDTO.ListRewardResponseDTO;
 import com.carolin.invasiveplants.RequestDTO.AdminAddRewardRequestDTO;
 import com.carolin.invasiveplants.ResponseDTO.AdminAddRewardResponseDTO;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class AdminService {
@@ -29,12 +32,15 @@ public class AdminService {
     private final RewardRepository rewardRepository;
     private final AdminAddRewardMapper adminAddRewardMapper;
 
-    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, AdminAddRewardMapper adminAddRewardMapper) {
+    private final ListRewardsMapper listRewardsMapper;
+
+    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, AdminAddRewardMapper adminAddRewardMapper, ListRewardsMapper listRewardsMapper) {
         this.plantRepository = plantRepository;
         this.notificationRepository = notificationRepository;
         this.removePlantRepository = removePlantRepository;
         this.rewardRepository = rewardRepository;
         this.adminAddRewardMapper = adminAddRewardMapper;
+        this.listRewardsMapper = listRewardsMapper;
     }
 
 
@@ -130,6 +136,21 @@ public class AdminService {
         Reward reward = adminAddRewardMapper.mapToEntity(dto);
         Reward savedReward = rewardRepository.save(reward);
         return adminAddRewardMapper.responseDTO(savedReward);
+    }
+
+    // ##################################### LIST REMOVED PLANT #######################################
+
+    public List<ListRewardResponseDTO>listRewads(){
+
+        List<Reward> rewards = rewardRepository.findAll();
+
+        //Filter out rewards with amount 0
+        List<Reward> availableRewards = rewards.stream()
+                .filter(reward -> reward.getRewardAmount() !=null && reward.getRewardAmount()>0)
+                .toList();
+
+        return listRewardsMapper.toDto(availableRewards);
+
     }
 
 }
