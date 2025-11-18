@@ -4,7 +4,9 @@ import com.carolin.invasiveplants.Entity.*;
 import com.carolin.invasiveplants.Enum.NotificationType;
 import com.carolin.invasiveplants.Enum.PlantStatus;
 import com.carolin.invasiveplants.Enum.RemovePlantStatus;
+import com.carolin.invasiveplants.ExceptionHandler.ApiException;
 import com.carolin.invasiveplants.Mapper.AdminAddRewardMapper;
+import com.carolin.invasiveplants.Mapper.AdminRemovedPlantListMapper;
 import com.carolin.invasiveplants.Mapper.ListRewardsMapper;
 import com.carolin.invasiveplants.Repository.NotificationRepository;
 import com.carolin.invasiveplants.Repository.PlantRepository;
@@ -13,6 +15,7 @@ import com.carolin.invasiveplants.Repository.RewardRepository;
 import com.carolin.invasiveplants.ResponseDTO.ListRewardResponseDTO;
 import com.carolin.invasiveplants.RequestDTO.AdminAddRewardRequestDTO;
 import com.carolin.invasiveplants.ResponseDTO.AdminAddRewardResponseDTO;
+import com.carolin.invasiveplants.ResponseDTO.AdminRemovedPlantsListResponseDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,15 +37,18 @@ public class AdminService {
 
     private final RewardRepository rewardRepository;
     private final AdminAddRewardMapper adminAddRewardMapper;
-
+    private final AdminRemovedPlantListMapper adminRemovedPlantListMapper;
     private final ListRewardsMapper listRewardsMapper;
 
-    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, AdminAddRewardMapper adminAddRewardMapper, ListRewardsMapper listRewardsMapper) {
+    
+
+    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, AdminAddRewardMapper adminAddRewardMapper, AdminRemovedPlantListMapper adminRemovedPlantListMapper, ListRewardsMapper listRewardsMapper) {
         this.plantRepository = plantRepository;
         this.notificationRepository = notificationRepository;
         this.removePlantRepository = removePlantRepository;
         this.rewardRepository = rewardRepository;
         this.adminAddRewardMapper = adminAddRewardMapper;
+        this.adminRemovedPlantListMapper = adminRemovedPlantListMapper;
         this.listRewardsMapper = listRewardsMapper;
     }
 
@@ -140,6 +147,20 @@ public class AdminService {
         return adminAddRewardMapper.responseDTO(savedReward);
     }
 
+
+   // ##################################### ADMIN REMOVED PLANT LIST ######################################
+
+    public List<AdminRemovedPlantsListResponseDto> getAllremovedPlantList (){
+
+        List<RemovedPlant> removedPlantsList = removePlantRepository.findByStatus(RemovePlantStatus.PENDING);
+
+            // If there´s no removed plants reported.
+            if(removedPlantsList == null || removedPlantsList.isEmpty()){
+                throw new ApiException("No removed plants found in the database.", HttpStatus.NOT_FOUND);
+            }
+
+            return adminRemovedPlantListMapper.toDto(removedPlantsList);
+    }
     // ##################################### LIST REWARDS #######################################
 
     public List<ListRewardResponseDTO>listRewads(User user){

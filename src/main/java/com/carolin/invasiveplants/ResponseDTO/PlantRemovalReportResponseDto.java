@@ -9,8 +9,6 @@ public class PlantRemovalReportResponseDto {
 
     private String speciesName;
 
-    private byte[] photoBefore;
-
     private byte[] photoAfter;
 
     private RemovePlantStatus status;
@@ -25,11 +23,10 @@ public class PlantRemovalReportResponseDto {
     public PlantRemovalReportResponseDto() {
     }
 
-    public PlantRemovalReportResponseDto(String speciesName, byte[] photoBefore, byte[] photoAfter,
+    public PlantRemovalReportResponseDto(String speciesName, byte[] photoAfter,
                                          RemovePlantStatus status, LocalDateTime removedAt, Integer count,
                                          Long reportedPlant) {
         this.speciesName = speciesName;
-        this.photoBefore = photoBefore;
         this.photoAfter = photoAfter;
         this.status = status;
         this.removedAt = removedAt;
@@ -43,14 +40,6 @@ public class PlantRemovalReportResponseDto {
 
     public void setSpeciesName(String speciesName) {
         this.speciesName = speciesName;
-    }
-
-    public byte[] getPhotoBefore() {
-        return photoBefore;
-    }
-
-    public void setPhotoBefore(byte[] photoBefore) {
-        this.photoBefore = photoBefore;
     }
 
     public byte[] getPhotoAfter() {

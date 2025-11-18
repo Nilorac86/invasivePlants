@@ -16,7 +16,6 @@ public class PlantRemovalReportMapper {
         }
         return new PlantRemovalReportResponseDto(
                 plant.getReportedPlant().getSpecies().getSpeciesName(),
-                plant.getReportedPlant().getPhotoBefore(),
                 plant.getPhotoAfter(),
                 plant.getStatus(),
                 plant.getRemovedAt(),

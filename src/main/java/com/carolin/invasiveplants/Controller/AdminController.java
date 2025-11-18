@@ -4,6 +4,7 @@ import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.RequestDTO.AdminAddRewardRequestDTO;
 import com.carolin.invasiveplants.RequestDTO.AdminVerifyRequestDTO;
 import com.carolin.invasiveplants.ResponseDTO.AdminAddRewardResponseDTO;
+import com.carolin.invasiveplants.ResponseDTO.AdminRemovedPlantsListResponseDto;
 import com.carolin.invasiveplants.ResponseDTO.ListRewardResponseDTO;
 import com.carolin.invasiveplants.Service.AdminService;
 import jakarta.validation.Valid;
@@ -19,10 +20,10 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final AdminService adminVerifyService;
+    private final AdminService adminService;
 
-    public AdminController(AdminService adminVerifyService) {
-        this.adminVerifyService = adminVerifyService;
+    public AdminController( AdminService adminService) {
+        this.adminService = adminService;
     }
 
 // ################################ ADMIN VERIFY REMOVED PLANT #############################################
@@ -33,7 +34,7 @@ public class AdminController {
             @RequestBody AdminVerifyRequestDTO requestDTO,
             @AuthenticationPrincipal User user){
 
-        adminVerifyService.updateReportedPlantsStatus(
+        adminService.updateReportedPlantsStatus(
                 requestDTO.getRemovedPlantId(),
                 requestDTO.getPlantStatus()
         );
@@ -49,11 +50,21 @@ public class AdminController {
             @RequestBody @Valid AdminAddRewardRequestDTO requestDTO,
             @AuthenticationPrincipal User user){
 
-        AdminAddRewardResponseDTO responseDTO = adminVerifyService.adminAddNewReward(requestDTO);
+        AdminAddRewardResponseDTO responseDTO = adminService.adminAddNewReward(requestDTO);
 
         return ResponseEntity.ok(responseDTO);
     }
 
+    // ##################################### ADMIN REMOVE PLANT LIST ###########################################
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("removed-plant/list")
+    public ResponseEntity<List<AdminRemovedPlantsListResponseDto>> adminRemovedPlantsList(){
+
+        List<AdminRemovedPlantsListResponseDto> adminRemovedPlantsListResponseDtos =
+                adminService.getAllremovedPlantList();
+
+        return ResponseEntity.ok(adminRemovedPlantsListResponseDtos);
     // ################################ LIST REWARDS #############################################
 
     @GetMapping("/list-rewards")
