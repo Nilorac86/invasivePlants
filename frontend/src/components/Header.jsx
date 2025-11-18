@@ -22,6 +22,9 @@ function Header({ user, onLogout }) {
           <Link to="/reportedPlants">
               <button className="nav-btn">Rapporterade växter</button>
           </Link>
+          <Link to="/admin/add-reward">
+              <button className="nav-btn">Admin Add Reward</button>
+          </Link>
 
         {user ? (
           <div className="user-menu">
