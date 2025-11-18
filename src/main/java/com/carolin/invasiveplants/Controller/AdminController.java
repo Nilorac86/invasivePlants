@@ -5,6 +5,7 @@ import com.carolin.invasiveplants.RequestDTO.AdminAddRewardRequestDTO;
 import com.carolin.invasiveplants.RequestDTO.AdminVerifyRequestDTO;
 import com.carolin.invasiveplants.ResponseDTO.AdminAddRewardResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.AdminRemovedPlantsListResponseDto;
+import com.carolin.invasiveplants.ResponseDTO.ListRewardResponseDTO;
 import com.carolin.invasiveplants.Service.AdminService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -64,5 +65,11 @@ public class AdminController {
                 adminService.getAllremovedPlantList();
 
         return ResponseEntity.ok(adminRemovedPlantsListResponseDtos);
+    // ################################ LIST REWARDS #############################################
+
+    @GetMapping("/list-rewards")
+    public ResponseEntity<List<ListRewardResponseDTO>>listRewards(@AuthenticationPrincipal User user){
+        return ResponseEntity.ok(adminVerifyService.listRewads(user));
+
     }
 }
