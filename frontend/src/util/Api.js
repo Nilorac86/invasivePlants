@@ -69,6 +69,43 @@ export async function apiPut(url, body=null){
   }
 }
 
+// API for POST with JSON = apiPost
+export async function apiPost(url, body) {
+    try {
+        const response = await fetch(`http://localhost:8080${url}`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body),
+        });
+
+        if (response.status === 401) {
+            const currentPath = window.location.pathname;
+            window.location.href = `/login?redirect=${encodeURIComponent(currentPath)}`;
+            return;
+        }
+
+        let data = null;
+        try {
+            data = await response.json();
+        } catch {
+            data = null;
+        }
+
+        if (!response.ok) {
+            throw data || { message: `Kunde inte POST:a (${response.status})` };
+        }
+
+        return data;
+    } catch (error) {
+    console.error("API POST JSON error: ", error);
+    throw error;
+    }
+}
+
+// API for POST with formdata = apiPostForm
 export async function apiPostForm(url, formData) {
     try {
         const response = await fetch(`http://localhost:8080${url}`, {
