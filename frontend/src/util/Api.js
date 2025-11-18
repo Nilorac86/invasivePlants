@@ -8,8 +8,13 @@
 export async function apiGet(url) {
   try {
     const response = await fetch(`http://localhost:8080${url}`, {
-      credentials: "include", // 
-    });
+      method: "GET",
+    credentials: "include", 
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  
 
     // Checks if status is 401 and then save current path and redirect to login.
     if (response.status === 401) {
