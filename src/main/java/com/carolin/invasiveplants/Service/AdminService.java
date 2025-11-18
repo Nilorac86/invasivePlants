@@ -4,13 +4,16 @@ import com.carolin.invasiveplants.Entity.*;
 import com.carolin.invasiveplants.Enum.NotificationType;
 import com.carolin.invasiveplants.Enum.PlantStatus;
 import com.carolin.invasiveplants.Enum.RemovePlantStatus;
+import com.carolin.invasiveplants.ExceptionHandler.ApiException;
 import com.carolin.invasiveplants.Mapper.AdminAddRewardMapper;
+import com.carolin.invasiveplants.Mapper.AdminRemovedPlantListMapper;
 import com.carolin.invasiveplants.Repository.NotificationRepository;
 import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.RemovePlantRepository;
 import com.carolin.invasiveplants.Repository.RewardRepository;
 import com.carolin.invasiveplants.RequestDTO.AdminAddRewardRequestDTO;
 import com.carolin.invasiveplants.ResponseDTO.AdminAddRewardResponseDTO;
+import com.carolin.invasiveplants.ResponseDTO.AdminRemovedPlantsListResponseDto;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AdminService {
@@ -28,13 +33,15 @@ public class AdminService {
 
     private final RewardRepository rewardRepository;
     private final AdminAddRewardMapper adminAddRewardMapper;
+    private final AdminRemovedPlantListMapper adminRemovedPlantListMapper;
 
-    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, AdminAddRewardMapper adminAddRewardMapper) {
+    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, AdminAddRewardMapper adminAddRewardMapper, AdminRemovedPlantListMapper adminRemovedPlantListMapper) {
         this.plantRepository = plantRepository;
         this.notificationRepository = notificationRepository;
         this.removePlantRepository = removePlantRepository;
         this.rewardRepository = rewardRepository;
         this.adminAddRewardMapper = adminAddRewardMapper;
+        this.adminRemovedPlantListMapper = adminRemovedPlantListMapper;
     }
 
 
@@ -132,4 +139,18 @@ public class AdminService {
         return adminAddRewardMapper.responseDTO(savedReward);
     }
 
+
+   // ##################################### ADMIN REMOVED PLANT LIST ######################################
+
+    public List<AdminRemovedPlantsListResponseDto> getAllremovedPlantList (){
+
+        List<RemovedPlant> removedPlantsList = removePlantRepository.findByStatus(RemovePlantStatus.PENDING);
+
+            // If there´s no removed plants reported.
+            if(removedPlantsList == null || removedPlantsList.isEmpty()){
+                throw new ApiException("No removed plants found in the database.", HttpStatus.NOT_FOUND);
+            }
+
+            return adminRemovedPlantListMapper.toDto(removedPlantsList);
+    }
 }
