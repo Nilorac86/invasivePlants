@@ -1,8 +1,15 @@
 // List of all reported plants for all users to see
 
 //import "./ListReportedPlants.css";
+import { useNavigate } from "react-router-dom";
+
 
 function ListReportedPlants({ data }) {
+  const navigate = useNavigate();
+
+const handleReportClick = (plant) => {
+  navigate("/removeplant", { state: { plant } });
+};
 
   //data is an array of plants objects fetsched from backend
   return (
@@ -30,6 +37,12 @@ function ListReportedPlants({ data }) {
             <p>City: {reportedPlant.city}</p>
             <p>Reported on: {new Date (reportedPlant.date).toLocaleDateString("sv-SV")}</p>
             <p>Count: {reportedPlant.count}</p>
+            <button
+              className="report-remove-btn"
+              onClick={() => handleReportClick(reportedPlant)}
+              >
+              Remove Report
+            </button>
           </div>
         </div>
       ))}

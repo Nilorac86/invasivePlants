@@ -18,6 +18,7 @@ public class ListReportedPlantsmapper {
         }
 
         return new ListReportedPlantsResponseDTO(
+                plant.getPlantId(),
                 plant.getSpecies().getSpeciesName(),
                 plant.getLocation().getCity(),
                 plant.getDateTime(),
