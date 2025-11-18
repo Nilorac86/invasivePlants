@@ -8,6 +8,7 @@ import ProfilePage from "./Pages/ProfilePage";
 import ReportedPlantsPage from "./Pages/ReportedPlantsPage";
 import ReportPlantFormPage from "./Pages/ReportPlantFormPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminProfilePage from "./Pages/AdminProfilePage";
 
 
 
@@ -38,6 +39,7 @@ function App() {
         />
           <Route path="/reportform" element={<ProtectedRoute><ReportPlantFormPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+        <Route path = "/admin/profile" element ={<ProtectedRoute><AdminProfilePage/></ProtectedRoute>} />
       </Routes>
     </Router>
   );
