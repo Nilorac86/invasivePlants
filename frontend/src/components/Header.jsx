@@ -28,7 +28,6 @@ function Header({ user, onLogout }) {
 
         {user ? (
           <div className="user-menu">
-
               {/* Länk till profil - bara för inloggade */}
               <Link to="/profile">
                   <button className="nav-btn">Min profil</button>

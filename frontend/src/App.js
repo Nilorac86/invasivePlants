@@ -40,14 +40,7 @@ function App() {
         />
           <Route path="/reportform" element={<ProtectedRoute><ReportPlantFormPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
-          <Route
-              path="/admin/add-reward"
-              element={
-                  <ProtectedRoute>
-                      <AdminAddRewardPage />
-                  </ProtectedRoute>
-              }
-          />
+          <Route path="/admin/add-reward" element={<ProtectedRoute><AdminAddRewardPage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

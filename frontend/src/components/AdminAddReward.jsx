@@ -1,32 +1,36 @@
 // AdminAddReward.jsx
+// Component responsible for the UI form used to create a new reward.
+// Receives 'rewards' and 'onAddReward' from the PAGE component.
+
+
 import React, {useState} from "react";
 import "./AdminAddReward.css";
 
 
-
-
-function AdminAddReward({ rewards, onAddReward}) {
+function AdminAddReward({ onAddReward}) {
     const [form, setForm] = useState({
+        // Local form state — controls the form inputs
         rewardTitle: "",
         description: "",
         rewardAmount: "",
         points: ""
 
-
     });
 
+    // Feedback message shown after submit
     const [message, setMessage] = useState("");
+
+    // Validation errors returned from backend (if any)
     const [errors, setErrors] = useState({});
 
+    // Updates local form state when user types
     const handleChange = (e) => {
         setForm({...form, [e.target.name]: e.target.value});
     };
 
- /*   const handleSubmit = (e) => {
-        e.preventDefault();
-        onAddReward(form);
-    };
-*/
+
+    // Called when user submits the form
+    // Sends cleaned data to PAGE, whitch then calls SERVICE → backend
     async function handleSubmit(e) {
         e.preventDefault();
         setErrors({});
@@ -40,11 +44,12 @@ function AdminAddReward({ rewards, onAddReward}) {
         };
 
         try {
-            // Skicka till PAGE, inte direkt till backend
+            // Hand over data to page component
             await onAddReward(rewardData);
 
             setMessage("Belöningen har sparats!");
 
+            // Reset form after success
             setForm({
                 rewardTitle: "",
                 description: "",
@@ -55,6 +60,7 @@ function AdminAddReward({ rewards, onAddReward}) {
         } catch (error) {
             console.log("Backend validation errors:", error);
 
+            // Backend may return validation details array
             if (error.details) {
                 const formatted = {};
                 error.details.forEach(detail => {
@@ -69,27 +75,6 @@ function AdminAddReward({ rewards, onAddReward}) {
             }
         }
     }
-
-
-    /*    return (
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <input name="rewardTitle" value={form.rewardTitle} onChange={handleChange} placeholder="Titel" />
-                    <textarea name="description" value={form.description} onChange={handleChange} placeholder="Beskrivning"/>
-                    <input name="rewardAmount" type="number"  placeholder="Antal"/>
-                    <input name="points" type="number" placeholder="Poängkostnad"/>
-                    <button type="submit">Spara</button>
-                </form>
-
-                <div>
-                    {rewards.map(r => (
-                        <div key ={r.rewardId}>{r.rewardTitle}</div>
-                    ))}
-                </div>
-            </div>
-        );
-    }*/
-
     return (
         <div className="admin-reward-page">
 
@@ -134,19 +119,6 @@ function AdminAddReward({ rewards, onAddReward}) {
 
                 {message && <div className="success">{message}</div>}
             </form>
-
-            <h2>Befintliga belöningar</h2>
-
-            <div className="reward-list">
-                {rewards.map((r) => (
-                    <div key={r.rewardId} className="reward-card">
-                        <h3>{r.rewardTitle}</h3>
-                        <p>{r.description}</p>
-                        <p>Poäng: {r.points}</p>
-                        <p>Antal: {r.rewardAmount}</p>
-                    </div>
-                ))}
-            </div>
 
         </div>
     );
