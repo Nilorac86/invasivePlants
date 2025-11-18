@@ -8,6 +8,8 @@ import ProfilePage from "./Pages/ProfilePage";
 import ReportedPlantsPage from "./Pages/ReportedPlantsPage";
 import ReportPlantFormPage from "./Pages/ReportPlantFormPage";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminAddRewardPage from "./Pages/AdminAddRewardPage";
+
 
 
 
@@ -38,6 +40,14 @@ function App() {
         />
           <Route path="/reportform" element={<ProtectedRoute><ReportPlantFormPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+          <Route
+              path="/admin/add-reward"
+              element={
+                  <ProtectedRoute>
+                      <AdminAddRewardPage />
+                  </ProtectedRoute>
+              }
+          />
       </Routes>
     </Router>
   );
