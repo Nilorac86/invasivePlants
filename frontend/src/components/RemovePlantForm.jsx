@@ -10,7 +10,7 @@ function RemovePlantForm() {
     const plant = state?.plant || {}; //plant data passed from card
 
     // Debug: log plant data received
-    console.log("Plant data received:", plant);
+    //console.log("Plant data received:", plant);
 
     // state
     const [removedCount, setRemovedCount] = useState(plant?.count || "");
@@ -46,23 +46,23 @@ function RemovePlantForm() {
             setIsSubmitting(false);
             return;
         }
-
+        // form data to send to backend
         const formData = new FormData();
         formData.append("plantId", plant.plantId);
         formData.append("removedCount", count);
         formData.append("photoAfter", photoAfter);
 
         // Debug: log what we're sending
-        console.log("Sending form data:", {
-            plantId: plant.plantId,
-            removedCount: count,
-            photoAfter: photoAfter?.name
-        });
+        //console.log("Sending form data:", {
+          //  plantId: plant.plantId,
+           // removedCount: count,
+           // photoAfter: photoAfter?.name
+        // });
 
-        try {
+        try { //vaidation passed navigate profile, otherwise show error
             await sendRemovalReport(formData);
             setSuccess("Borttagning registrerad!");
-            setTimeout(() => navigate("/profile"), 1500);
+            setTimeout(() => navigate("/profile"), 1500); //1.5sec small delay for feedback for ux
         } catch (error) {
             if (error.details) {
                 const formatted = {};
@@ -75,7 +75,7 @@ function RemovePlantForm() {
                 setGeneralError(error.message || "Fel vid rapportering");
             }
         } finally {
-            setIsSubmitting(false);
+            setIsSubmitting(false); 
         }
     };
 
