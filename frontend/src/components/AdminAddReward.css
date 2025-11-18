@@ -1,0 +1,55 @@
+.admin-reward-page {
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+}
+
+.reward-form {
+    background: #fff8f4;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(150,100,80,0.1);
+    max-width: 350px;
+}
+
+.reward-form input,
+.reward-form textarea {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #e3c9b8;
+    background: #fffaf7;
+}
+
+.reward-form button {
+    width: 100%;
+    padding: 12px;
+    background: #e4c3b1;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.reward-list {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 20px;
+}
+
+.reward-card {
+    background: #fff8f4;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(180,140,120,0.1);
+}
+
+.error {
+    color: #d54444;
+    font-size: 0.9rem;
+}
+
+.success {
+    color: #4a8f4a;
+    margin-top: 10px;
+}
