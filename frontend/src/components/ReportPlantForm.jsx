@@ -36,8 +36,8 @@ function ReportPlantForm() {
 
         //  Frontend validation
         const fieldErrors = {};
-        if (!latitude || !coordRegex.test(latitude)) fieldErrors.latitude = "Latitude måste vara i formatet xxx.yyyyy (minst 5 decimaler)";
-        if (!longitude || !coordRegex.test(longitude)) fieldErrors.longitude = "Longitude måste vara i formatet xxx.yyyyy (minst 5 decimaler)";
+        if (!latitude || !coordRegex.test(latitude)) fieldErrors.latitude = "Latitude måste vara i formatet xx.yyyyy (minst 5 decimaler)";
+        if (!longitude || !coordRegex.test(longitude)) fieldErrors.longitude = "Longitude måste vara i formatet xx.yyyyy (minst 5 decimaler)";
         if (!city?.trim()) fieldErrors.city = "Stad är obligatorisk";
         if (!count || parseInt(count) < 1) fieldErrors.count = "Antal måste vara minst 1";
         if (!photo) fieldErrors.photoBefore = "Du måste ladda upp en bild";
