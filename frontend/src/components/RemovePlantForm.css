@@ -1,0 +1,47 @@
+.report-form {
+  max-width: 600px;
+  margin: 24px auto;
+  padding: 16px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.report-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.field input[type="text"],
+.field input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.report-btn {
+  background-color: #2d6a4f;
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.error {
+  color: #c1121f;
+  font-size: 0.9rem;
+}
+
+.success {
+  color: #2d6a4f;
+  font-size: 0.95rem;
+}

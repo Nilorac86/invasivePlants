@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 public class ListReportedPlantsResponseDTO {
 
+    private Long plantId;
     private String plantName;
     private String city;
     private LocalDateTime date;
@@ -16,13 +17,22 @@ public class ListReportedPlantsResponseDTO {
     public ListReportedPlantsResponseDTO() {
     }
 
-    public ListReportedPlantsResponseDTO(String plantName, String city, LocalDateTime date, byte[] photoBefore,
+    public ListReportedPlantsResponseDTO(Long plantId, String plantName, String city, LocalDateTime date, byte[] photoBefore,
                                          Integer count) {
+        this.plantId = plantId;
         this.plantName = plantName;
         this.city = city;
         this.date = date;
         this.photoBefore = photoBefore;
         this.count = count;
+    }
+
+    public Long getPlantId() {
+        return plantId;
+    }
+
+    public void setPlantId(Long plantId) {
+        this.plantId = plantId;
     }
 
     public Integer getCount() {

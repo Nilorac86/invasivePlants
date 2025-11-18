@@ -1,5 +1,5 @@
 
-// src/components/ReportPlantForm.jsx
+
 import React, { useState } from "react";
 import "./ReportPlantForm.css";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -61,7 +61,7 @@ function ReportPlantForm() {
         try {
             await reportPlant(formData);
             setSuccess("Rapporten har skickats in!");
-            // after successful report, wait 1,5 sek and then go to profilepage
+            // after successful report, wait 1,5 sec and then go to profilepage
             setTimeout(() => navigate("/profile"), 1500);
         } catch (error) {
             console.error("Error från backend:", error);

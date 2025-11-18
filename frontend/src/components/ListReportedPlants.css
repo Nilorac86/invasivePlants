@@ -69,3 +69,21 @@
 .more-info-btn:hover {
   background-color: #30534f; /* darker on hover */
 }
+
+/* Remove Report Button */
+
+.report-remove-btn {
+  background-color: white;
+  color: #1b6b57;            
+  border: 1px solid #1b6b57;
+  padding: 5px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-top: 8px;
+  align-self: flex-end;      /* Right cornor for button */
+}
+
+.report-remove-btn:hover {
+  background-color: #e8f4f1;
+}

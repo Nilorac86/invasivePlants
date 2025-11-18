@@ -7,10 +7,12 @@ import Header from "./components/Header";
 import ProfilePage from "./Pages/ProfilePage";
 import ReportedPlantsPage from "./Pages/ReportedPlantsPage";
 import ReportPlantFormPage from "./Pages/ReportPlantFormPage";
+import RemovePlantFormPage from "./Pages/RemovePlantForm";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProfilePage from "./Pages/AdminProfilePage";
 
 
+import AdminAddRewardPage from "./Pages/AdminAddRewardPage";
 
 
 function App() {
@@ -40,6 +42,9 @@ function App() {
           <Route path="/reportform" element={<ProtectedRoute><ReportPlantFormPage /></ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
         <Route path = "/admin/profile" element ={<ProtectedRoute><AdminProfilePage/></ProtectedRoute>} />
+          <Route path="/admin/add-reward" element={<ProtectedRoute><AdminAddRewardPage /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+          <Route path="/removeplant" element={<ProtectedRoute><RemovePlantFormPage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );
