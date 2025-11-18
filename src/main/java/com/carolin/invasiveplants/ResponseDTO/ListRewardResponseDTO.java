@@ -6,15 +6,17 @@ public class ListRewardResponseDTO {
     private String description;
     private Integer points;
     private Integer rewardAmount;
+    private boolean affordable;
 
     public ListRewardResponseDTO() {
     }
 
-    public ListRewardResponseDTO(String rewardTitle, String description, Integer points, Integer rewardAmount) {
+    public ListRewardResponseDTO(String rewardTitle, String description, Integer points, Integer rewardAmount, boolean affordable) {
         this.rewardTitle = rewardTitle;
         this.description = description;
         this.points = points;
         this.rewardAmount = rewardAmount;
+        this.affordable = affordable;
     }
 
     public String getRewardTitle() {
@@ -47,5 +49,13 @@ public class ListRewardResponseDTO {
 
     public void setRewardAmount(Integer rewardAmount) {
         this.rewardAmount = rewardAmount;
+    }
+
+    public boolean isAffordable() {
+        return affordable;
+    }
+
+    public void setAffordable(boolean affordable) {
+        this.affordable = affordable;
     }
 }

@@ -11,30 +11,22 @@ import java.util.stream.Collectors;
 @Component
 public class ListRewardsMapper {
 
-    public ListRewardResponseDTO toDto(Reward reward){
+    public ListRewardResponseDTO toDto(Reward reward, int userPoints){
 
         if(reward == null){
             return null;
         }
 
+        int rewardPoints = reward.getPoints() == null ? Integer.MAX_VALUE : reward.getPoints();
+        boolean affordable = userPoints >= rewardPoints;
+
         return new ListRewardResponseDTO(
                 reward.getRewardTitle(),
                 reward.getDescription(),
                 reward.getPoints(),
-                reward.getRewardAmount()
+                reward.getRewardAmount(),
+                affordable
         );
-    }
-
-    public List<ListRewardResponseDTO> toDto(List<Reward>rewardList){
-
-        if(rewardList== null){
-            return Collections.emptyList();
-        }
-
-        return rewardList.stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
-
     }
 
 }

@@ -20,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminService {
@@ -140,16 +142,16 @@ public class AdminService {
 
     // ##################################### LIST REMOVED PLANT #######################################
 
-    public List<ListRewardResponseDTO>listRewads(){
+    public List<ListRewardResponseDTO>listRewads(User user){
 
-        List<Reward> rewards = rewardRepository.findAll();
+        int userPoints = (user == null || user.getPoints() == null) ? 0 : user.getPoints();
 
-        //Filter out rewards with amount 0
-        List<Reward> availableRewards = rewards.stream()
-                .filter(reward -> reward.getRewardAmount() !=null && reward.getRewardAmount()>0)
-                .toList();
+        return rewardRepository.findAll().stream()
+                .filter(r -> r.getRewardAmount() != null && r.getRewardAmount() > 0)
+                .sorted(Comparator.comparing(Reward::getPoints, Comparator.nullsLast(Integer::compareTo)))
+                .map(r -> listRewardsMapper.toDto(r, userPoints))
+                .collect(Collectors.toList());
 
-        return listRewardsMapper.toDto(availableRewards);
 
     }
 

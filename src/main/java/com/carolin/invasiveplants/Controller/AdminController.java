@@ -57,8 +57,8 @@ public class AdminController {
     // ################################ LIST REWARDS #############################################
 
     @GetMapping("/list-rewards")
-    public ResponseEntity<List<ListRewardResponseDTO>>listRewards(){
-        return ResponseEntity.ok(adminVerifyService.listRewads());
+    public ResponseEntity<List<ListRewardResponseDTO>>listRewards(@AuthenticationPrincipal User user){
+        return ResponseEntity.ok(adminVerifyService.listRewads(user));
 
     }
 }
