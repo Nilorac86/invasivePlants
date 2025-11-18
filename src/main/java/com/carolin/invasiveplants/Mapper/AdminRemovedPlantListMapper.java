@@ -29,6 +29,7 @@ public class AdminRemovedPlantListMapper {
         }
 
         return new AdminRemovedPlantsListResponseDto(
+                removedPlant.getRemovedPlantId(),
                 removedPlant.getReportedPlant().getSpecies().getSpeciesName(),
                 userName,
                 removedPlant.getRemovedAt(),

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class AdminRemovedPlantsListResponseDto {
 
+    private Long id;
     private String speciesName;
     private String userName;
     private LocalDateTime removedAt;
@@ -13,13 +14,21 @@ public class AdminRemovedPlantsListResponseDto {
     public AdminRemovedPlantsListResponseDto() {
     }
 
-    public AdminRemovedPlantsListResponseDto(String speciesName, String userName, LocalDateTime removedAt, byte[] photoAfter,
+    public AdminRemovedPlantsListResponseDto(Long id, String speciesName, String userName, LocalDateTime removedAt, byte[] photoAfter,
                                              byte[] photoBefore) {
+        this.id = id;
         this.speciesName = speciesName;
         this.userName = userName;
         this.removedAt = removedAt;
         this.photoAfter = photoAfter;
         this.photoBefore = photoBefore;
+    }
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getSpeciesName() {
