@@ -140,7 +140,7 @@ public class AdminService {
         return adminAddRewardMapper.responseDTO(savedReward);
     }
 
-    // ##################################### LIST REMOVED PLANT #######################################
+    // ##################################### LIST REWARDS #######################################
 
     public List<ListRewardResponseDTO>listRewads(User user){
 
