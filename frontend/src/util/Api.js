@@ -29,45 +29,6 @@ export async function apiGet(url) {
   }
 }
 
-// API for PUT = apiPut
-export async function apiPut(url, body=null){
-  
-  try {
-    const response = await fetch(`http://localhost:8080${url}`, {
-      method: "PUT",
-      credentials: "include", //include cookies for auth
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: body ? JSON.stringify(body) : null,
-    });
-
-    // Redirect to login if unauthorized
-    if (response.status === 401) {
-      const currentPath = window.location.pathname;
-      window.location.href = `/login?redirect=${encodeURIComponent(
-        currentPath
-      )}`;
-      return;
-    }
-    // Attempt to parse JSON response (may fail if no content)
-    let data = null;
-    try {
-      data = await response.json();
-    } catch {
-      data = null;
-    }
-
-    if (!response.ok) {
-      throw data || { message: `Kunde inte PUT:a (${response.status})` };
-    }
-
-    return data;
-  } catch (error) {
-    console.error("API PUT error:", error);
-    throw error;
-  }
-}
 
 export async function apiPostForm(url, formData) {
     try {
