@@ -69,6 +69,47 @@ export async function apiPut(url, body=null){
   }
 }
 
+// API for POST with JSON = apiPost
+// Adds JSON headers, handles 401 redirects, parses JSON response.
+export async function apiPost(url, body) {
+    try {
+        const response = await fetch(`http://localhost:8080${url}`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body),
+        });
+
+        // If backend returns 401, redirect user to login
+        if (response.status === 401) {
+            const currentPath = window.location.pathname;
+            window.location.href = `/login?redirect=${encodeURIComponent(currentPath)}`;
+            return;
+        }
+
+        // Try parsing JSON
+        let data = null;
+        try {
+            data = await response.json();
+        } catch {
+            data = null; // backend returned empty
+        }
+
+        // Throw error if not successful
+        if (!response.ok) {
+            throw data || { message: `Kunde inte POST:a (${response.status})` };
+        }
+
+        return data;
+    } catch (error) {
+    console.error("API POST JSON error: ", error);
+    throw error;
+    }
+}
+
+// API for POST with formdata = apiPostForm
 export async function apiPostForm(url, formData) {
     try {
         const response = await fetch(`http://localhost:8080${url}`, {
@@ -85,7 +126,7 @@ export async function apiPostForm(url, formData) {
         }
 
         // try read JSON (if backend sends error text = catched)
-        let data = null;
+        let data;
         try {
             data = await response.json();
         } catch {
@@ -94,7 +135,7 @@ export async function apiPostForm(url, formData) {
 
         if (!response.ok) {
             // Backend sends message { message, details: [...] }
-            throw data || { message: `Kunde inte skicka (${response.status})` };
+            throw new Error(data?.message || `Kunde inte skicka (${response.status})`);
         }
 
         return data;
