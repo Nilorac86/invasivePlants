@@ -33,8 +33,12 @@ const handleSubmit = async (e) => {
         const params = new URLSearchParams(location.search);
         const redirect = params.get("redirect");
 
+        const targetPath = res.role === "ROLE_ADMIN" // If admin will redirect to /admin/profile
+        ? "/admin/profile"
+        : redirect || "/profile"
+
         console.log("Redirect parameter:", redirect); // 🔍 Debug
-        navigate(redirect || "/profile"); //  Go to redirect OR profile
+        navigate(targetPath); //  Go to redirect OR profile
 
     } catch (error) {
         console.log("Error from backend:", error);

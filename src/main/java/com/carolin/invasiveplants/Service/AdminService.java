@@ -161,6 +161,8 @@ public class AdminService {
 
             return adminRemovedPlantListMapper.toDto(removedPlantsList);
     }
+
+
     // ##################################### LIST REWARDS #######################################
 
     public List<ListRewardResponseDTO>listRewads(User user){

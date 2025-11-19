@@ -13,8 +13,14 @@ function AdminProfileInfo({adminData}) {
 
   useEffect(() => {
     fetchRemovedPlants()
-    .then(data => setRemovedPlants(data))
-    .catch (error => setError(error.message))
+    .then(data => { setRemovedPlants(data || []);
+  })
+    .catch (error => { 
+      console.error("Error fetching removed plants:", error);
+      setRemovedPlants ([]);
+      setError("Inga borttagna växter har rapporterats")
+  })
+  
     .finally (() => setLoading(false));
   }, []);
 
@@ -47,7 +53,7 @@ function AdminProfileInfo({adminData}) {
   return (
 
     <div className="profile-info">
-      <h3>Välkommen Admin {adminData?.email || "Admin" }!</h3>
+      <h3>Välkommen Admin {adminData?.email }!</h3>
 
       < AdminRemovedPlantList 
       plants = {removedPlants} 
