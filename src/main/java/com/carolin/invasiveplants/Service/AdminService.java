@@ -38,18 +38,17 @@ public class AdminService {
     private final RewardRepository rewardRepository;
     private final AdminAddRewardMapper adminAddRewardMapper;
     private final AdminRemovedPlantListMapper adminRemovedPlantListMapper;
-    private final ListRewardsMapper listRewardsMapper;
+
 
     
 
-    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, AdminAddRewardMapper adminAddRewardMapper, AdminRemovedPlantListMapper adminRemovedPlantListMapper, ListRewardsMapper listRewardsMapper) {
+    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, AdminAddRewardMapper adminAddRewardMapper, AdminRemovedPlantListMapper adminRemovedPlantListMapper) {
         this.plantRepository = plantRepository;
         this.notificationRepository = notificationRepository;
         this.removePlantRepository = removePlantRepository;
         this.rewardRepository = rewardRepository;
         this.adminAddRewardMapper = adminAddRewardMapper;
         this.adminRemovedPlantListMapper = adminRemovedPlantListMapper;
-        this.listRewardsMapper = listRewardsMapper;
     }
 
 
@@ -161,19 +160,6 @@ public class AdminService {
 
             return adminRemovedPlantListMapper.toDto(removedPlantsList);
     }
-    // ##################################### LIST REWARDS #######################################
 
-    public List<ListRewardResponseDTO>listRewads(User user){
-
-        int userPoints = (user == null || user.getPoints() == null) ? 0 : user.getPoints();
-
-        return rewardRepository.findAll().stream()
-                .filter(r -> r.getRewardAmount() != null && r.getRewardAmount() > 0)
-                .sorted(Comparator.comparing(Reward::getPoints, Comparator.nullsLast(Integer::compareTo)))
-                .map(r -> listRewardsMapper.toDto(r, userPoints))
-                .collect(Collectors.toList());
-
-
-    }
 
 }
