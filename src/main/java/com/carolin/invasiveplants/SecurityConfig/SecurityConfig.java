@@ -53,10 +53,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT,"/notifications/**").hasRole("USER")
                         .requestMatchers("/admin/verify").hasRole("ADMIN")
                         .requestMatchers("/admin/add-reward").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET,"/admin/list-rewards").hasRole("USER")//for users as admin do not have points
+                        .requestMatchers("/rewards/**").hasRole("USER")
 
                         // everything else
-                        .anyRequest().permitAll())
+                        .anyRequest().denyAll())
 
                 // Adds jwt token before standard loginfilter runs.
                 // For control of expiration token before every request.
