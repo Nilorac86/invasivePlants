@@ -10,6 +10,7 @@ import ReportPlantFormPage from "./Pages/ReportPlantFormPage";
 import RemovePlantFormPage from "./Pages/RemovePlantForm";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProfilePage from "./Pages/AdminProfilePage";
+import RemovePlantListPage from "./Pages/RemovePlantListPage";
 
 
 import AdminAddRewardPage from "./Pages/AdminAddRewardPage";
@@ -35,6 +36,7 @@ function App() {
       <Routes>
         <Route path="/" element={<PlantCardsPage isLoggedIn={!!user} />} />
         <Route path="/reportedPlants" element={<ReportedPlantsPage />} />
+          <Route path="/remove-plant/list" element={<RemovePlantListPage />} />
         <Route
           path="/login"
           element={<LoginPage onLoginSuccess={handleLoginSuccess} />}

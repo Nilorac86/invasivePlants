@@ -4,8 +4,7 @@ import { apiGet } from "../util/Api";
 
 export async function fetchRemovedPlants() {
   try {
-    return await apiGet( "/remove-plant/list"), 
-
+    return await apiGet( "/remove-plant/list")
 
    
   } catch (error) {

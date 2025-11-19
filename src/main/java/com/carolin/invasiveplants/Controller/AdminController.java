@@ -59,17 +59,20 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("removed-plant/list")
-    public ResponseEntity<List<AdminRemovedPlantsListResponseDto>> adminRemovedPlantsList(){
+    public ResponseEntity<List<AdminRemovedPlantsListResponseDto>> adminRemovedPlantsList() {
 
         List<AdminRemovedPlantsListResponseDto> adminRemovedPlantsListResponseDtos =
                 adminService.getAllremovedPlantList();
 
+
         return ResponseEntity.ok(adminRemovedPlantsListResponseDtos);
+    }
+
     // ################################ LIST REWARDS #############################################
 
     @GetMapping("/list-rewards")
     public ResponseEntity<List<ListRewardResponseDTO>>listRewards(@AuthenticationPrincipal User user){
-        return ResponseEntity.ok(adminVerifyService.listRewads(user));
+        return ResponseEntity.ok(adminService.listRewads(user));
 
     }
 }

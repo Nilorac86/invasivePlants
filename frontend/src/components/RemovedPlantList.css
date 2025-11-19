@@ -1,0 +1,72 @@
+
+/* Container for the entire list of removed plants */
+.removed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+}
+
+/* Each plant item box */
+.removed-item {
+    display: flex;
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.1s ease;    /* Slight zoom on hover */
+}
+
+/* Small scale-up effect when hovering */
+.removed-item:hover {
+    transform: scale(1.01);
+}
+
+/* Thumbnail image shown in the list view */
+.thumbnail {
+    width: 120px;
+    height: 90px;
+    object-fit: cover; /* Crops the image proportionally */
+    border-radius: 4px;
+    margin-right: 16px; /* Space between image and text */
+}
+
+/* Styling for the plant name */
+.removed-info h3 {
+    margin: 0 0 4px 0;
+}
+
+/* Darkened background for popup overlay */
+.popup {
+    position: fixed;
+    inset: 0;      /* Fills entire screen */
+    background: rgba(0,0,0,0.5);  /* Semi-transparent dark overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Inner popup container with content */
+.popup-inner {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 95vw;  /* Responsive width */
+    max-height: 95vh;
+    overflow-y: auto;  /* Scroll if content is too tall */
+}
+
+/* Full-size image shown inside the popup */
+.popup-inner img {
+    max-width: 100%;
+    display: block;
+    margin-bottom: 12px;
+}
+
+/* Close button inside popup */
+.popup-inner button {
+    margin-top: 10px;
+    padding: 8px 14px;
+    cursor: pointer;
+}
