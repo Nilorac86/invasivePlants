@@ -60,12 +60,10 @@ function App() {
           element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
         />
           <Route path="/reportform" element={<ProtectedRoute><ReportPlantFormPage /></ProtectedRoute>} />
-          <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
-          <Route path = "/admin/profile" element ={<ProtectedRoute><AdminProfilePage/></ProtectedRoute>} />
           <Route path="/admin/add-reward" element={<ProtectedRoute><AdminAddRewardPage /></ProtectedRoute>} />
           <Route path="/removeplant" element={<ProtectedRoute><RemovePlantFormPage /></ProtectedRoute>} />
           <Route path="/profile/rewards" element={<ProtectedRoute><RewardPage /></ProtectedRoute>} />
-          <Route path="/testprofile" element={<ProtectedRoute><UnifiedProfilePage /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><UnifiedProfilePage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

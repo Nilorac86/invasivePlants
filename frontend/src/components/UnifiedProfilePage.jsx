@@ -1,3 +1,4 @@
+
 import {Fragment, useEffect, useState} from "react";
 import { fetchUserProfile } from "../service/ProfileService";
 import {fetchUserNotifications, markNotificationAsRead} from "../service/NotificationService";
@@ -30,14 +31,18 @@ function UnifiedProfilePage() {
                 const data = await fetchUserProfile();
                 setProfile(data);
 
+                const admin =
+                    data?.role?.includes("ADMIN") ||
+                    data?.roles?.some(r => r.includes("ADMIN"));
+
                 // Only fetch notifications if the user is NOT an admin
-                if(!isAdmin) {
+                if (!admin) {
                     const userNotifications = await fetchUserNotifications();
                     setNotifications(userNotifications);
                 }
 
             } catch (err) {
-                console.error("error loadning profile:", err);
+                console.error("error loading profile:", err);
                 setError("Kunde inte hämta profiluppgifter");
             }
         }
