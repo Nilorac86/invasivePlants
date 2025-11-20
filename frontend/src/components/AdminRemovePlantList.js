@@ -1,6 +1,12 @@
+import { useState } from "react";
+import "./AdminRemovedPlantList.css"
+
 
 
 function AdminRemovedPlantList ({plants, onApprove, onReject}) {
+
+    const [selectedPlant, setSelectedPlant] = useState(null);
+
 
       if (!plants || plants.length === 0) {
             return <p> Inga borttagna växter har rapporterats </p>
@@ -8,42 +14,70 @@ function AdminRemovedPlantList ({plants, onApprove, onReject}) {
         }
     return (
 
-        
+        <>
         <div className="card-container">
             {plants.map((removedPlant) => (
                 <div className="card" key = {removedPlant.plantName + removedPlant.removedAt}>
-                        <div className="photo-container">
-
+                        
+                        <div>
                          <p>Foto vid rapportering</p>
                         <img className="plant-photo"
                             src={`data:image/jpeg;base64,${removedPlant.photoBefore}`}
                             alt={removedPlant.plantName}
+                            onClick={() => setSelectedPlant(removedPlant)}
                         />
+                        </div>
 
+                        <div>
                         <p>Foto efter borttagning</p>
                         <img className="plant-photo"
                             src={`data:image/jpeg;base64,${removedPlant.photoAfter}`}
                             alt={removedPlant.plantName}
+                            onClick = {() => setSelectedPlant(removedPlant)}
                         />
                         </div>
+                    
 
                         <div className="remove-info">
-                            <p>Växt: {removedPlant.spName}</p>
+                            <p>Växt: {removedPlant.speciesName}</p>
                             <p> Borttagen av: {removedPlant.userName} </p>
                             <p> Datum: {new Date(removedPlant.removedAt).toLocaleString()}</p>
                         </div>
 
                         <div className="buttons"> 
+                        
                             <button onClick={() => onApprove(removedPlant.id)}> Godkänn</button>
                             <button onClick={() => onReject(removedPlant.id)}> Avslå </button>
+                            
                         </div>
 
                     </div>
                           
             ))}
          
-        </div>
-    )
+         </div>
+
+            { selectedPlant && (
+                <div className="popup-overlay" onClick={() => setSelectedPlant(null)}>
+                    <div className="popup-content">
+                        <h3> {selectedPlant.speciesName}</h3>
+
+                        <div className="popup-photos">
+                            <img
+                                src={`data:image/jpeg;base64,${selectedPlant.photoBefore}`}
+                                alt="before"
+                            />
+                            <img
+                                src={`data:image/jpeg;base64,${selectedPlant.photoAfter}`}
+                                alt="after"
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+    
 }
 
 export default AdminRemovedPlantList;
