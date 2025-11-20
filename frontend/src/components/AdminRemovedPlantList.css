@@ -1,6 +1,10 @@
+
+/* Container */
 .card-container{
     margin: 4rem;
 }
+
+/* Admin remove plant card */
 .card{
     background-color: rgb(244, 235, 235);
     border: none;
@@ -10,17 +14,19 @@
     margin: 10px;
 }
 
+/* Button box */
 .buttons{
-    
     display: flex;
     flex-direction: column;
     
 }
 
+/* Button hover */
 .buttons button:hover{
     background-color: rgb(202, 201, 198);
 }
 
+/* The button */
 .buttons button{
     background-color: rgb(239, 239, 240);
     border-radius: 5px;
@@ -30,7 +36,9 @@
 
 }
 
-/* Modal overlay */
+/* CSS for popup photos
+
+The background presenting */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -44,14 +52,9 @@
   z-index: 1000;
 }
 
-.popup-content h3{
-    text-align: center;
-}
-
-
-/* Modal content */
+/* Box that contains the images */
 .popup-content {
-  background-color: #fff;
+  background-color: #a0a0a0; 
   padding: 20px;
   border-radius: 8px;
   max-width: 90%;
@@ -59,15 +62,20 @@
   overflow-y: auto;
 }
 
-/* Container för båda bilderna */
+/* Text in pop up window */
+.popup-content h3{
+    text-align: center;
+}
+
+/* Popup photo container */
 .popup-photos {
   display: flex;
   gap: 20px;
-  flex-wrap: wrap; 
+  flex-wrap: wrap; /* wrap if screen is small*/
   justify-content: center;
 }
 
-
+/* For the images */
 .popup-photos img {
   max-width: 55%;
   max-height: 45rem;

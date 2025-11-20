@@ -7,14 +7,14 @@ function AdminRemovedPlantList ({plants, onApprove, onReject}) {
 
     const [selectedPlant, setSelectedPlant] = useState(null);
 
-
+        // If no plants removed
       if (!plants || plants.length === 0) {
             return <p> Inga borttagna växter har rapporterats </p>
             
         }
     return (
 
-        <>
+        <> {/* Information in Admin removed plant list */}
         <div className="card-container">
             {plants.map((removedPlant) => (
                 <div className="card" key = {removedPlant.plantName + removedPlant.removedAt}>
@@ -57,6 +57,7 @@ function AdminRemovedPlantList ({plants, onApprove, onReject}) {
          
          </div>
 
+            {/* Content for photos to pop up when clicked on */}
             { selectedPlant && (
                 <div className="popup-overlay" onClick={() => setSelectedPlant(null)}>
                     <div className="popup-content">
