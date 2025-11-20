@@ -64,8 +64,8 @@ public class AdminController {
         List<AdminRemovedPlantsListResponseDto> adminRemovedPlantsListResponseDtos =
                 adminService.getAllremovedPlantList();
 
-        return ResponseEntity.ok(adminRemovedPlantsListResponseDtos);
 
+        return ResponseEntity.ok(adminRemovedPlantsListResponseDtos);
     }
 
     // ################################ LIST REWARDS #############################################
