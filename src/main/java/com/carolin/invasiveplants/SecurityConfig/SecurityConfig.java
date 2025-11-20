@@ -41,8 +41,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/plants/info").permitAll()
                         .requestMatchers(HttpMethod.GET, "/report-plant/list").permitAll()
                         .requestMatchers(HttpMethod.GET, "/report-plant/listremovedplants").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/remove-plant/list").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
+
 
                         //Protected endpoints
                         .requestMatchers(HttpMethod.GET, "/admin/removed-plant/list").hasRole("ADMIN")
