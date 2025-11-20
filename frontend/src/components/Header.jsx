@@ -22,6 +22,9 @@ function Header({ user, onLogout }) {
           <Link to="/reportedPlants">
               <button className="nav-btn">Rapporterade växter</button>
           </Link>
+          <Link to="/remove-plant/list">
+              <button className="nav-btn">borttagna växter</button>
+          </Link>
           <Link to="/admin/add-reward">
               <button className="nav-btn">Admin Add Reward</button>
           </Link>
@@ -31,6 +34,9 @@ function Header({ user, onLogout }) {
               {/* Länk till profil - bara för inloggade */}
               <Link to="/profile">
                   <button className="nav-btn">Min profil</button>
+              </Link>
+              <Link to="/admin/profile">
+                  <button className="nav-btn">Min profil admin</button>
               </Link>
 
           <span>Hej, {user.email}</span> {/* user.name till user.email */}
