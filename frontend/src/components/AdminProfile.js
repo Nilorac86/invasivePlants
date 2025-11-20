@@ -47,7 +47,7 @@ function AdminProfileInfo({adminData}) {
   return (
 
     <div className="profile-info">
-      <h3>Välkommen Admin {adminData?.email || "Admin" }!</h3>
+      <h3>Välkommen Admin {adminData?.email }!</h3>
 
       < AdminRemovedPlantList 
       plants = {removedPlants} 
