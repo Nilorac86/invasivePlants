@@ -1,15 +1,18 @@
 import "./App.css";
-import React, { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PlantCardsPage from "./Pages/PlantCardsPage";
 import LoginPage from "./Pages/LoginPage";
 import Header from "./components/Header";
 import ProfilePage from "./Pages/ProfilePage";
+import { fetchUserProfile } from "./service/ProfileService";
 import ReportedPlantsPage from "./Pages/ReportedPlantsPage";
 import ReportPlantFormPage from "./Pages/ReportPlantFormPage";
 import RemovePlantFormPage from "./Pages/RemovePlantForm";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProfilePage from "./Pages/AdminProfilePage";
+import RewardPage from "./Pages/RewardPage";
 import RemovePlantListPage from "./Pages/RemovePlantListPage";
 
 
@@ -19,6 +22,18 @@ import AdminAddRewardPage from "./Pages/AdminAddRewardPage";
 function App() {
   
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    async function checkUser() {
+      try {
+        const userData = await fetchUserProfile();
+        setUser(userData);
+      } catch {
+        setUser(null);
+      }
+    }
+    checkUser();
+  }, []);
 
   const handleLoginSuccess = (userData) => {
     console.log("App handleLoginSuccess with:", userData); // Debug purpose
@@ -42,11 +57,11 @@ function App() {
           element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
         />
           <Route path="/reportform" element={<ProtectedRoute><ReportPlantFormPage /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
-        <Route path = "/admin/profile" element ={<ProtectedRoute><AdminProfilePage/></ProtectedRoute>} />
-          <Route path="/admin/add-reward" element={<ProtectedRoute><AdminAddRewardPage /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage/></ProtectedRoute>} />
+          <Route path = "/admin/profile" element ={<ProtectedRoute><AdminProfilePage/></ProtectedRoute>} />
+          <Route path="/admin/add-reward" element={<ProtectedRoute><AdminAddRewardPage /></ProtectedRoute>} />
           <Route path="/removeplant" element={<ProtectedRoute><RemovePlantFormPage /></ProtectedRoute>} />
+          <Route path="/profile/rewards" element={<ProtectedRoute><RewardPage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

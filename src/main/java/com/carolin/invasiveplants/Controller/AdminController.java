@@ -68,11 +68,4 @@ public class AdminController {
         return ResponseEntity.ok(adminRemovedPlantsListResponseDtos);
     }
 
-    // ################################ LIST REWARDS #############################################
-
-    @GetMapping("/list-rewards")
-    public ResponseEntity<List<ListRewardResponseDTO>>listRewards(@AuthenticationPrincipal User user){
-        return ResponseEntity.ok(adminService.listRewads(user));
-
-    }
 }

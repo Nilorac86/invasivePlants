@@ -21,6 +21,7 @@ public class AdminAddRewardRequestDTO {
 
     @NotNull(message = "Du måste ange hur många belöningar som finns.")
     @Min(value=0, message ="Analet belöningar kan inte vara negativt.")
+    @Max(value=150, message = "Det kan inte vara mer än 150 st")
     private Integer rewardAmount;
 
     public AdminAddRewardRequestDTO() {
