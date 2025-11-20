@@ -21,6 +21,7 @@ public class ListRewardsMapper {
         boolean affordable = userPoints >= rewardPoints;
 
         return new ListRewardResponseDTO(
+                reward.getRewardId(),
                 reward.getRewardTitle(),
                 reward.getDescription(),
                 reward.getPoints(),

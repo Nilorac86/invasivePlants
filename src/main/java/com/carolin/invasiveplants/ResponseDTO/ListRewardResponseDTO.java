@@ -2,6 +2,7 @@ package com.carolin.invasiveplants.ResponseDTO;
 
 public class ListRewardResponseDTO {
 
+    private Long rewardId;
     private String rewardTitle;
     private String description;
     private Integer points;
@@ -11,12 +12,21 @@ public class ListRewardResponseDTO {
     public ListRewardResponseDTO() {
     }
 
-    public ListRewardResponseDTO(String rewardTitle, String description, Integer points, Integer rewardAmount, boolean affordable) {
+    public ListRewardResponseDTO(Long rewardId, String rewardTitle, String description, Integer points, Integer rewardAmount, boolean affordable) {
+        this.rewardId = rewardId;
         this.rewardTitle = rewardTitle;
         this.description = description;
         this.points = points;
         this.rewardAmount = rewardAmount;
         this.affordable = affordable;
+    }
+
+    public Long getRewardId() {
+        return rewardId;
+    }
+
+    public void setRewardId(Long rewardId) {
+        this.rewardId = rewardId;
     }
 
     public String getRewardTitle() {

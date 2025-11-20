@@ -1,0 +1,63 @@
+
+
+.reward-page {
+  text-align: center;
+}
+
+.beloning-card{
+  text-align: center;
+  margin: 8px 0;
+}
+
+
+.beloning-form {
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  background-color: rgba(227, 228, 229, 0.555);
+  padding: 20px;
+
+  max-width: 900px;  /* limits the max width */
+  margin: 0 auto;     /* centers the container horizontally */
+  box-sizing: border-box; /* ensures padding is included in width */
+  border-radius: 20px;
+}
+
+.beloning-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 20px;
+}
+
+
+.beloning-card.affordable {
+  background-color: #edd6d6;
+}
+
+.beloning-card.not-affordable {
+  opacity: 0.6;
+  pointer-events: none; /* disables clicking if not affordable */
+}
+
+.beloning-card:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #7a848c;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
+
