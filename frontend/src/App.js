@@ -15,6 +15,9 @@ import AdminProfilePage from "./Pages/AdminProfilePage";
 import RewardPage from "./Pages/RewardPage";
 import RemovePlantListPage from "./Pages/RemovePlantListPage";
 
+import UnifiedProfilePage from "./components/UnifiedProfilePage";
+
+
 
 import AdminAddRewardPage from "./Pages/AdminAddRewardPage";
 
@@ -62,6 +65,7 @@ function App() {
           <Route path="/admin/add-reward" element={<ProtectedRoute><AdminAddRewardPage /></ProtectedRoute>} />
           <Route path="/removeplant" element={<ProtectedRoute><RemovePlantFormPage /></ProtectedRoute>} />
           <Route path="/profile/rewards" element={<ProtectedRoute><RewardPage /></ProtectedRoute>} />
+          <Route path="/testprofile" element={<ProtectedRoute><UnifiedProfilePage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );
