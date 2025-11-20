@@ -1,5 +1,5 @@
 import {useEffect, useState } from "react";
-import AdminRemovedPlantList from "./AdminRemovePlantList";
+import AdminRemovedPlantList from "./AdminRemovedPlantList";
 import { fetchRemovedPlants, VerifyRemovedPlant } from "../service/AdminRemovePlantListService";
 
 
