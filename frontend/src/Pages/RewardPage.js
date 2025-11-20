@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import RewardForm from "../components/RewardForm";
 import {getRewards}from "../service/RewardListService"
-import { getUserPoints } from "../service/UserPoints";
+import { getUserPoints } from "../service/UserPointsService.js";
 import pickReward from "../service/PickRewardService.js";
 
 
