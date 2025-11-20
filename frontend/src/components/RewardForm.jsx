@@ -3,11 +3,11 @@ import "./RewardForm.css";
 
 function RewardForm({rewards= [], userPoints = 0, onRedeem = ()=>{} }) {
   return (
-    <div className="reward-form">
+    <div className="beloning-form">
       {rewards.map((reward, index)=> (
         <div
           key={index}
-          className={`reward-card ${reward.affordable ? "affordable" : "not-affordable"}`}
+          className={`beloning-card ${reward.affordable ? "affordable" : "not-affordable"}`}
           >
           <h3>{reward.rewardTitle}</h3>
           <p>{reward.description}</p>
