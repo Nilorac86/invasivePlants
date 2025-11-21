@@ -136,7 +136,8 @@ public class RemovePlantService {
     public List<UserRemovedPlantsStatusResponseDto> getRemovedPlantsByStatusForUser(Long userId){
 
         List<RemovePlantStatus> statuses = Arrays.asList(RemovePlantStatus.PENDING,RemovePlantStatus.APPROVED);
-        List<RemovedPlant> removedPlants = removePlantRepository.findByStatusInAndRemovedBy_UserId(statuses, userId);
+        List<RemovedPlant> removedPlants = removePlantRepository.findByStatusInAndRemovedBy_UserIdOrderByRemovedAtDesc(
+                statuses, userId);
 
         // If no removed plants are found, throw API exception
         if (removedPlants == null || removedPlants.isEmpty()) {
