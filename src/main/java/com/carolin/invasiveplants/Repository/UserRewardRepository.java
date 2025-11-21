@@ -17,5 +17,4 @@ public interface UserRewardRepository extends JpaRepository<UserReward, Long> {
     // Previw rewards in order and how many per page
     List<UserReward>findByUser_UserIdOrderByReward_RewardIdDesc(Long userId, Pageable pageable);
 
-
 }
