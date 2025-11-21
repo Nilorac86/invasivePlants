@@ -64,8 +64,10 @@ function UnifiedProfilePage() {
         }
     }
 
-
+    // fetsh logged in users Page
     useEffect(()=> {
+        // only fetch dashboard data if user is NOT admin
+        if(!isAdmin){ 
             async function fetchDashboardData(){
     
                 try{
@@ -77,8 +79,9 @@ function UnifiedProfilePage() {
                 }
             }
             fetchDashboardData();
-    
-        },[]);
+        }
+    },[isAdmin]);
+
 
     if(error) return <p>{error}</p>;
     if(!profile) return <p>Laddar profil...</p>;
