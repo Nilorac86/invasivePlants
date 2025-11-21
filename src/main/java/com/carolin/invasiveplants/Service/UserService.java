@@ -11,6 +11,7 @@ import com.carolin.invasiveplants.ResponseDTO.RewardPreviewResponseDto;
 import com.carolin.invasiveplants.ResponseDTO.UserProfileDashboardResponseDto;
 import com.carolin.invasiveplants.ResponseDTO.UserRemovedPlantsStatusResponseDto;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,7 +46,9 @@ public class UserService {
         long appovedTotal = removePlantRepository.countByStatusAndRemovedBy_UserId(RemovePlantStatus.APPROVED, userId);
 
         // Preview (newest first) using pageable
-        PageRequest previewPage = PageRequest.of(0, previewSize);
+        PageRequest previewPage = PageRequest.of(0, previewSize, Sort.by(Sort.Direction.DESC,"removedAt"));
+        PageRequest previewPageRewards = PageRequest.of(0, previewSize, Sort.by(Sort.Direction.DESC, "reward.rewardId"));
+
 
         List<RemovedPlant> pendingList = removePlantRepository.findByStatusAndRemovedBy_UserId(RemovePlantStatus.PENDING, userId, previewPage);
         List<RemovedPlant> approvedList = removePlantRepository.findByStatusAndRemovedBy_UserId(RemovePlantStatus.APPROVED, userId, previewPage);
@@ -55,7 +58,7 @@ public class UserService {
         List<UserRemovedPlantsStatusResponseDto> approvedPreview = userRemovedPlantsStatusMapper.toDto(approvedList);
 
         //Map to DTO gifts
-        List<UserReward> rewardEntities = userRewardRepository.findByUser_UserIdOrderByReward_RewardIdDesc(userId, previewPage);
+        List<UserReward> rewardEntities = userRewardRepository.findByUser_UserIdOrderByReward_RewardIdDesc(userId, previewPageRewards);
 
         List<RewardPreviewResponseDto> giftPreview =rewardEntities.stream()
                 .map(rewardPreviewMapper::toDto)
