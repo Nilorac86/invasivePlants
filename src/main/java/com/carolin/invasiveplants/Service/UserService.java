@@ -3,6 +3,7 @@ package com.carolin.invasiveplants.Service;
 import com.carolin.invasiveplants.Entity.RemovedPlant;
 import com.carolin.invasiveplants.Entity.UserReward;
 import com.carolin.invasiveplants.Enum.RemovePlantStatus;
+import com.carolin.invasiveplants.Mapper.RewardPreviewMapper;
 import com.carolin.invasiveplants.Mapper.UserRemovedPlantsStatusMapper;
 import com.carolin.invasiveplants.Repository.RemovePlantRepository;
 import com.carolin.invasiveplants.Repository.UserRewardRepository;
@@ -21,12 +22,14 @@ public class UserService {
     private final RemovePlantRepository removePlantRepository;
     private final UserRewardRepository userRewardRepository;
     private final UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper;
+    private final RewardPreviewMapper rewardPreviewMapper;
 
 
-    public UserService(RemovePlantRepository removePlantRepository, UserRewardRepository userRewardRepository, UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper) {
+    public UserService(RemovePlantRepository removePlantRepository, UserRewardRepository userRewardRepository, UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper, RewardPreviewMapper rewardPreviewMapper) {
         this.removePlantRepository = removePlantRepository;
         this.userRewardRepository = userRewardRepository;
         this.userRemovedPlantsStatusMapper = userRemovedPlantsStatusMapper;
+        this.rewardPreviewMapper = rewardPreviewMapper;
     }
 
     public UserProfileDashboardResponseDto getUserProfileDashboard(Long userId, Integer previewSize){
@@ -51,19 +54,16 @@ public class UserService {
         List<UserRemovedPlantsStatusResponseDto> penndingPreview = userRemovedPlantsStatusMapper.toDto(pendingList);
         List<UserRemovedPlantsStatusResponseDto> approvedPreview = userRemovedPlantsStatusMapper.toDto(approvedList);
 
+        //Map to DTO gifts
+        List<UserReward> rewardEntities = userRewardRepository.findByUser_UserIdOrderByReward_RewardIdDesc(userId, previewPage);
+
+        List<RewardPreviewResponseDto> giftPreview =rewardEntities.stream()
+                .map(rewardPreviewMapper::toDto)
+                .collect(Collectors.toList());
+
         // Gifts / rewards
         long giftsTotal = userRewardRepository.countByUser_UserId(userId);
 
-        List<UserReward> rewardEntities = userRewardRepository.findByUser_UserIdOrderByReward_RewardIdDesc(userId, previewPage);
-        List<RewardPreviewResponseDto> giftPreview = rewardEntities.stream()
-                .map(ur ->{
-                    RewardPreviewResponseDto dto = new RewardPreviewResponseDto();
-                    dto.setRewardId(ur.getReward().getRewardId());
-                    dto.setRewardTitle(ur.getReward().getRewardTitle());
-                    dto.setPoints(ur.getReward().getPoints());
-                    dto.setRewardAmount(ur.getReward().getRewardAmount());
-                    return dto;
-                }).collect(Collectors.toList());
 
         // building up the frontend DTO
         UserProfileDashboardResponseDto dto = new UserProfileDashboardResponseDto();
