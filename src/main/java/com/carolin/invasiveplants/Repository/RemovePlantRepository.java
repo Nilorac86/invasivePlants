@@ -3,6 +3,7 @@ package com.carolin.invasiveplants.Repository;
 import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import com.carolin.invasiveplants.Entity.RemovedPlant;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +25,16 @@ public interface RemovePlantRepository extends JpaRepository<RemovedPlant, Long>
     long countByStatusAndRemovedBy_UserId(RemovePlantStatus status, Long userId);
 
     // previw by single status with pageable
-    List<RemovedPlant> findByStatusAndRemovedBy_UserId(RemovePlantStatus status, Long userId, Pageable pageable);
+    List<RemovedPlant> findByStatusAndRemovedBy_UserId(
+            RemovePlantStatus status,
+            Long userId,
+            Pageable pageable);
+
+    // full list (sorting only)
+    List<RemovedPlant> findByStatusAndRemovedBy_UserId(
+            RemovePlantStatus status,
+            Long userId,
+            Sort sort);
 
 }
 
