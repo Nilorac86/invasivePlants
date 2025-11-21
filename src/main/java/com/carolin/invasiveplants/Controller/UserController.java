@@ -37,5 +37,18 @@ public class UserController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/history")
+    public ResponseEntity<UserProfileDashboardResponseDto> getUserHistory(
+            @AuthenticationPrincipal User user){
+
+        if (user == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        //PreviewSize = 0 trigger full list in service
+        UserProfileDashboardResponseDto dto = userService.getUserProfileDashboard(user.getUserId(),0);
+
+        dto.setPoints(user.getPoints());
+        return ResponseEntity.ok(dto);
+    }
+
 
 }
