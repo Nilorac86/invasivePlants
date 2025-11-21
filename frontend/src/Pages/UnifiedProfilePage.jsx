@@ -4,14 +4,14 @@ import { fetchUserProfile } from "../service/ProfileService";
 import {fetchUserNotifications, markNotificationAsRead} from "../service/NotificationService";
 
 // User components
-import ProfileInfo from "./Profile";
-import NotificationList from "./NotificationList";
+import ProfileInfo from "../components/Profile";
+import NotificationList from "../components/NotificationList";
 
 import {getdashboard} from "../service/DashboardUserService";
-import Dashboard from "./DashboardUser";
+import Dashboard from "../components/DashboardUser";
 
 //Admin components
-import AdminProfileInfo from "./AdminProfile";
+import AdminProfileInfo from "../components/AdminProfile";
 
 function UnifiedProfilePage() {
     // Stores fetched user profile data
