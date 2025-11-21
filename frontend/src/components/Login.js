@@ -34,7 +34,7 @@ const handleSubmit = async (e) => {
         const redirect = params.get("redirect");
 
         const targetPath = res.role === "ROLE_ADMIN" // If admin will redirect to /admin/profile
-        ? "/admin/profile"
+        ? "/profile"
         : redirect || "/profile"
 
         console.log("Redirect parameter:", redirect); // 🔍 Debug

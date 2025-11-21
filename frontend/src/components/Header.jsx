@@ -28,6 +28,8 @@ function Header({ user, onLogout }) {
                     Växtlista
                 </Link>
 
+
+
                 {/* --- DROPDOWN RAPPORTER --- */}
                 <div className="dropdown">
                     <button className="dropbtn">Rapporter ▾</button>
@@ -38,10 +40,7 @@ function Header({ user, onLogout }) {
                     </div>
                 </div>
 
-                {/* Rewards – Shows for all */}
-                <Link to="./Pages/RewardPage" className="nav-link">
-                    Lista Belöningar
-                </Link>
+
 
                 {/* Admin-only */}
                 {isAdmin && (
@@ -54,10 +53,15 @@ function Header({ user, onLogout }) {
                 {user ? (
                     <div className="user-menu">
 
-                        {isAdmin ? (
-                            <Link to="/admin/profile" className="nav-link">Adminprofil</Link>
-                        ) : (
-                            <Link to="/profile" className="nav-link">Min profil</Link>
+                        <Link to="/profile" className="nav-link">
+                            profil
+                        </Link>
+
+                        {/* Rewards – only visible for regular users */}
+                        {!isAdmin && (
+                            <Link to="/profile/rewards" className="nav-link">
+                                Lista Belöningar
+                            </Link>
                         )}
 
                         <span>Hej, {user.email}</span>
