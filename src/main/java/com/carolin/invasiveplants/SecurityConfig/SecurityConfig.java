@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/report-plant/list").permitAll()
                         .requestMatchers(HttpMethod.GET, "/report-plant/listremovedplants").permitAll()
                         .requestMatchers(HttpMethod.GET, "/remove-plant/list").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/plants/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
 

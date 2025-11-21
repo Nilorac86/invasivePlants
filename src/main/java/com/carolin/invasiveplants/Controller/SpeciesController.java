@@ -1,12 +1,10 @@
 package com.carolin.invasiveplants.Controller;
 
 import com.carolin.invasiveplants.ResponseDTO.SpeciesBasicInfoResponse;
+import com.carolin.invasiveplants.ResponseDTO.SpeciesDetailResponseDTO;
 import com.carolin.invasiveplants.Service.SpeciesService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +28,14 @@ public class SpeciesController {
         List<SpeciesBasicInfoResponse> speciesBasicInfoResponses = speciesService.getAllSpecies();
 
         return ResponseEntity.ok(speciesBasicInfoResponses);
+    }
+
+    //#################################### Detail page for specific plant by ID ####################################################
+    @GetMapping("/{id}")
+    public ResponseEntity<SpeciesDetailResponseDTO> getSpeciesById(@PathVariable Long id) {
+        SpeciesDetailResponseDTO speciesDetailResponseDTO = speciesService.getSpeciesById(id);
+
+        return ResponseEntity.ok(speciesDetailResponseDTO);
     }
 
 }
