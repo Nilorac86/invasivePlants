@@ -41,28 +41,22 @@
   color: #2f2f2f;
 }
 
-/*
-.reward-item {
-  background-color: #f0e6ff;
-  border-radius: 12px;
-  margin: 6px auto;
-  padding: 8px 15px;
-  max-width: 320px;
-  box-shadow: 0 1px 4px rgba(74, 63, 110, 0.3);
-  font-weight: 600;
-  color: #4a3f6e;
-  transition: background-color 0.3s ease;
-}
-
-.reward-item:hover {
-  background-color: #d8caff;
-  cursor: default;
-}
-*/
 p {
   font-style: italic;
   font-size: 0.95rem;
   color: #2f2f2f;
   margin-top: 6px;
   font-weight: 600;
+}
+
+.history-link {
+  color: #4a3f6e;
+  display: inline-block;
+  margin-top: 10px;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.history-link:hover {
+  color: #4f4566;
 }

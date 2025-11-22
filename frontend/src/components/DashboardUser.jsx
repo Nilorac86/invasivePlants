@@ -1,7 +1,6 @@
 //DashboardUser.jsx
-
-//import { useEffect, useState } from "react";
-//import { getdashboard } from "../service/DashboardUserService";
+ 
+import { Link } from "react-router-dom";
 import "./DashboardUser.css";
 
 function Dashboard({data}){
@@ -25,6 +24,10 @@ function Dashboard({data}){
               {new Date(plant.removedAt).toLocaleDateString()}
             </div>
           ))}
+
+          <Link to="/history" className="history-link">
+            Visa hela historiken
+          </Link>
         </div>
 
         <div className="approved">
@@ -35,6 +38,10 @@ function Dashboard({data}){
               {new Date(plant.removedAt).toLocaleDateString()}
             </div>
           ))}
+
+          <Link to="/history" className="history-link">
+            Visa hela historiken
+          </Link>
         </div>
 
         <div className="gift">
@@ -48,6 +55,11 @@ function Dashboard({data}){
           ) : (
             <p>Inga gåvor än</p>
           )}
+
+          <Link to="/history" className="history-link">
+            Visa hela historiken
+          </Link>
+
         </div>
       </div>
     ); 

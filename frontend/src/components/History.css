@@ -1,0 +1,6 @@
+
+.tabs button.active {
+  background-color: #6a6172;
+  color: white;
+  border-bottom: 3px solid #d4c9b4;
+}
