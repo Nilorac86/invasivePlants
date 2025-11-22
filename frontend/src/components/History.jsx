@@ -55,7 +55,7 @@ export default function History({data}){
                 <button 
                 className={activ === "approved" ? "active": ""}
                 onClick={() => setActiv("approved")}
-                >Godkännande ({data.approvedTotal})
+                >Godkända ({data.approvedTotal})
                 </button>  
 
                 <button
