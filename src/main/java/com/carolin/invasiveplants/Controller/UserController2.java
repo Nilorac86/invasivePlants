@@ -2,7 +2,7 @@ package com.carolin.invasiveplants.Controller;
 
 import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.ResponseDTO.UserProfileDashboardResponseDto;
-import com.carolin.invasiveplants.Service.UserService;
+import com.carolin.invasiveplants.Service.UserService2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/user")
-public class UserController {
+public class UserController2 {
 
-    private final UserService userService;
+    private final UserService2 userService;
 
-    public UserController(UserService userService) {
+    public UserController2(UserService2 userService) {
         this.userService = userService;
     }
 

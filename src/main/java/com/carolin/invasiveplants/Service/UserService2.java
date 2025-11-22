@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class UserService2 {
 
     private final RemovePlantRepository removePlantRepository;
     private final UserRewardRepository userRewardRepository;
@@ -26,7 +26,7 @@ public class UserService {
     private final RewardPreviewMapper rewardPreviewMapper;
 
 
-    public UserService(RemovePlantRepository removePlantRepository, UserRewardRepository userRewardRepository, UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper, RewardPreviewMapper rewardPreviewMapper) {
+    public UserService2(RemovePlantRepository removePlantRepository, UserRewardRepository userRewardRepository, UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper, RewardPreviewMapper rewardPreviewMapper) {
         this.removePlantRepository = removePlantRepository;
         this.userRewardRepository = userRewardRepository;
         this.userRemovedPlantsStatusMapper = userRemovedPlantsStatusMapper;
