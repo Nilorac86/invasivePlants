@@ -14,25 +14,26 @@ export default function History({data}){
             case "pending":
                 return data.pendingPreview.map(item =>(
                     <div key = {item.id}>
-                        {item.plantName} - {new Date(item.removedAt).toLocaleTimeString()}
+                        {item.plantName} - {new Date(item.removedAt).toLocaleDateString()}
                     </div>
                 ));
 
             case "approved":
                 return data.approvedPreview.map(item =>(
                     <div key = {item.id}>
-                        {item.plantName} - {new Date(item.removedAt).toLocaleTimeString()}
+                        {item.plantName} - {new Date(item.removedAt).toLocaleDateString()}
                     </div>
                 ));  
             
             case "gifts":
-                return data.giftsPreview.lenght >0 
-                ? data.giftsPreview.map(r => (
-                  <div key={r.rewardId}>
-                    {r.rewardTitle} -{r.points} poäng
+                if(!data.giftsPreview|| data.giftsPreview.length===0)
+                    return <p>Inga gåvor ännu</p>;
+
+                return data.giftsPreview.map(gift => (
+                  <div key={gift.rewardId}>
+                    {gift.rewardTitle} -{gift.points} poäng
                   </div>
-                )) 
-            : <p>Inga gåvor ännu</p>;  
+                )) ;
             
             default:
                 return null;
