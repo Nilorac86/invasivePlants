@@ -1,0 +1,28 @@
+
+
+.history-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: #cac2bd;
+  gap: 20px;
+  max-width: 900px;
+  margin: 20px auto;
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #3e3e3e;
+}
+
+.tabs{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.tabs button.active {
+  background-color: #6a6172;
+  color: white;
+  border-bottom: 3px solid #d4c9b4;
+}

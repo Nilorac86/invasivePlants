@@ -1,9 +1,9 @@
 package com.carolin.invasiveplants.Repository;
 
-import com.carolin.invasiveplants.Entity.Plant;
-import com.carolin.invasiveplants.Entity.RemovedPlant;
-import com.carolin.invasiveplants.Enum.PlantStatus;
 import com.carolin.invasiveplants.Enum.RemovePlantStatus;
+import com.carolin.invasiveplants.Entity.RemovedPlant;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +17,25 @@ public interface RemovePlantRepository extends JpaRepository<RemovedPlant, Long>
 
     // Fetch all plants with status = REMOVED
     List<RemovedPlant> findByStatus(RemovePlantStatus status);
+
+    // get all plants with status PENDING and APROVED conected to User id
+    List<RemovedPlant> findByStatusInAndRemovedBy_UserIdOrderByRemovedAtDesc(List<RemovePlantStatus> statuses, Long userId);
+
+    // for counts
+    long countByStatusAndRemovedBy_UserId(RemovePlantStatus status, Long userId);
+
+    // previw by single status with pageable
+    List<RemovedPlant> findByStatusAndRemovedBy_UserId(
+            RemovePlantStatus status,
+            Long userId,
+            Pageable pageable);
+
+    // full list (sorting only)
+    List<RemovedPlant> findByStatusAndRemovedBy_UserId(
+            RemovePlantStatus status,
+            Long userId,
+            Sort sort);
+
 }
 
 

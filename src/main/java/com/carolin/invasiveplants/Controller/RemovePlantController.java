@@ -4,6 +4,7 @@ import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.RequestDTO.PlantRemovalReportRequestDto;
 import com.carolin.invasiveplants.ResponseDTO.ListRemovedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.PlantRemovalReportResponseDto;
+import com.carolin.invasiveplants.ResponseDTO.UserRemovedPlantsStatusResponseDto;
 import com.carolin.invasiveplants.Service.RemovePlantService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -59,5 +60,22 @@ public class RemovePlantController {
 
         return ResponseEntity.ok(listRemovedPlantsResponseDTOS);
     }
+
+    // ############################ LIST REMOVED PLANTS approved and pending ##################################################
+
+    @GetMapping("/list/user")
+    public ResponseEntity<List<UserRemovedPlantsStatusResponseDto>> getRemovedPlantsByStatus(
+            @AuthenticationPrincipal User user
+    ){
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        return ResponseEntity.ok(
+                removePlantService.getRemovedPlantsByStatusForUser(user.getUserId())
+        );
+    }
+
 }
 
