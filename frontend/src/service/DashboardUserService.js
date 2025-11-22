@@ -6,7 +6,7 @@ import { apiGet } from "../util/Api";
 
 export async function getdashboard() {
   try {
-    return await apiGet("/user/dashboard", {
+    return await apiGet("/users/dashboard", {
       method: "GET",
       credentials: "include",
     });
