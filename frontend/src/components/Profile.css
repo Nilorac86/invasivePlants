@@ -1,0 +1,8 @@
+
+.profile-info{
+    display: flex;
+    max-width: 900px;
+    margin: 0 auto;     /* centers the container horizontally */
+    box-sizing: border-box;
+    text-align: center;
+}

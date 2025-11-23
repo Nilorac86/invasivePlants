@@ -2,6 +2,7 @@
 import {Fragment, useEffect, useState} from "react";
 import { fetchUserProfile } from "../service/ProfileService";
 import {fetchUserNotifications, markNotificationAsRead} from "../service/NotificationService";
+import { getNameUser } from "../service/UserNameService";
 
 // User components
 import ProfileInfo from "../components/Profile";
@@ -32,12 +33,15 @@ function UnifiedProfilePage() {
         // Loads user profile and notifications depending on role
         async function loadUserData() {
             try {
-                const data = await fetchUserProfile();
-                setProfile(data);
+                const profileData = await fetchUserProfile();
+                setProfile(profileData);
+
+                const nameData = await getNameUser(); //first & last name
+                setProfile(prev=> ({...prev, ...nameData})); //merge into profile
 
                 const admin =
-                    data?.role?.includes("ADMIN") ||
-                    data?.roles?.some(r => r.includes("ADMIN"));
+                    profileData?.role?.includes("ADMIN") ||
+                    profileData?.roles?.some(r => r.includes("ADMIN"));
 
                 // Only fetch notifications if the user is NOT an admin
                 if (!admin) {
