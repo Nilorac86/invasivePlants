@@ -1,21 +1,21 @@
 package com.carolin.invasiveplants.Service;
 
+import com.carolin.invasiveplants.Entity.Plant;
 import com.carolin.invasiveplants.Entity.RemovedPlant;
 import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.Entity.UserReward;
 import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import com.carolin.invasiveplants.ExceptionHandler.ApiException;
+import com.carolin.invasiveplants.Mapper.ReportedPreviewMapper;
 import com.carolin.invasiveplants.Mapper.RewardPreviewMapper;
 import com.carolin.invasiveplants.Mapper.UserRegisterMapper;
 import com.carolin.invasiveplants.Mapper.UserRemovedPlantsStatusMapper;
+import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.RemovePlantRepository;
 import com.carolin.invasiveplants.Repository.UserRepository;
 import com.carolin.invasiveplants.Repository.UserRewardRepository;
 import com.carolin.invasiveplants.RequestDTO.UserRegisterRequestDto;
-import com.carolin.invasiveplants.ResponseDTO.RewardPreviewResponseDto;
-import com.carolin.invasiveplants.ResponseDTO.UserProfileDashboardResponseDto;
-import com.carolin.invasiveplants.ResponseDTO.UserRegisterResponseDto;
-import com.carolin.invasiveplants.ResponseDTO.UserRemovedPlantsStatusResponseDto;
+import com.carolin.invasiveplants.ResponseDTO.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -34,14 +34,18 @@ public class UserService {
     private final UserRewardRepository userRewardRepository;
     private final UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper;
     private final RewardPreviewMapper rewardPreviewMapper;
+    private final ReportedPreviewMapper reportedPreviewMapper;
+    private final PlantRepository plantRepository;
 
-    public UserService(UserRepository userRepository, UserRegisterMapper userRegisterMapper, RemovePlantRepository removePlantRepository, UserRewardRepository userRewardRepository, UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper, RewardPreviewMapper rewardPreviewMapper) {
+    public UserService(UserRepository userRepository, UserRegisterMapper userRegisterMapper, RemovePlantRepository removePlantRepository, UserRewardRepository userRewardRepository, UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper, RewardPreviewMapper rewardPreviewMapper, ReportedPreviewMapper reportedPreviewMapper, PlantRepository plantRepository) {
         this.userRepository = userRepository;
         this.userRegisterMapper = userRegisterMapper;
         this.removePlantRepository = removePlantRepository;
         this.userRewardRepository = userRewardRepository;
         this.userRemovedPlantsStatusMapper = userRemovedPlantsStatusMapper;
         this.rewardPreviewMapper = rewardPreviewMapper;
+        this.reportedPreviewMapper = reportedPreviewMapper;
+        this.plantRepository = plantRepository;
     }
 
 
@@ -80,15 +84,18 @@ public class UserService {
         long pendingTotal = removePlantRepository.countByStatusAndRemovedBy_UserId(RemovePlantStatus.PENDING, userId);
         long approvedTotal = removePlantRepository.countByStatusAndRemovedBy_UserId(RemovePlantStatus.APPROVED, userId);
         long giftsTotal = userRewardRepository.countByUser_UserId(userId);
+        long reportedTotal = plantRepository.countByReportedBy_UserId(userId);
 
         List<RemovedPlant> pendingList;
         List<RemovedPlant>aprovedList;
         List<UserReward>rewardEntities;
+        List<Plant>reportedEntities;
 
         if(fetchAll){
 
             Sort sortByRemoved = Sort.by(Sort.Direction.DESC,"removedAt");
             Sort sortByReward = Sort.by(Sort.Direction.DESC, "reward.rewardId");
+            Sort sortByPlant = Sort.by(Sort.Direction.DESC, "plantId");
 
             pendingList = removePlantRepository.findByStatusAndRemovedBy_UserId(
                     RemovePlantStatus.PENDING, userId, sortByRemoved);
@@ -99,21 +106,31 @@ public class UserService {
             rewardEntities = userRewardRepository.findByUser_UserIdOrderByReward_RewardIdDesc(
                     userId, sortByReward);
 
+            reportedEntities = plantRepository.findByReportedBy_UserIdOrderByPlantIdDesc(
+                    userId, sortByPlant);
+
+
         }else{
             // Fetch paged list for preview
             PageRequest previewPage = PageRequest.of(0, previewSize, Sort.by(Sort.Direction.DESC,"removedAt"));
             PageRequest previewPageRewards = PageRequest.of(0, previewSize, Sort.by(Sort.Direction.DESC, "reward.rewardId"));
+            PageRequest previewPageReported = PageRequest.of(0, previewSize, Sort.by(Sort.Direction.DESC,"plantId"));
 
             pendingList = removePlantRepository.findByStatusAndRemovedBy_UserId(RemovePlantStatus.PENDING, userId,previewPage);
             aprovedList = removePlantRepository.findByStatusAndRemovedBy_UserId(RemovePlantStatus.APPROVED, userId,previewPage);
             rewardEntities = userRewardRepository.findByUser_UserIdOrderByReward_RewardIdDesc(userId, previewPageRewards);
+            reportedEntities = plantRepository.findByReportedBy_UserIdOrderByPlantIdDesc(userId, previewPageReported);
         }
 
         //Map to DTO
-        List<UserRemovedPlantsStatusResponseDto> penndingPreview = userRemovedPlantsStatusMapper.toDto(pendingList);
+        List<UserRemovedPlantsStatusResponseDto> pendingPreview = userRemovedPlantsStatusMapper.toDto(pendingList);
         List<UserRemovedPlantsStatusResponseDto> approvedPreview = userRemovedPlantsStatusMapper.toDto(aprovedList);
         List<RewardPreviewResponseDto> giftPreview =rewardEntities.stream()
                 .map(rewardPreviewMapper::toDto)
+                .collect(Collectors.toList());
+
+        List<ReportedPreviewResponceDto> reportPreview = reportedEntities.stream()
+                .map(reportedPreviewMapper::toDto)
                 .collect(Collectors.toList());
 
         // building up the frontend DTO
@@ -122,9 +139,11 @@ public class UserService {
         dto.setPendingTotal(pendingTotal);
         dto.setApprovedTotal(approvedTotal);
         dto.setGiftsTotal(giftsTotal);
-        dto.setPendingPreview(penndingPreview);
+        dto.setReportedTotal(reportedTotal);
+        dto.setPendingPreview(pendingPreview);
         dto.setApprovedPreview(approvedPreview);
         dto.setGiftsPreview(giftPreview);
+        dto.setReportedPreview(reportPreview);
         return dto;
 
     }
