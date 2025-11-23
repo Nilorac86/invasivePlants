@@ -1,8 +1,10 @@
 package com.carolin.invasiveplants.Controller;
 
 import com.carolin.invasiveplants.Entity.User;
+import com.carolin.invasiveplants.ExceptionHandler.ApiException;
 import com.carolin.invasiveplants.Mapper.UserRegisterMapper;
 import com.carolin.invasiveplants.RequestDTO.UserRegisterRequestDto;
+import com.carolin.invasiveplants.ResponseDTO.UserNameResponseDto;
 import com.carolin.invasiveplants.ResponseDTO.UserProfileDashboardResponseDto;
 import com.carolin.invasiveplants.ResponseDTO.UserRegisterResponseDto;
 import com.carolin.invasiveplants.Service.UserService;
@@ -66,6 +68,19 @@ public class UserController {
 
         dto.setPoints(user.getPoints());
         return ResponseEntity.ok(dto);
+    }
+
+    // ################################## GET USER NAME #################################################
+
+    @GetMapping("/name")
+    public ResponseEntity<UserNameResponseDto> getName(@AuthenticationPrincipal User user){
+
+        if(user == null){
+            throw new ApiException("User not authenticated", HttpStatus.UNAUTHORIZED);
+        }
+
+        return ResponseEntity.ok(userService.getUsername(user.getUserId()));
+
     }
 
 }

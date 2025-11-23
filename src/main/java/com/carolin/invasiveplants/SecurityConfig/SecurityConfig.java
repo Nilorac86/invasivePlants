@@ -60,6 +60,7 @@ public class SecurityConfig {
                         .requestMatchers("/remove-plant/list/user").hasRole("USER")
                         .requestMatchers("/users/dashboard").hasRole("USER")
                         .requestMatchers("/users/history").hasRole("USER")
+                        .requestMatchers("/users/name").hasRole("USER")
 
                         // everything else
                         .anyRequest().denyAll())

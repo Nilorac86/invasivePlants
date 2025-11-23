@@ -6,10 +6,7 @@ import com.carolin.invasiveplants.Entity.User;
 import com.carolin.invasiveplants.Entity.UserReward;
 import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import com.carolin.invasiveplants.ExceptionHandler.ApiException;
-import com.carolin.invasiveplants.Mapper.ReportedPreviewMapper;
-import com.carolin.invasiveplants.Mapper.RewardPreviewMapper;
-import com.carolin.invasiveplants.Mapper.UserRegisterMapper;
-import com.carolin.invasiveplants.Mapper.UserRemovedPlantsStatusMapper;
+import com.carolin.invasiveplants.Mapper.*;
 import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.RemovePlantRepository;
 import com.carolin.invasiveplants.Repository.UserRepository;
@@ -37,7 +34,9 @@ public class UserService {
     private final ReportedPreviewMapper reportedPreviewMapper;
     private final PlantRepository plantRepository;
 
-    public UserService(UserRepository userRepository, UserRegisterMapper userRegisterMapper, RemovePlantRepository removePlantRepository, UserRewardRepository userRewardRepository, UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper, RewardPreviewMapper rewardPreviewMapper, ReportedPreviewMapper reportedPreviewMapper, PlantRepository plantRepository) {
+    private final UserNameMapper userNameMapper;
+
+    public UserService(UserRepository userRepository, UserRegisterMapper userRegisterMapper, RemovePlantRepository removePlantRepository, UserRewardRepository userRewardRepository, UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper, RewardPreviewMapper rewardPreviewMapper, ReportedPreviewMapper reportedPreviewMapper, PlantRepository plantRepository, UserNameMapper userNameMapper) {
         this.userRepository = userRepository;
         this.userRegisterMapper = userRegisterMapper;
         this.removePlantRepository = removePlantRepository;
@@ -46,6 +45,7 @@ public class UserService {
         this.rewardPreviewMapper = rewardPreviewMapper;
         this.reportedPreviewMapper = reportedPreviewMapper;
         this.plantRepository = plantRepository;
+        this.userNameMapper = userNameMapper;
     }
 
 
@@ -145,6 +145,18 @@ public class UserService {
         dto.setGiftsPreview(giftPreview);
         dto.setReportedPreview(reportPreview);
         return dto;
+
+    }
+
+    //#################################### GET USER NAME ##################################################
+
+    public UserNameResponseDto getUsername(Long userId){
+
+        // check if user exist in db
+        User user = userRepository.findById(userId)
+                .orElseThrow(()-> new ApiException("User was not found", HttpStatus.NOT_FOUND));
+
+        return userNameMapper.toDto(user);
 
     }
 
