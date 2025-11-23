@@ -8,24 +8,29 @@ public class UserProfileDashboardResponseDto {
     private long pendingTotal;
     private long approvedTotal;
     private long giftsTotal;
+    private long reportedTotal;
 
     private List<UserRemovedPlantsStatusResponseDto> pendingPreview;
     private List<UserRemovedPlantsStatusResponseDto> approvedPreview;
     private List<RewardPreviewResponseDto> giftsPreview;
+    private List<ReportedPreviewResponceDto> reportedPreview;
 
     public UserProfileDashboardResponseDto() {
     }
 
     public UserProfileDashboardResponseDto(Integer points, long pendingTotal, long approvedTotal, long giftsTotal,
-                                           List<UserRemovedPlantsStatusResponseDto> pendingPreview,
-                                           List<UserRemovedPlantsStatusResponseDto> approvedPreview, List<RewardPreviewResponseDto> giftsPreview) {
+                                           long reportedTotal, List<UserRemovedPlantsStatusResponseDto> pendingPreview,
+                                           List<UserRemovedPlantsStatusResponseDto> approvedPreview,
+                                           List<RewardPreviewResponseDto> giftsPreview, List<ReportedPreviewResponceDto> reportedPreview) {
         this.points = points;
         this.pendingTotal = pendingTotal;
         this.approvedTotal = approvedTotal;
         this.giftsTotal = giftsTotal;
+        this.reportedTotal = reportedTotal;
         this.pendingPreview = pendingPreview;
         this.approvedPreview = approvedPreview;
         this.giftsPreview = giftsPreview;
+        this.reportedPreview = reportedPreview;
     }
 
     public Integer getPoints() {
@@ -60,6 +65,14 @@ public class UserProfileDashboardResponseDto {
         this.giftsTotal = giftsTotal;
     }
 
+    public long getReportedTotal() {
+        return reportedTotal;
+    }
+
+    public void setReportedTotal(long reportedTotal) {
+        this.reportedTotal = reportedTotal;
+    }
+
     public List<UserRemovedPlantsStatusResponseDto> getPendingPreview() {
         return pendingPreview;
     }
@@ -82,5 +95,13 @@ public class UserProfileDashboardResponseDto {
 
     public void setGiftsPreview(List<RewardPreviewResponseDto> giftsPreview) {
         this.giftsPreview = giftsPreview;
+    }
+
+    public List<ReportedPreviewResponceDto> getReportedPreview() {
+        return reportedPreview;
+    }
+
+    public void setReportedPreview(List<ReportedPreviewResponceDto> reportedPreview) {
+        this.reportedPreview = reportedPreview;
     }
 }
