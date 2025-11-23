@@ -44,6 +44,26 @@ function Dashboard({data}){
           </Link>
         </div>
 
+        <div className="reported">
+          <h3 id="h3">Rapoterade växter({data.reportedTotal})</h3>
+          {data.reportedPreview && data.reportedPreview.length > 0 ? (
+            data.reportedPreview.map((report) => (
+              <div key={report.plantId} className="report-item">
+                {report.plantName} - {" "}
+                {report.originalCount} st rappoterade -{" "}
+                {report.originalCount - report.count} antal borttagna -{" "}
+                {new Date(report.dateTime).toLocaleDateString()}
+              </div>
+            ))
+          ) : (
+            <p>Inga Rapoterade växter ännu</p>
+          )}
+
+          <Link to="/history" className="history-link">
+            Visa hela historiken
+          </Link>
+        </div>
+
         <div className="gift">
           <h3 id="h3">Mottagna gåvor ({data.giftsTotal})</h3>
           {data.giftsPreview && data.giftsPreview.length > 0 ? (
@@ -59,7 +79,6 @@ function Dashboard({data}){
           <Link to="/history" className="history-link">
             Visa hela historiken
           </Link>
-
         </div>
       </div>
     ); 
