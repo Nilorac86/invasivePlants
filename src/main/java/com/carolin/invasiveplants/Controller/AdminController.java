@@ -75,7 +75,7 @@ public class AdminController {
     // ##################################### ADMIN ADD INVASIVE PLANT ###########################################
 
     @PostMapping(
-            value ="/admin/add-plant",
+            value ="/add-plant",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity<AdminAddPlantResponseDto>addInvasivePlant(
