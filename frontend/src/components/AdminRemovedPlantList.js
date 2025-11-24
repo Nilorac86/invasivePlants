@@ -15,7 +15,7 @@ function AdminRemovedPlantList ({plants, onApprove, onReject}) {
     return (
 
         <> {/* Information in Admin removed plant list */}
-        <div className="card-container">
+        <div className="card-box">
             {plants.map((removedPlant) => (
                 <div className="card" key = {removedPlant.plantName + removedPlant.removedAt}>
                         
