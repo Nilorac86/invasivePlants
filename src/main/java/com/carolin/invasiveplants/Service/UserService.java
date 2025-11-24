@@ -7,6 +7,7 @@ import com.carolin.invasiveplants.Repository.UserRepository;
 import com.carolin.invasiveplants.RequestDTO.UserRegisterRequestDto;
 import com.carolin.invasiveplants.ResponseDTO.UserRegisterResponseDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,10 +15,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserRegisterMapper userRegisterMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, UserRegisterMapper userRegisterMapper) {
+    public UserService(UserRepository userRepository, UserRegisterMapper userRegisterMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userRegisterMapper = userRegisterMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -30,9 +33,10 @@ public class UserService {
             throw new ApiException("E-mail finns redan", HttpStatus.CONFLICT);
         }
 
+
             // Map to entity and then save in user.
             User user = userRegisterMapper.toEntity(userRegisterRequestDto);
-
+            user.setPassword(passwordEncoder.encode(userRegisterRequestDto.getPassword()));
             User savedUser = userRepository.save(user);
 
             // Converts entity to responseDto
