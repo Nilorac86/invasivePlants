@@ -57,6 +57,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin/verify").hasRole("ADMIN")
                         .requestMatchers("/admin/add-reward").hasRole("ADMIN")
                         .requestMatchers("/rewards/**").hasRole("USER")
+                        .requestMatchers("/admin/add-plant").hasRole("ADMIN")
 
                         // everything else
                         .anyRequest().denyAll())

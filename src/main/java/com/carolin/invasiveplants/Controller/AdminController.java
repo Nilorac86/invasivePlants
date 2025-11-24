@@ -1,18 +1,22 @@
 package com.carolin.invasiveplants.Controller;
 
 import com.carolin.invasiveplants.Entity.User;
+import com.carolin.invasiveplants.RequestDTO.AdminAddPlantRequestDto;
 import com.carolin.invasiveplants.RequestDTO.AdminAddRewardRequestDTO;
 import com.carolin.invasiveplants.RequestDTO.AdminVerifyRequestDTO;
+import com.carolin.invasiveplants.ResponseDTO.AdminAddPlantResponseDto;
 import com.carolin.invasiveplants.ResponseDTO.AdminAddRewardResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.AdminRemovedPlantsListResponseDto;
 import com.carolin.invasiveplants.ResponseDTO.ListRewardResponseDTO;
 import com.carolin.invasiveplants.Service.AdminService;
 import jakarta.validation.Valid;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -67,5 +71,22 @@ public class AdminController {
 
         return ResponseEntity.ok(adminRemovedPlantsListResponseDtos);
     }
+
+    // ##################################### ADMIN ADD INVASIVE PLANT ###########################################
+
+    @PostMapping(
+            value ="/admin/add-plant",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public ResponseEntity<AdminAddPlantResponseDto>addInvasivePlant(
+            @Valid @ModelAttribute AdminAddPlantRequestDto dto,
+            @AuthenticationPrincipal User user)throws IOException {
+
+        AdminAddPlantResponseDto responseDto = adminService.adminAddPlant(dto, user);
+
+        return ResponseEntity.ok(responseDto);
+
+    }
+
 
 }
