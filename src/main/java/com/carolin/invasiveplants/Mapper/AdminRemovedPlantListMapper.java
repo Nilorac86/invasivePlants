@@ -14,24 +14,11 @@ public class AdminRemovedPlantListMapper {
     public AdminRemovedPlantsListResponseDto toDto (RemovedPlant removedPlant){
         if (removedPlant == null) return null;
 
-        String userName = "unknown";
-
-        // Check so that user is not null
-        if(removedPlant.getRemovedBy() !=null){
-            String firstName = removedPlant.getRemovedBy().getFirstName() != null
-                    ? removedPlant.getRemovedBy().getFirstName()
-                    : "";
-            String lastName = removedPlant.getRemovedBy().getLastName() != null
-                    ? removedPlant.getRemovedBy().getLastName()
-                    : "";
-
-            userName = (firstName + " " + lastName).trim();
-        }
 
         return new AdminRemovedPlantsListResponseDto(
                 removedPlant.getRemovedPlantId(),
                 removedPlant.getReportedPlant().getSpecies().getSpeciesName(),
-                userName,
+                removedPlant.getRemovedBy().getFirstName()+"  "+removedPlant.getRemovedBy().getLastName(),
                 removedPlant.getRemovedAt(),
                 removedPlant.getPhotoAfter(),
                 removedPlant.getReportedPlant().getPhotoBefore());
