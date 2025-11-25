@@ -59,6 +59,10 @@ public class SecurityConfig {
                         .requestMatchers("/admin/verify").hasRole("ADMIN")
                         .requestMatchers("/admin/add-reward").hasRole("ADMIN")
                         .requestMatchers("/rewards/**").hasRole("USER")
+                        .requestMatchers("/remove-plant/list/user").hasRole("USER")
+                        .requestMatchers("/users/dashboard").hasRole("USER")
+                        .requestMatchers("/users/history").hasRole("USER")
+                        .requestMatchers("/users/name").hasRole("USER")
 
                         // everything else
                         .anyRequest().denyAll())

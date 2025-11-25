@@ -8,10 +8,12 @@ import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import com.carolin.invasiveplants.ExceptionHandler.ApiException;
 import com.carolin.invasiveplants.Mapper.ListRemovedPlantsMapper;
 import com.carolin.invasiveplants.Mapper.PlantRemovalReportMapper;
+import com.carolin.invasiveplants.Mapper.UserRemovedPlantsStatusMapper;
 import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.RemovePlantRepository;
 import com.carolin.invasiveplants.ResponseDTO.ListRemovedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.PlantRemovalReportResponseDto;
+import com.carolin.invasiveplants.ResponseDTO.UserRemovedPlantsStatusResponseDto;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -31,12 +34,14 @@ public class RemovePlantService {
     private final PlantRemovalReportMapper plantRemovalReportMapper;
     private final ListRemovedPlantsMapper listRemovedPlantsMapper;
     private final RemovePlantRepository removePlantRepository;
+    private final UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper;
 
-    public RemovePlantService(PlantRepository plantRepository, PlantRemovalReportMapper plantRemovalReportMapper, ListRemovedPlantsMapper listRemovedPlantsMapper, RemovePlantRepository removePlantRepository) {
+    public RemovePlantService(PlantRepository plantRepository, PlantRemovalReportMapper plantRemovalReportMapper, ListRemovedPlantsMapper listRemovedPlantsMapper, RemovePlantRepository removePlantRepository, UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper) {
         this.plantRepository = plantRepository;
         this.plantRemovalReportMapper = plantRemovalReportMapper;
         this.listRemovedPlantsMapper = listRemovedPlantsMapper;
         this.removePlantRepository = removePlantRepository;
+        this.userRemovedPlantsStatusMapper = userRemovedPlantsStatusMapper;
     }
 
 
@@ -127,6 +132,19 @@ public class RemovePlantService {
         return listRemovedPlantsMapper.toDto(removedPlants);
     }
 
+    // ############################### LIST REMOVED PLANTS approved and pending #########################################
+    public List<UserRemovedPlantsStatusResponseDto> getRemovedPlantsByStatusForUser(Long userId){
 
+        List<RemovePlantStatus> statuses = Arrays.asList(RemovePlantStatus.PENDING,RemovePlantStatus.APPROVED);
+        List<RemovedPlant> removedPlants = removePlantRepository.findByStatusInAndRemovedBy_UserIdOrderByRemovedAtDesc(
+                statuses, userId);
+
+        // If no removed plants are found, throw API exception
+        if (removedPlants == null || removedPlants.isEmpty()) {
+            throw new ApiException("No removed plants found in the database.", HttpStatus.NOT_FOUND);
+        }
+
+        return userRemovedPlantsStatusMapper.toDto(removedPlants);
+    }
 
 }

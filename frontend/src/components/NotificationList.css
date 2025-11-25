@@ -13,6 +13,10 @@ ul {
   box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   transition: box-shadow 0.3s ease;
   cursor: pointer;
+
+  max-width: 900px;
+  margin: 0 auto;     /* centers the container horizontally */
+  box-sizing: border-box;
 }
 
 .notification-item:hover {

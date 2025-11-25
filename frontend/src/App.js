@@ -14,12 +14,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProfilePage from "./Pages/AdminProfilePage";
 import RewardPage from "./Pages/RewardPage";
 import RemovePlantListPage from "./Pages/RemovePlantListPage";
-
-import UnifiedProfilePage from "./components/UnifiedProfilePage";
-
-
-
+import UnifiedProfilePage from "./Pages/UnifiedProfilePage";
 import AdminAddRewardPage from "./Pages/AdminAddRewardPage";
+import HistoryPage from "./Pages/HistoryPage";
 
 
 function App() {
@@ -64,6 +61,7 @@ function App() {
           <Route path="/removeplant" element={<ProtectedRoute><RemovePlantFormPage /></ProtectedRoute>} />
           <Route path="/profile/rewards" element={<ProtectedRoute><RewardPage /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><UnifiedProfilePage /></ProtectedRoute>} />
+          <Route path="/history" element={<ProtectedRoute><HistoryPage/></ProtectedRoute>} />
       </Routes>
     </Router>
   );
