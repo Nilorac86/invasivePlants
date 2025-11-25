@@ -16,6 +16,7 @@ import com.carolin.invasiveplants.ResponseDTO.*;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserRegisterMapper userRegisterMapper;
+    private final PasswordEncoder passwordEncoder;
 
     private final RemovePlantRepository removePlantRepository;
     private final UserRewardRepository userRewardRepository;
@@ -36,7 +38,7 @@ public class UserService {
 
     private final UserNameMapper userNameMapper;
 
-    public UserService(UserRepository userRepository, UserRegisterMapper userRegisterMapper, RemovePlantRepository removePlantRepository, UserRewardRepository userRewardRepository, UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper, RewardPreviewMapper rewardPreviewMapper, ReportedPreviewMapper reportedPreviewMapper, PlantRepository plantRepository, UserNameMapper userNameMapper) {
+    public UserService(UserRepository userRepository, UserRegisterMapper userRegisterMapper, RemovePlantRepository removePlantRepository, UserRewardRepository userRewardRepository, UserRemovedPlantsStatusMapper userRemovedPlantsStatusMapper, RewardPreviewMapper rewardPreviewMapper, ReportedPreviewMapper reportedPreviewMapper, PlantRepository plantRepository, UserNameMapper userNameMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userRegisterMapper = userRegisterMapper;
         this.removePlantRepository = removePlantRepository;
@@ -46,7 +48,13 @@ public class UserService {
         this.reportedPreviewMapper = reportedPreviewMapper;
         this.plantRepository = plantRepository;
         this.userNameMapper = userNameMapper;
-    }
+        this.passwordEncoder = passwordEncoder;
+      
+    //public UserService(UserRepository userRepository, UserRegisterMapper userRegisterMapper, ) {
+      //  this.userRepository = userRepository;
+      //  this.userRegisterMapper = userRegisterMapper;
+        
+    //}
 
 
     //#################################### REGISTER A USER ##################################################
@@ -58,9 +66,10 @@ public class UserService {
             throw new ApiException("E-mail finns redan", HttpStatus.CONFLICT);
         }
 
+
             // Map to entity and then save in user.
             User user = userRegisterMapper.toEntity(userRegisterRequestDto);
-
+            user.setPassword(passwordEncoder.encode(userRegisterRequestDto.getPassword()));
             User savedUser = userRepository.save(user);
 
             // Converts entity to responseDto

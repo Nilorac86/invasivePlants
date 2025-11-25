@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -42,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/report-plant/list").permitAll()
                         .requestMatchers(HttpMethod.GET, "/report-plant/listremovedplants").permitAll()
                         .requestMatchers(HttpMethod.GET, "/remove-plant/list").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/plants/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/logout").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
@@ -76,6 +78,6 @@ public class SecurityConfig {
     // Without hashed password. Method needed to add JWT in Service
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return org.springframework.security.crypto.password.NoOpPasswordEncoder.getInstance();
+        return  new BCryptPasswordEncoder();
     }
 }
