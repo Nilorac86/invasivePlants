@@ -14,6 +14,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProfilePage from "./Pages/AdminProfilePage";
 import RewardPage from "./Pages/RewardPage";
 import RemovePlantListPage from "./Pages/RemovePlantListPage";
+import RegisterUserFormPage from "./Pages/RegisterUserPage";
+import UnifiedProfilePage from "./components/UnifiedProfilePage";
 import UnifiedProfilePage from "./Pages/UnifiedProfilePage";
 import AdminAddRewardPage from "./Pages/AdminAddRewardPage";
 import HistoryPage from "./Pages/HistoryPage";
@@ -52,6 +54,7 @@ function App() {
         <Route path="/" element={<PlantCardsPage isLoggedIn={!!user} />} />
         <Route path="/reportedPlants" element={<ReportedPlantsPage />} />
           <Route path="/remove-plant/list" element={<RemovePlantListPage />} />
+          <Route path="/register" element = {<RegisterUserFormPage />} />
         <Route
           path="/login"
           element={<LoginPage onLoginSuccess={handleLoginSuccess} />}
