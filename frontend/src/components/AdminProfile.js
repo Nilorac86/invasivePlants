@@ -1,24 +1,30 @@
 import {useEffect, useState } from "react";
 import AdminRemovedPlantList from "./AdminRemovedPlantList";
 import { fetchRemovedPlants, VerifyRemovedPlant } from "../service/AdminRemovePlantListService";
+import { getNameUser } from "../service/UserNameService";
+import "./AdminProfile.css";
 
 
 
 function AdminProfileInfo({adminData}) {
 
+  const [username, setUsername ] = useState("");
   const [removedPlants, setRemovedPlants ] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
 
   useEffect(() => {
+
+    getNameUser()
+        .then(data => setUsername(`${data.firstName} ${data.lastName}`));
     fetchRemovedPlants()
     .then(data => { setRemovedPlants(data || []);
   })
     .catch (error => { 
       console.error("Error fetching removed plants:", error);
       setRemovedPlants ([]);
-      setError("Inga borttagna växter har rapporterats")
+      
   })
   
     .finally (() => setLoading(false));
@@ -53,7 +59,7 @@ function AdminProfileInfo({adminData}) {
   return (
 
     <div className="profile-info">
-      <h3>Välkommen Admin {adminData?.email }!</h3>
+      <h3>Välkommen {username}!</h3>
 
       < AdminRemovedPlantList 
       plants = {removedPlants} 
