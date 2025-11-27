@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Base64;
 
 @Component
 public class AdminAddPlantMapper {
@@ -17,18 +18,26 @@ public class AdminAddPlantMapper {
             return null;
         }
 
+        // You can't just pass byte[] as MultipartFile,
+        // usually for response you send something else like a URL or base64 string.
+        // For example, encode photo bytes to Base64 String:
+        String base64Photo = null;
+        if (species.getPhoto() != null) {
+            base64Photo = Base64.getEncoder().encodeToString(species.getPhoto());
+        }
+
         return new AdminAddPlantResponseDto(
                 species.getSpeciesName(),
                 species.getDescription(),
                 species.getSpeciesStatus(),
                 species.getBiologicalCharacteristics(),
                 species.getPlantHandling(),
-                species.getPhoto()
+                base64Photo
         );
 
     }
 
-    public Species toEntity(AdminAddPlantRequestDto dto){
+    public Species toEntity(AdminAddPlantRequestDto dto) throws IOException{
 
         if(dto == null){
             return null;
@@ -40,6 +49,11 @@ public class AdminAddPlantMapper {
         species.setSpeciesStatus(dto.getSpeciesStatus());
         species.setBiologicalCharacteristics(dto.getBiologicalCharacteristics());
         species.setPlantHandling(dto.getPlantHandling());
+
+        MultipartFile photo = dto.getPhoto();
+        if(photo != null && !photo.isEmpty()){
+            species.setPhoto(photo.getBytes());
+        }
 
         return species;
     }

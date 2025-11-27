@@ -1,27 +1,14 @@
 //AdminAddPlantService
 
-import axios from "axios";
+import { apiPost, apiPostForm } from "../util/Api";
 
-const API_URL ="http://localhost:8080/admin/species";
-
-export const adminPostPlant= (formData) =>{
-    return axios.post(API_URL, formData, {
-        withCredentials: true
-    }).then(res =>res.data);
-};
-
-/*
-import { apiPost } from "../util/Api";
-
-export async function adminPostPlant(){
+export async function adminPostPlant(formData){
 
     try{
-        return await apiPost("/admin/add-plant")
+        return await apiPostForm("/admin/add-plant", formData)
     }catch (error){
         console.log("Error posting a invasive plant: ", error)
         throw error;
     }
-
-
 }
-    */
+    

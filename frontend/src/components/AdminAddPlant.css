@@ -1,4 +1,38 @@
 
+
+.addPlant-form{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: #cac2bd;
+  gap: 20px;
+  max-width: 900px;
+  margin: 20px auto;
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding: 20px;
+  color: #3e3e3e;
+}
+
+.form-box{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: #b6b0ac;
+  max-width: 900px;
+  margin: 20px auto;
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #3e3e3e;
+}
+
+.lable{
+  size: 20px;
+}
+
+
 .error-msg {
   color: red;
   margin-bottom: 1em;

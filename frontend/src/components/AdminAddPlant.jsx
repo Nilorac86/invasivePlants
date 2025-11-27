@@ -7,11 +7,11 @@ import "./AdminAddPlant.css"
 function AdminAddPlant(){
     const [form, setForm] = useState(
         {
-            SpeciesName: "",
+            speciesName: "",
             description: "",
             speciesStatus: "",
             biologicalCharacteristics: "",
-            plantHandeling: "",
+            plantHandling: "",
             photo: null,
         });
 
@@ -33,16 +33,17 @@ function AdminAddPlant(){
         setErrorMsg("");
         setSuccessMsg("");
 
-    // file preview 
-    if(file){
-        const reader = new FileReader();
-        reader.onloadend = () => setPreviewUrl(reader.result);
-        reader.readAsDataURL(file);
-    }else{
-        setPreviewUrl(null);
+        // file preview 
+        if(file){
+            const reader = new FileReader();
+            reader.onloadend = () => setPreviewUrl(reader.result);
+            reader.readAsDataURL(file);
+        }else{
+            setPreviewUrl(null);
     }
 };
 
+//check input
 const validateForm =() =>{
 
      if(!form.speciesName.trim()){
@@ -65,9 +66,9 @@ const validateForm =() =>{
         return false;
      }
 
-     if(!form.plantHandeling.trim()){
-        setErrorMsg("Hantering av växten krävs");
-        return false;
+     if (!form.plantHandling.trim()) {
+       setErrorMsg("Hantering av växten krävs");
+       return false;
      }
 
      if(!form.photo){
@@ -90,18 +91,22 @@ const validateForm =() =>{
     Object.entries(form).forEach(([key,value])=>
         formData.append(key, value));
 
-    setLoading(true);
+    //setLoading(true);
+    console.log("Payload:");
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
 
     try{
         await adminPostPlant(formData);
         setSuccessMsg("växt registrerad!");
         //reset form and prewuie
         setForm({
-          SpeciesName: "",
+          speciesName: "",
           description: "",
           speciesStatus: "",
           biologicalCharacteristics: "",
-          plantHandeling: "",
+          plantHandling: "",
           photo: null,
         });
 
@@ -116,74 +121,73 @@ const validateForm =() =>{
 };
 
 return (
-<div className="addPlant-form">
-  
+  <div className="addPlant-form">
     <form onSubmit={handleSubmit} className="form-box">
-        <h2>Lägg till en invasive växt</h2>
+      <h2>Lägg till en invasive växt</h2>
 
-        {errorMsg && <div className="error-msg">{errorMsg}</div>}
-        {successMsg && <div className="success-msg">{successMsg}</div>}
+      {errorMsg && <div className="error-msg">{errorMsg}</div>}
+      {successMsg && <div className="success-msg">{successMsg}</div>}
 
-        <label>Växt namn: </label>
-        <input name="speciesName" 
-        value ={form.SpeciesName}
-        onChange ={handleChange}
-        disabled = {loading}
+      <label>Växt namn: </label>
+      <input
+        name="speciesName"
+        value={form.speciesName}
+        onChange={handleChange}
+        disabled={loading}
         required
-        />
+      />
 
-        <label>Beskrivning: </label>
-        <textarea 
-        name="description" 
+      <label>Beskrivning: </label>
+      <textarea
+        name="description"
         value={form.description}
         onChange={handleChange}
-        disabled = {loading}
-        />
+        disabled={loading}
+      />
 
-        <label>Status: </label>
-        <input 
-        name="speciesStatus" 
+      <label>Status: </label>
+      <input
+        name="speciesStatus"
         value={form.speciesStatus}
         onChange={handleChange}
-        disabled = {loading}
-        />
+        disabled={loading}
+      />
 
-        <label>Biologiska kännetecken: </label>
-        <textarea 
-        name="biologicalCharacteristics" 
-        value = {form.biologicalCharacteristics}
+      <label>Biologiska kännetecken: </label>
+      <textarea
+        name="biologicalCharacteristics"
+        value={form.biologicalCharacteristics}
         onChange={handleChange}
-        disabled = {loading}
-        />
+        disabled={loading}
+      />
 
-        <label>Hantera växten: </label>
-        <textarea 
-        name="plantHandeling" 
-        value={form.plantHandeling}
+      <label>Hantera växten: </label>
+      <textarea
+        name="plantHandling"
+        value={form.plantHandling}
         onChange={handleChange}
-        disabled = {loading}
-        />
-        
+        disabled={loading}
+      />
 
-        <label>Foto: </label>
-        <input 
-        type="file" 
-        acceps="image/*" 
+      <label>Foto: </label>
+      <input
+        type="file"
+        accept="image/*"
         onChange={handleFileChange}
-        disabled = {loading}
-        />
+        disabled={loading}
+      />
 
-        {previewUrl && (
-            <div className="image-preview">
-                <img src={previewUrl} alt="förhandsvisning"/>
-            </div>
-        )}
-     
+      {previewUrl && (
+        <div className="image-preview">
+          <img src={previewUrl} alt="förhandsvisning" />
+        </div>
+      )}
 
-      <button type="submit" disabled = {loading}>{loading ? "sparar..." : "spara"}</button>
-
+      <button type="submit" disabled={loading}>
+        {loading ? "sparar..." : "spara"}
+      </button>
     </form>
-</div>
+  </div>
 );
 }
 export default AdminAddPlant;

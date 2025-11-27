@@ -1,20 +1,13 @@
 package com.carolin.invasiveplants.ResponseDTO;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class AdminAddPlantResponseDto {
 
     private String speciesName;
-
     private String description;
-
     private String speciesStatus;
-
     private String biologicalCharacteristics;
-
     private String plantHandling;
-
-    private byte[] photo;
+    private String photoBase64;
 
     //private Integer pointsReport;
 
@@ -24,13 +17,13 @@ public class AdminAddPlantResponseDto {
     }
 
     public AdminAddPlantResponseDto(String speciesName, String description, String speciesStatus,
-                                    String biologicalCharacteristics, String plantHandling, byte[] photo) {
+                                    String biologicalCharacteristics, String plantHandling, String photoBase64) {
         this.speciesName = speciesName;
         this.description = description;
         this.speciesStatus = speciesStatus;
         this.biologicalCharacteristics = biologicalCharacteristics;
         this.plantHandling = plantHandling;
-        this.photo = photo;
+        this.photoBase64 = photoBase64;
     }
 
     public String getSpeciesName() {
@@ -73,11 +66,11 @@ public class AdminAddPlantResponseDto {
         this.plantHandling = plantHandling;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public String getPhotoBase64() {
+        return photoBase64;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+    public void setPhotoBase64(String photoBase64) {
+        this.photoBase64 = photoBase64;
     }
 }

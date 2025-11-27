@@ -63,7 +63,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/dashboard").authenticated()
                         .requestMatchers("/users/history").hasRole("USER")
                         .requestMatchers("/users/name").authenticated()
-                        .requestMatchers("/admin/add-plant").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/admin/add-plant").hasRole("ADMIN")
 
                         // everything else
                         .anyRequest().denyAll())

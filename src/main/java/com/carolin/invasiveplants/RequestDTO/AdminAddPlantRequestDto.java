@@ -1,6 +1,7 @@
 package com.carolin.invasiveplants.RequestDTO;
 
 import jakarta.validation.constraints.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 public class AdminAddPlantRequestDto {
