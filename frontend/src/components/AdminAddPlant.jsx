@@ -12,9 +12,14 @@ function AdminAddPlant(){
             speciesStatus: "",
             biologicalCharacteristics: "",
             plantHandeling: "",
-            photo: null
-        }
-    );
+            photo: null,
+        });
+
+    const [loading, setLoading] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
+    const [previewUrl, setPreviewUrl] = useState(null);
+
 
     const handleChange = (e) => {
         setForm({...form, [e.target.name]: e.target.value});
@@ -24,36 +29,73 @@ function AdminAddPlant(){
 
     const handleFileChange = (e) =>{
         const file = e.target.files[0];
-        setForm({...form,photo: file});//store file object
+        setForm({...form, photo: file});//store file object
         setErrorMsg("");
-        setSuccessmsg("");
-    };
+        setSuccessMsg("");
 
+    // file preview 
     if(file){
         const reader = new FileReader();
-        reader.onloadend = () =>{
-            setPreviewUrl(reader.result);
-        };
+        reader.onloadend = () => setPreviewUrl(reader.result);
         reader.readAsDataURL(file);
     }else{
         setPreviewUrl(null);
     }
-
 };
+
+const validateForm =() =>{
+
+     if(!form.speciesName.trim()){
+        setErrorMsg("Växt namn krävs");
+        return false;
+     }
+
+     if(!form.description.trim()){
+        setErrorMsg("Beskrivning krävs.");
+        return false;
+     }
+
+     if(!form.speciesStatus.trim()){
+        setErrorMsg("Status krävs.");
+        return false;
+     }
+
+     if(!form.biologicalCharacteristics.trim()){
+        setErrorMsg("Biologiska kännetecken krävs");
+        return false;
+     }
+
+     if(!form.plantHandeling.trim()){
+        setErrorMsg("Hantering av växten krävs");
+        return false;
+     }
+
+     if(!form.photo){
+        setErrorMsg("Foto krävs");
+        return false;
+     }
+
+     return true;
+};
+
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
+        setErrorMsg("");
+        setSuccessMsg("");
 
-        const formData = new formData();
-        Object.entries(form).forEach(([key, value])=>{
-            formData.append(key, value);
-        });
-    
+        if(!validateForm()) return;
+        
+    const formData = new FormData();
+    Object.entries(form).forEach(([key,value])=>
+        formData.append(key, value));
+
+    setLoading(true);
 
     try{
         await adminPostPlant(formData);
-        alert("växt registrerad!");
-        //reset form
+        setSuccessMsg("växt registrerad!");
+        //reset form and prewuie
         setForm({
           SpeciesName: "",
           description: "",
@@ -62,9 +104,14 @@ function AdminAddPlant(){
           plantHandeling: "",
           photo: null,
         });
+
+        setPreviewUrl(null);
+
     }catch (error){
         console.error(error);
-        alert("något gick fel.");
+        alert("något gick fel vid registreringen.");
+    } finally{
+        setLoading(false);
     }
 };
 
@@ -74,26 +121,66 @@ return (
     <form onSubmit={handleSubmit} className="form-box">
         <h2>Lägg till en invasive växt</h2>
 
+        {errorMsg && <div className="error-msg">{errorMsg}</div>}
+        {successMsg && <div className="success-msg">{successMsg}</div>}
+
         <label>Växt namn: </label>
-        <input name="speciesName" onChange={handleChange}/>
+        <input name="speciesName" 
+        value ={form.SpeciesName}
+        onChange ={handleChange}
+        disabled = {loading}
+        required
+        />
 
         <label>Beskrivning: </label>
-        <textarea name="description" onChange={handleChange}/>
+        <textarea 
+        name="description" 
+        value={form.description}
+        onChange={handleChange}
+        disabled = {loading}
+        />
 
         <label>Status: </label>
-        <input name="speciesStatus" onChange={handleChange}/>
+        <input 
+        name="speciesStatus" 
+        value={form.speciesStatus}
+        onChange={handleChange}
+        disabled = {loading}
+        />
 
         <label>Biologiska kännetecken: </label>
-        <textarea name="biologicalCharacteristics" onChange={handleChange}/>
+        <textarea 
+        name="biologicalCharacteristics" 
+        value = {form.biologicalCharacteristics}
+        onChange={handleChange}
+        disabled = {loading}
+        />
 
         <label>Hantera växten: </label>
-        <textarea name="plantHandeling" onChange={handleChange}/>
+        <textarea 
+        name="plantHandeling" 
+        value={form.plantHandeling}
+        onChange={handleChange}
+        disabled = {loading}
+        />
+        
 
         <label>Foto: </label>
-        <input type="file" acceps="image/*" onChange={handleChange}/>
+        <input 
+        type="file" 
+        acceps="image/*" 
+        onChange={handleFileChange}
+        disabled = {loading}
+        />
+
+        {previewUrl && (
+            <div className="image-preview">
+                <img src={previewUrl} alt="förhandsvisning"/>
+            </div>
+        )}
      
 
-      <button type="submit">Spara</button>
+      <button type="submit" disabled = {loading}>{loading ? "sparar..." : "spara"}</button>
 
     </form>
 </div>

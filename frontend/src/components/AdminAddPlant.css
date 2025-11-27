@@ -1,0 +1,14 @@
+
+.error-msg {
+  color: red;
+  margin-bottom: 1em;
+}
+.success-msg {
+  color: green;
+  margin-bottom: 1em;
+}
+.image-preview img {
+  max-width: 200px;
+  margin-top: 1em;
+  border-radius: 4px;
+}
