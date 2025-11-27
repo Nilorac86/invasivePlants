@@ -41,6 +41,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/remove-plant/list",
                         "/error",
                         "/report-plant/list",
+                        "/plants/{id}"
                         "/users/register"
                 );
     }
