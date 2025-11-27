@@ -2,7 +2,7 @@ import {useEffect, useState } from "react";
 import AdminRemovedPlantList from "./AdminRemovedPlantList";
 import { fetchRemovedPlants, VerifyRemovedPlant } from "../service/AdminRemovePlantListService";
 import { getNameUser } from "../service/UserNameService";
-
+import "./AdminProfile.css";
 
 
 
