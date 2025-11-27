@@ -28,6 +28,11 @@ function Header({ user, onLogout }) {
                     Växtlista
                 </Link>
 
+                {/* Link to register user */}
+                <Link to="/register" className="nav-link">
+                    Registrera
+                </Link>
+
 
 
                 {/* --- DROPDOWN RAPPORTER --- */}
