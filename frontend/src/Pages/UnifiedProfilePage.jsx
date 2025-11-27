@@ -1,5 +1,5 @@
 
-import {Fragment, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import { fetchUserProfile } from "../service/ProfileService";
 import {fetchUserNotifications, markNotificationAsRead} from "../service/NotificationService";
 import { getNameUser } from "../service/UserNameService";
@@ -25,8 +25,9 @@ function UnifiedProfilePage() {
 
     // Determine if logged-in user is an admin
     const isAdmin =
-        profile?.role?.includes("ADMIN") ||
-        profile?.roles?.some(r => r.includes("ADMIN"));
+        (profile?.role?.includes("ADMIN")) ||
+        (Array.isArray(profile?.roles) && profile.roles.some(r => r.includes("ADMIN")));
+
 
 
     useEffect(() => {
@@ -105,7 +106,7 @@ function UnifiedProfilePage() {
             {/* ADMIN SECTION */}
             {isAdmin && (
                 <div className="admin-section">
-                    <Fragment></Fragment><h2>Admin Profil</h2>
+                   <h2>Admin Profil</h2>
                     <AdminProfileInfo adminData={profile} />
                 </div>
     )}
