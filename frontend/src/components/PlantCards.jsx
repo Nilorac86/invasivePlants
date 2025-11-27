@@ -39,7 +39,7 @@ function PlantCards({ data, isLoggedIn }) {
             {plant.photo ? (
               <img
                 className="plant-photo"
-                src={plant.photo}
+                src={`data:image/jpeg;base64,${plant.photo}`}
                 alt={plant.speciesName}
               />
             ) : (
