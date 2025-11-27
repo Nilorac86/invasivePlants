@@ -12,6 +12,9 @@ public class UserReward {
     @EmbeddedId
     private UserRewardId id;
 
+    @Column(name = "quantity")
+    private Integer quantity = 0;
+
     @ManyToOne
     @MapsId("userId")  // maps userId part of the embedded key
     @JoinColumn(name = "user_id")
@@ -29,20 +32,29 @@ public class UserReward {
     public UserReward() {
     }
 
-    public UserReward(User user, Reward reward) {
+    public UserReward(UserRewardId id, Integer quantity, User user, Reward reward) {
+        this.id = id;
+        this.quantity = quantity;
         this.user = user;
         this.reward = reward;
-        this.id = new UserRewardId(user.getUserId(), reward.getRewardId());
-        //this.awardedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
+
     public UserRewardId getId() {
         return id;
     }
 
     public void setId(UserRewardId id) {
         this.id = id;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public User getUser() {
@@ -60,6 +72,7 @@ public class UserReward {
     public void setReward(Reward reward) {
         this.reward = reward;
     }
+
 
     /*public LocalDateTime getAwardedAt() {
         return awardedAt;
