@@ -15,7 +15,7 @@ import AdminProfilePage from "./Pages/AdminProfilePage";
 import RewardPage from "./Pages/RewardPage";
 import RemovePlantListPage from "./Pages/RemovePlantListPage";
 import RegisterUserFormPage from "./Pages/RegisterUserPage";
-import UnifiedProfilePage from "./components/UnifiedProfilePage";
+
 import UnifiedProfilePage from "./Pages/UnifiedProfilePage";
 import AdminAddRewardPage from "./Pages/AdminAddRewardPage";
 import HistoryPage from "./Pages/HistoryPage";
