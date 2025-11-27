@@ -49,12 +49,8 @@ public class UserService {
         this.plantRepository = plantRepository;
         this.userNameMapper = userNameMapper;
         this.passwordEncoder = passwordEncoder;
-      
-    //public UserService(UserRepository userRepository, UserRegisterMapper userRegisterMapper, ) {
-      //  this.userRepository = userRepository;
-      //  this.userRegisterMapper = userRegisterMapper;
         
-    //}
+    }
 
 
     //#################################### REGISTER A USER ##################################################
