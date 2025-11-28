@@ -1,80 +1,36 @@
-package com.carolin.invasiveplants.Entity;
+package com.carolin.invasiveplants.ResponseDTO;
 
-import jakarta.persistence.*;
+public class AdminAddPlantResponseDto {
 
-import java.util.List;
-
-@Entity
-@Table(name = "species")
-public class Species {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "species_id")
-    private Long speciesId;
-
-    @Column(name = "species_name",length = 255)
     private String speciesName;
-
-    @Column(columnDefinition = "longtext")
     private String description;
-
-    @Column(name = "status" ,length = 255)
     private String speciesStatus;
-
-    @Column(name = "biological_charecteristics", columnDefinition = "longtext")
     private String biologicalCharacteristics;
-
-    @Column(name = "plant_handling", columnDefinition = "longtext")
     private String plantHandling;
+    private String photoBase64;
 
-    @Lob
-    @Column(columnDefinition = "mediumblob")
-    private byte[] photo;
-
-    @Column(name= "points_report")
     private Integer pointsReport;
-
-    @Column(name= "points_remove")
     private Integer pointsRemove;
 
-    @OneToMany(mappedBy = "species")
-    private List<Plant> plants;
-
-    // Constructors
-    public Species() {
+    public AdminAddPlantResponseDto() {
     }
 
-    public Species(Long speciesId, String speciesName, String description, String speciesStatus,
-                   String biologicalCharacteristics, String plantHandling, byte[] photo, Integer pointsReport,
-                   Integer pointsRemove, List<Plant> plants) {
-        this.speciesId = speciesId;
+    public AdminAddPlantResponseDto(String speciesName, String description, String speciesStatus,
+                                    String biologicalCharacteristics, String plantHandling, String photoBase64,
+                                    Integer pointsReport, Integer pointsRemove) {
         this.speciesName = speciesName;
         this.description = description;
         this.speciesStatus = speciesStatus;
         this.biologicalCharacteristics = biologicalCharacteristics;
         this.plantHandling = plantHandling;
-        this.photo = photo;
+        this.photoBase64 = photoBase64;
         this.pointsReport = pointsReport;
         this.pointsRemove = pointsRemove;
-        this.plants = plants;
-    }
-
-    // Getters and Setters
-    public Long getSpeciesId() {
-        return speciesId;
-    }
-
-    public void setSpeciesId(Long speciesId) {
-        this.speciesId = speciesId;
     }
 
     public String getSpeciesName() {
         return speciesName;
     }
-
-    /*public void setSpeciesName(String name) {
-        this.speciesName = speciesName;
-    }*/
 
     public void setSpeciesName(String speciesName) {
         this.speciesName = speciesName;
@@ -112,12 +68,12 @@ public class Species {
         this.plantHandling = plantHandling;
     }
 
-    public byte[] getPhoto() {
-        return photo;
+    public String getPhotoBase64() {
+        return photoBase64;
     }
 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+    public void setPhotoBase64(String photoBase64) {
+        this.photoBase64 = photoBase64;
     }
 
     public Integer getPointsReport() {
@@ -134,13 +90,5 @@ public class Species {
 
     public void setPointsRemove(Integer pointsRemove) {
         this.pointsRemove = pointsRemove;
-    }
-
-    public List<Plant> getPlants() {
-        return plants;
-    }
-
-    public void setPlants(List<Plant> plants) {
-        this.plants = plants;
     }
 }

@@ -5,23 +5,26 @@ import com.carolin.invasiveplants.Enum.NotificationType;
 import com.carolin.invasiveplants.Enum.PlantStatus;
 import com.carolin.invasiveplants.Enum.RemovePlantStatus;
 import com.carolin.invasiveplants.ExceptionHandler.ApiException;
+import com.carolin.invasiveplants.Mapper.AdminAddPlantMapper;
 import com.carolin.invasiveplants.Mapper.AdminAddRewardMapper;
 import com.carolin.invasiveplants.Mapper.AdminRemovedPlantListMapper;
 import com.carolin.invasiveplants.Mapper.ListRewardsMapper;
-import com.carolin.invasiveplants.Repository.NotificationRepository;
-import com.carolin.invasiveplants.Repository.PlantRepository;
-import com.carolin.invasiveplants.Repository.RemovePlantRepository;
-import com.carolin.invasiveplants.Repository.RewardRepository;
+import com.carolin.invasiveplants.Repository.*;
+import com.carolin.invasiveplants.RequestDTO.AdminAddPlantRequestDto;
+import com.carolin.invasiveplants.ResponseDTO.AdminAddPlantResponseDto;
 import com.carolin.invasiveplants.ResponseDTO.ListRewardResponseDTO;
 import com.carolin.invasiveplants.RequestDTO.AdminAddRewardRequestDTO;
 import com.carolin.invasiveplants.ResponseDTO.AdminAddRewardResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.AdminRemovedPlantsListResponseDto;
+import org.apache.catalina.mapper.Mapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -34,21 +37,27 @@ public class AdminService {
     private final PlantRepository plantRepository;
     private final NotificationRepository notificationRepository;
     private final RemovePlantRepository removePlantRepository;
-
     private final RewardRepository rewardRepository;
+    private final SpeciesRepository speciesRepository;
+    private final UserRepository userRepository;
+
     private final AdminAddRewardMapper adminAddRewardMapper;
     private final AdminRemovedPlantListMapper adminRemovedPlantListMapper;
+    private final AdminAddPlantMapper adminAddPlantMapper;
 
 
     
 
-    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, AdminAddRewardMapper adminAddRewardMapper, AdminRemovedPlantListMapper adminRemovedPlantListMapper) {
+    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, SpeciesRepository speciesRepository, UserRepository userRepository, AdminAddRewardMapper adminAddRewardMapper, AdminRemovedPlantListMapper adminRemovedPlantListMapper, AdminAddPlantMapper adminAddPlantMapper) {
         this.plantRepository = plantRepository;
         this.notificationRepository = notificationRepository;
         this.removePlantRepository = removePlantRepository;
         this.rewardRepository = rewardRepository;
+        this.speciesRepository = speciesRepository;
+        this.userRepository = userRepository;
         this.adminAddRewardMapper = adminAddRewardMapper;
         this.adminRemovedPlantListMapper = adminRemovedPlantListMapper;
+        this.adminAddPlantMapper = adminAddPlantMapper;
     }
 
 
@@ -97,15 +106,24 @@ public class AdminService {
 
             // If removal is approved status changes depending on if its removed or partlyremoved
         } else if (newStatus == RemovePlantStatus.APPROVED) {
+
             if (reportedPlant.getCount() == 0) { // If count is 0 status will be VERIFIED
                 reportedPlant.setStatus(PlantStatus.VERIFIED);
         } else {
                 reportedPlant.setStatus(PlantStatus.PARTLYREMOVED); // If there's count left, it will still be partlyremoved.
             }
 
+            //add points to user
+            Species species = reportedPlant.getSpecies();
+            Integer pointsReward = (species.getPointsRemove() == null) ? 0 : species.getPointsRemove();
+
+            if(pointsReward > 0){
+                User removedBy = removedPlant.getRemovedBy();
+                Integer currentPoints = (removedBy.getPoints() == null) ? 0 : removedBy.getPoints();
+                removedBy.setPoints(currentPoints + pointsReward);
+                userRepository.save(removedBy);
+            }
     }
-        // Save the new information in reported plant table.
-        //plantRepository.save(reportedPlant);
 
         //Notification for user who removed the plant
         User removedByUser= removedPlant.getRemovedBy();
@@ -161,5 +179,29 @@ public class AdminService {
             return adminRemovedPlantListMapper.toDto(removedPlantsList);
     }
 
+    // ##################################### ADMIN ADD INVASIVE PLANT ######################################
+
+    @Transactional
+    public AdminAddPlantResponseDto adminAddPlant(AdminAddPlantRequestDto dto, User user) throws IOException {
+
+        if(user == null){
+            throw new ApiException("Unauthorized", HttpStatus.UNAUTHORIZED);
+        }
+
+        MultipartFile photo = dto.getPhoto();
+
+        if(photo == null || photo.isEmpty()){
+            throw new ApiException("Photo is required", HttpStatus.BAD_REQUEST);
+        }
+
+        try{
+            Species species = adminAddPlantMapper.toEntity(dto);
+            speciesRepository.save(species);
+            return adminAddPlantMapper.toDto(species);
+        }catch (IOException e){
+            throw new ApiException("Failed to process photo", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
 }

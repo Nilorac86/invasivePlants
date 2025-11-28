@@ -1,53 +1,52 @@
-package com.carolin.invasiveplants.Entity;
+package com.carolin.invasiveplants.RequestDTO;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+public class AdminAddPlantRequestDto {
 
-@Entity
-@Table(name = "species")
-public class Species {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "species_id")
-    private Long speciesId;
-
-    @Column(name = "species_name",length = 255)
+    @NotBlank(message=" Du måste lägga till namn på den invasiva växten")
+    @Size(max = 20, message= "Växtnamnet kan bara vara max 20 tecken långt")
     private String speciesName;
 
-    @Column(columnDefinition = "longtext")
+    @NotBlank(message="Du måste lägga till en beskrivning")
+    @Size(max= 200, message="Beskrivningen kan bara innehålla max 200 tecken")
     private String description;
 
-    @Column(name = "status" ,length = 255)
+    @NotBlank(message = "Du måste lägga till vad för status växten har")
+    @Size(max= 50, message="Status kan bara innehålla max 50 tecken")
     private String speciesStatus;
 
-    @Column(name = "biological_charecteristics", columnDefinition = "longtext")
+    @NotBlank(message="Du måste lägga till biologiska karaktärer")
+    @Size(max= 100, message="Biologiska karaktärer kan bara innehålla max 100 tecken")
     private String biologicalCharacteristics;
 
-    @Column(name = "plant_handling", columnDefinition = "longtext")
+    @NotBlank(message="Du måste lägga till hur man ska hantera växten")
+    @Size(max=50, message="Hantering kan bara innehålla max 50 tecken")
     private String plantHandling;
 
-    @Lob
-    @Column(columnDefinition = "mediumblob")
-    private byte[] photo;
+    // Cannot use annotation with multipartfile.
+    // But the ones that only requires text it will work fine together photo only need other validation.
+    private MultipartFile photo;
 
-    @Column(name= "points_report")
+    @NotNull(message="Du måste ange hur många poäng rapotering ger")
+    @Min(value = 1, message = "Poängen måste vara minst 1.")
+    @Max(value= 1000, message= "Poängen får vara högst 1000.")
     private Integer pointsReport;
 
-    @Column(name= "points_remove")
+    @NotNull(message="Du måste ange hur många poäng bortagning ger")
+    @Min(value = 1, message = "Poängen måste vara minst 1.")
+    @Max(value= 1000, message= "Poängen får vara högst 1000.")
     private Integer pointsRemove;
 
-    @OneToMany(mappedBy = "species")
-    private List<Plant> plants;
 
-    // Constructors
-    public Species() {
+    public AdminAddPlantRequestDto() {
     }
 
-    public Species(Long speciesId, String speciesName, String description, String speciesStatus,
-                   String biologicalCharacteristics, String plantHandling, byte[] photo, Integer pointsReport,
-                   Integer pointsRemove, List<Plant> plants) {
-        this.speciesId = speciesId;
+    public AdminAddPlantRequestDto(String speciesName, String description, String speciesStatus,
+                                   String biologicalCharacteristics, String plantHandling, MultipartFile photo,
+                                   Integer pointsReport, Integer pointsRemove) {
         this.speciesName = speciesName;
         this.description = description;
         this.speciesStatus = speciesStatus;
@@ -56,25 +55,11 @@ public class Species {
         this.photo = photo;
         this.pointsReport = pointsReport;
         this.pointsRemove = pointsRemove;
-        this.plants = plants;
-    }
-
-    // Getters and Setters
-    public Long getSpeciesId() {
-        return speciesId;
-    }
-
-    public void setSpeciesId(Long speciesId) {
-        this.speciesId = speciesId;
     }
 
     public String getSpeciesName() {
         return speciesName;
     }
-
-    /*public void setSpeciesName(String name) {
-        this.speciesName = speciesName;
-    }*/
 
     public void setSpeciesName(String speciesName) {
         this.speciesName = speciesName;
@@ -112,11 +97,11 @@ public class Species {
         this.plantHandling = plantHandling;
     }
 
-    public byte[] getPhoto() {
+    public MultipartFile getPhoto() {
         return photo;
     }
 
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(MultipartFile photo) {
         this.photo = photo;
     }
 
@@ -134,13 +119,5 @@ public class Species {
 
     public void setPointsRemove(Integer pointsRemove) {
         this.pointsRemove = pointsRemove;
-    }
-
-    public List<Plant> getPlants() {
-        return plants;
-    }
-
-    public void setPlants(List<Plant> plants) {
-        this.plants = plants;
     }
 }
