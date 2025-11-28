@@ -13,6 +13,8 @@ function AdminAddPlant(){
             biologicalCharacteristics: "",
             plantHandling: "",
             photo: null,
+            pointsReport: "",
+            pointsRemove: "",
         });
 
     const [loading, setLoading] = useState(false);
@@ -76,6 +78,16 @@ const validateForm =() =>{
         return false;
      }
 
+     if (!form.pointsReport || isNaN(form.pointsReport)) {
+       setErrorMsg("Hur mycket poäng det är värt att rapotera krävs");
+       return false;
+     }
+
+     if (!form.pointsRemove || isNaN(form.pointsRemove)) {
+       setErrorMsg("Hur mycket poäng det är värt att ta bort krävs");
+       return false;
+     }
+
      return true;
 };
 
@@ -108,6 +120,8 @@ const validateForm =() =>{
           biologicalCharacteristics: "",
           plantHandling: "",
           photo: null,
+          pointsReport: "",
+          pointsRemove: "",
         });
 
         setPreviewUrl(null);
@@ -174,6 +188,24 @@ return (
         type="file"
         accept="image/*"
         onChange={handleFileChange}
+        disabled={loading}
+      />
+
+      <label>Poäng för att rapotera: </label>
+      <input
+        type="number"
+        name="pointsReport"
+        value={form.pointsReport}
+        onChange={handleChange}
+        disabled={loading}
+      />
+
+      <label>Poäng för att ta bort: </label>
+      <input
+        type="number"
+        name="pointsRemove"
+        value={form.pointsRemove}
+        onChange={handleChange}
         disabled={loading}
       />
 
