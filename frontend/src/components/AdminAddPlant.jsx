@@ -215,7 +215,7 @@ return (
         </div>
       )}
 
-      <button type="submit" disabled={loading}>
+      <button className="addPlantBtn" type="submit" disabled={loading}>
         {loading ? "sparar..." : "spara"}
       </button>
     </form>
