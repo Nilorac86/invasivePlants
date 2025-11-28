@@ -30,7 +30,6 @@ public class AdminAddPlantRequestDto {
     // But the ones that only requires text it will work fine together photo only need other validation.
     private MultipartFile photo;
 
-    /*
     @NotNull(message="Du måste ange hur många poäng rapotering ger")
     @Min(value = 1, message = "Poängen måste vara minst 1.")
     @Max(value= 1000, message= "Poängen får vara högst 1000.")
@@ -40,19 +39,22 @@ public class AdminAddPlantRequestDto {
     @Min(value = 1, message = "Poängen måste vara minst 1.")
     @Max(value= 1000, message= "Poängen får vara högst 1000.")
     private Integer pointsRemove;
-*/
+
 
     public AdminAddPlantRequestDto() {
     }
 
     public AdminAddPlantRequestDto(String speciesName, String description, String speciesStatus,
-                                   String biologicalCharacteristics, String plantHandling, MultipartFile photo) {
+                                   String biologicalCharacteristics, String plantHandling, MultipartFile photo,
+                                   Integer pointsReport, Integer pointsRemove) {
         this.speciesName = speciesName;
         this.description = description;
         this.speciesStatus = speciesStatus;
         this.biologicalCharacteristics = biologicalCharacteristics;
         this.plantHandling = plantHandling;
         this.photo = photo;
+        this.pointsReport = pointsReport;
+        this.pointsRemove = pointsRemove;
     }
 
     public String getSpeciesName() {
@@ -101,5 +103,21 @@ public class AdminAddPlantRequestDto {
 
     public void setPhoto(MultipartFile photo) {
         this.photo = photo;
+    }
+
+    public Integer getPointsReport() {
+        return pointsReport;
+    }
+
+    public void setPointsReport(Integer pointsReport) {
+        this.pointsReport = pointsReport;
+    }
+
+    public Integer getPointsRemove() {
+        return pointsRemove;
+    }
+
+    public void setPointsRemove(Integer pointsRemove) {
+        this.pointsRemove = pointsRemove;
     }
 }

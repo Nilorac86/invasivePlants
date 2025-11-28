@@ -32,7 +32,9 @@ public class AdminAddPlantMapper {
                 species.getSpeciesStatus(),
                 species.getBiologicalCharacteristics(),
                 species.getPlantHandling(),
-                base64Photo
+                base64Photo,
+                species.getPointsReport(),
+                species.getPointsRemove()
         );
 
     }
@@ -54,6 +56,9 @@ public class AdminAddPlantMapper {
         if(photo != null && !photo.isEmpty()){
             species.setPhoto(photo.getBytes());
         }
+
+        species.setPointsReport(dto.getPointsReport());
+        species.setPointsRemove(dto.getPointsRemove());
 
         return species;
     }
