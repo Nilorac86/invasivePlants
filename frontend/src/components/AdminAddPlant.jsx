@@ -45,7 +45,7 @@ function AdminAddPlant(){
     }
 };
 
-//check input
+//check input and validate
 const validateForm =() =>{
 
      if(!form.speciesName.trim()){
@@ -112,6 +112,7 @@ const validateForm =() =>{
     try{
         await adminPostPlant(formData);
         setSuccessMsg("växt registrerad!");
+        
         //reset form and prewuie
         setForm({
           speciesName: "",
