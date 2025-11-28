@@ -39,6 +39,7 @@ public class AdminService {
     private final RemovePlantRepository removePlantRepository;
     private final RewardRepository rewardRepository;
     private final SpeciesRepository speciesRepository;
+    private final UserRepository userRepository;
 
     private final AdminAddRewardMapper adminAddRewardMapper;
     private final AdminRemovedPlantListMapper adminRemovedPlantListMapper;
@@ -47,12 +48,13 @@ public class AdminService {
 
     
 
-    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, SpeciesRepository speciesRepository, AdminAddRewardMapper adminAddRewardMapper, AdminRemovedPlantListMapper adminRemovedPlantListMapper, AdminAddPlantMapper adminAddPlantMapper) {
+    public AdminService(PlantRepository plantRepository, NotificationRepository notificationRepository, RemovePlantRepository removePlantRepository, RewardRepository rewardRepository, SpeciesRepository speciesRepository, UserRepository userRepository, AdminAddRewardMapper adminAddRewardMapper, AdminRemovedPlantListMapper adminRemovedPlantListMapper, AdminAddPlantMapper adminAddPlantMapper) {
         this.plantRepository = plantRepository;
         this.notificationRepository = notificationRepository;
         this.removePlantRepository = removePlantRepository;
         this.rewardRepository = rewardRepository;
         this.speciesRepository = speciesRepository;
+        this.userRepository = userRepository;
         this.adminAddRewardMapper = adminAddRewardMapper;
         this.adminRemovedPlantListMapper = adminRemovedPlantListMapper;
         this.adminAddPlantMapper = adminAddPlantMapper;
@@ -104,15 +106,24 @@ public class AdminService {
 
             // If removal is approved status changes depending on if its removed or partlyremoved
         } else if (newStatus == RemovePlantStatus.APPROVED) {
+
             if (reportedPlant.getCount() == 0) { // If count is 0 status will be VERIFIED
                 reportedPlant.setStatus(PlantStatus.VERIFIED);
         } else {
                 reportedPlant.setStatus(PlantStatus.PARTLYREMOVED); // If there's count left, it will still be partlyremoved.
             }
 
+            //add points to user
+            Species species = reportedPlant.getSpecies();
+            Integer pointsReward = (species.getPointsRemove() == null) ? 0 : species.getPointsRemove();
+
+            if(pointsReward > 0){
+                User removedBy = removedPlant.getRemovedBy();
+                Integer currentPoints = (removedBy.getPoints() == null) ? 0 : removedBy.getPoints();
+                removedBy.setPoints(currentPoints + pointsReward);
+                userRepository.save(removedBy);
+            }
     }
-        // Save the new information in reported plant table.
-        //plantRepository.save(reportedPlant);
 
         //Notification for user who removed the plant
         User removedByUser= removedPlant.getRemovedBy();
