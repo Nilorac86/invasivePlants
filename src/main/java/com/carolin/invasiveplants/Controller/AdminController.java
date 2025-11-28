@@ -19,9 +19,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -30,7 +27,6 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private static final Logger log = LoggerFactory.getLogger(AdminController.class);
     private final AdminService adminService;
 
     public AdminController( AdminService adminService) {
@@ -90,35 +86,22 @@ public class AdminController {
             BindingResult bindingResult,
             @AuthenticationPrincipal User user)throws IOException {
 
-        log.info("Species Name: {}", dto.getSpeciesName());
-
 
         if(bindingResult.hasErrors()){
-            log.error("Validation errors: {}", bindingResult.getAllErrors());
             throw new ApiException("validation failed", HttpStatus.BAD_REQUEST);
         }
 
         if(dto.getPhoto()== null|| dto.getPhoto().isEmpty()){
-            log.error("Photo is missing");
             throw new ApiException("photo is required",HttpStatus.BAD_REQUEST);
         }
-
-        log.info("DTO values: speciesName={}, description={}, speciesStatus={}, biologicalCharacteristics={}, plantHandling={}",
-                dto.getSpeciesName(),
-                dto.getDescription(),
-                dto.getSpeciesStatus(),
-                dto.getBiologicalCharacteristics(),
-                dto.getPlantHandling());
 
         try {
             AdminAddPlantResponseDto responseDto = adminService.adminAddPlant(dto, user);
             return ResponseEntity.ok(responseDto);
         } catch (Exception e) {
-            log.error("Error in adminAddPlant service", e);
             throw new ApiException("Internal Server Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
-
 
 }

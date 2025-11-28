@@ -64,7 +64,11 @@ public class Species {
         return speciesName;
     }
 
-    public void setSpeciesName(String name) {
+    /*public void setSpeciesName(String name) {
+        this.speciesName = speciesName;
+    }*/
+
+    public void setSpeciesName(String speciesName) {
         this.speciesName = speciesName;
     }
 

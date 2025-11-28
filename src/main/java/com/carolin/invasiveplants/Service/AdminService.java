@@ -185,7 +185,6 @@ public class AdminService {
 
         try{
             Species species = adminAddPlantMapper.toEntity(dto);
-            species.setPhoto(photo.getBytes());
             speciesRepository.save(species);
             return adminAddPlantMapper.toDto(species);
         }catch (IOException e){

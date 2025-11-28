@@ -58,12 +58,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT,"/notifications/**").hasRole("USER")
                         .requestMatchers("/admin/verify").hasRole("ADMIN")
                         .requestMatchers("/admin/add-reward").hasRole("ADMIN")
+                        .requestMatchers("/admin/add-plant").hasRole("ADMIN")
                         .requestMatchers("/rewards/**").hasRole("USER")
                         .requestMatchers("/remove-plant/list/user").hasRole("USER")
                         .requestMatchers("/users/dashboard").authenticated()
                         .requestMatchers("/users/history").hasRole("USER")
                         .requestMatchers("/users/name").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/admin/add-plant").hasRole("ADMIN")
 
                         // everything else
                         .anyRequest().denyAll())
