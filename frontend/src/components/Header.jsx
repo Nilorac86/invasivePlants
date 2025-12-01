@@ -26,6 +26,19 @@ function Header({ user, onLogout }) {
             {/* Plantlist – shows for all */}
             <nav className="nav-bar desktop-only">
                 <Link to="/" className="nav-link">Växtlista</Link>
+            <nav className="nav-bar">
+
+                {/* Plantlist – shows for all */}
+                <Link to="/" className="nav-link">
+                    Växtlista
+                </Link>
+
+                {/* Link to register user */}
+                <Link to="/register" className="nav-link">
+                    Registrera
+                </Link>
+
+
 
                 {/* --- DROPDOWN RAPPORTER --- */}
                 <div className="dropdown">

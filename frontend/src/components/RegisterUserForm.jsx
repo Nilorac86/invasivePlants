@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { registerUserForm } from "../service/RegisterUserService";
 import "./RegisterUserForm.css"
 
 function RegisterUserForm(){
     
+    const navigate = useNavigate();
+
     // Creates object to keep track on the input
     const [form, setForm] = useState({
         firstName: "",
@@ -72,6 +75,11 @@ function RegisterUserForm(){
         try {
             await registerUserForm(form);
             setSuccess ("Användare registerad!")
+
+            setTimeout(() => { // So user can see the message before redirecting.
+                navigate("/login");           
+            }, 1000);
+
         } catch (error) {
             setGeneralError("Något gick fel, försök igen!");
         } finally {

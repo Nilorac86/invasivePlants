@@ -11,6 +11,7 @@ import com.carolin.invasiveplants.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,6 +73,7 @@ public class UserController {
 
     // ################################## GET USER NAME #################################################
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/name")
     public ResponseEntity<UserNameResponseDto> getName(@AuthenticationPrincipal User user){
 
