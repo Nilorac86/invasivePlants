@@ -16,6 +16,7 @@ import RegisterUserFormPage from "./Pages/RegisterUserPage";
 import UnifiedProfilePage from "./Pages/UnifiedProfilePage";
 import AdminAddRewardPage from "./Pages/AdminAddRewardPage";
 import HistoryPage from "./Pages/HistoryPage";
+import SpeciesDetailPage from "./Pages/SpeciesDetailPage";
 
 
 function App() {
@@ -62,6 +63,8 @@ function App() {
           <Route path="/profile/rewards" element={<ProtectedRoute><RewardPage /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><UnifiedProfilePage /></ProtectedRoute>} />
           <Route path="/history" element={<ProtectedRoute><HistoryPage/></ProtectedRoute>} />
+          <Route path="/plants/:id" element={<SpeciesDetailPage />} />
+
       </Routes>
     </Router>
   );
