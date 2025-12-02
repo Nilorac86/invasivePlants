@@ -58,6 +58,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT,"/notifications/**").hasRole("USER")
                         .requestMatchers("/admin/verify").hasRole("ADMIN")
                         .requestMatchers("/admin/add-reward").hasRole("ADMIN")
+                        .requestMatchers("/admin/add-plant").hasRole("ADMIN")
                         .requestMatchers("/rewards/**").hasRole("USER")
                         .requestMatchers("/remove-plant/list/user").hasRole("USER")
                         .requestMatchers("/users/dashboard").authenticated()

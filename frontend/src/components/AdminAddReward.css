@@ -6,13 +6,16 @@
     align-items: center;
 }
 
-/* Form-container */
+/*
+
+
+!* Form-container *!
 .reward-form {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
     width: 100%;
-    max-width: 32rem; /* ca 512px */
+    max-width: 32rem; !* ca 512px *!
     margin: 2rem auto;
     background: #f7f7f7;
     padding: 2rem 3rem 2rem 2rem;;
@@ -22,7 +25,7 @@
 
 
 
-/* Inputs */
+!* Inputs *!
 .reward-form input,
 .reward-form textarea {
     width: 100%;
@@ -32,7 +35,7 @@
     background: #fffaf7;
 }
 
-/* Hover + focus small enhancements */
+!* Hover + focus small enhancements *!
 .reward-form input:hover,
 .reward-form textarea:hover {
     outline: none;
@@ -40,21 +43,21 @@
     box-shadow: 0 0 0.2rem rgba(180,140,120,0.2);
 }
 
-/* Error message styling */
+!* Error message styling *!
 .error {
     color: #d54444;
     font-size: 0.9rem;
     margin-top: -0.6rem;
 }
 
-/* Success message */
+!* Success message *!
 .success {
     color: #4a8f4a;
     margin-top: 1rem;
     font-size: 1rem;
 }
 
-/* Submit button */
+!* Submit button *!
 .reward-form button {
     width: 100%;
     padding: 0.9rem;
@@ -65,8 +68,9 @@
     transition: background 0.2s ease, transform 0.1s ease;
 }
 
-/* Hover effect */
+!* Hover effect *!
 .reward-form button:hover {
     background: #d7b29f;
     transform: translateY(-0.05rem);
 }
+*/

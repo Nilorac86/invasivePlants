@@ -1,0 +1,155 @@
+/* ====== Base for all forms ====== */
+
+.form-wrapper {
+    width: 90%;
+    max-width: 32rem; /* ~512px */
+    margin: 2rem auto;
+    /*background: rgba(247, 247, 247, 0.72);*/
+    padding: 2rem;
+    border-radius: 14px;
+    text-align: center;
+
+    /* Form effect */
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    /* Soft luxury shadow */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+}
+.forms-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: center;
+    text-align: left;
+}
+
+/* ====== Form Fields ====== */
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 28rem;
+    gap: 0.4rem;
+}
+
+.field label {
+    font-weight: 600;
+    color: #1e1e1e;
+}
+
+/* ====== Inputs & Textareas ====== */
+.field input,
+.field textarea,
+input[type="file"] {
+    width: 100%;
+    padding: 0.75rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(100, 100, 100, 0.2);
+    background: rgba(255, 255, 255, 0.7);
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+/* Hover = mörkare bakgrund */
+.field input:hover,
+.field textarea:hover {
+    border-color: #1e1e1e;
+}
+
+/* Focus = svart border + glow */
+.field input:focus,
+.field textarea:focus {
+    border: 2px solid #000;
+    background: #ffffff;
+    box-shadow: 0 0 8px rgba(149, 213, 178, 0.25);
+}
+/* Error + success */
+.error {
+    color: #d54444;
+    font-size: 0.9rem;
+}
+
+.success {
+    color: #4a8f4a;
+    font-size: 1rem;
+    margin-top: 0.3rem;
+}
+
+/* Knapp */
+.form-btn {
+    width: 90%;
+    padding: 0.75rem;
+    max-width: 29rem;
+    background: #1e3f2f;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+.form-btn:hover {
+    background: #2c5282;
+}
+
+/* ====== Small Screen responsiveness ====== */
+@media (max-width: 768px) {
+    .form-wrapper {
+        width: 100%;
+        margin: 0;
+        border-radius: 4px;
+        box-shadow: none;
+    }
+
+    .field {
+        width: 100%;
+    }
+
+    .field {
+        margin: 1rem 0;
+       width: 100%;
+   }
+}
+
+/*================================================*/
+/*MOBILE RESPONSIVENESS (<768PX)*/
+/*================================================ */
+/*@media (max-width: 768px) {*/
+/*    .form-wrapper {*/
+/*        width: 100%;*/
+/*        height: auto;*/
+/*        margin: 0;*/
+/*        min-width: 20%;*/
+/*        border-radius: 0;*/
+/*        font-size: 1rem;*/
+/*    }*/
+
+
+/*    .field {*/
+/*        !*margin: 1rem 0;*!*/
+/*        width: 100%;*/
+/*    }*/
+
+/*    .field label {*/
+/*        font-size: 1.1rem;*/
+/*    }*/
+
+/*    .field input {*/
+/*        width: 100%;*/
+/*        font-size: 1.1rem;*/
+/*        padding: 1.5rem;          !* 🔥 större klickyta *!*/
+/*        border-radius: 10px;*/
+/*    }*/
+
+
+/*    .report-btn,*/
+/*    .report-btn,*/
+/*    .error {*/
+/*        width: 100%;*/
+/*    }*/
+

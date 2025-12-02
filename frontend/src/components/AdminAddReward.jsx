@@ -4,6 +4,7 @@
 
 
 import React, {useState} from "react";
+import "./FormBase.css";
 import "./AdminAddReward.css";
 
 
@@ -80,32 +81,43 @@ function AdminAddReward({ onAddReward}) {
 
             <h1>Hantera Belöningar</h1>
 
-            <form className="reward-form" onSubmit={handleSubmit}>
+            <form className="form-wrapper forms-container" onSubmit={handleSubmit}>
+                <div className="field">
+                    <label>Titel</label>
                 <input
                     name="rewardTitle"
                     value={form.rewardTitle}
                     onChange={handleChange}
-                    placeholder="Titel"
+                    placeholder="Ange namn på belöning"
                 />
                 {errors.rewardTitle && <div className="error">{errors.rewardTitle}</div>}
+                </div>
 
+                <div className="field">
+                    <label>Beskrivning</label>
                 <textarea
                     name="description"
                     value={form.description}
                     onChange={handleChange}
-                    placeholder="Beskrivning"
+                    placeholder="Gör en beskrivning på belöning"
                 />
                 {errors.description && <div className="error">{errors.description}</div>}
+                    </div>
 
+                <div className="field">
+                    <label>Antal</label>
                 <input
                     name="rewardAmount"
                     type="number"
                     value={form.rewardAmount}
                     onChange={handleChange}
-                    placeholder="Antal"
+                    placeholder="Ange antal i siffor"
                 />
                 {errors.rewardAmount && <div className="error">{errors.rewardAmount}</div>}
+                </div>
 
+                <div className="field">
+                    <label>Kostnad</label>
                 <input
                     name="points"
                     type="number"
@@ -114,8 +126,9 @@ function AdminAddReward({ onAddReward}) {
                     placeholder="Poängkostnad"
                 />
                 {errors.points && <div className="error">{errors.points}</div>}
+                </div>
 
-                <button type="submit">Spara</button>
+                <button className="form-btn" type="submit">Spara</button>
 
                 {message && <div className="success">{message}</div>}
             </form>
