@@ -27,15 +27,12 @@ function Header({ user, onLogout }) {
             <nav className="nav-bar desktop-only">
                 <Link to="/" className="nav-link">Växtlista</Link>
 
-                {/* Plantlist – shows for all */}
-                <Link to="/" className="nav-link">
-                    Växtlista
-                </Link>
-
                 {/* Link to register user */}
+                {!user && (
                 <Link to="/register" className="nav-link">
                     Registrera
                 </Link>
+                )}
 
 
 
@@ -91,11 +88,16 @@ function Header({ user, onLogout }) {
 
             {/* MOBILE MENU */}
             {mobileOpen && (
-                <div className="mobile-menu mobile-only">
+                <div className="mobile-menu mobile-only-dropdown">
 
                     <Link to="/" className="mobile-link" onClick={() => setMobileOpen(false)}>
                         Växtlista
                     </Link>
+                    {!user && (
+                        <Link to="/register" className="nav-link">
+                            Registrera
+                        </Link>
+                    )}
 
                     <Link to="/reportedPlants" className="mobile-link" onClick={() => setMobileOpen(false)}>
                         Lista på tillagda växter

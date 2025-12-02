@@ -1,6 +1,7 @@
 
 
 import React, { useState } from "react";
+import "./FormBase.css";
 import "./ReportPlantForm.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { reportPlant } from "../service/ReportPlantFormService";
@@ -85,18 +86,18 @@ function ReportPlantForm() {
     };
 
     return (
-        <div className="report-form">
+        <div className="form-wrapper">
             <h2>Rapportera växt</h2>
 
-            <form onSubmit={handleSubmit} className="report-form-container">
+            <form onSubmit={handleSubmit} className="forms-container">
                 <div className="field">
                     <label>Växtnamn</label>
-                    <input type="text" value={plant.speciesName || ""} readOnly />
+                    <input className="form-input" type="text" value={plant.speciesName || ""} readOnly />
                 </div>
 
                 <div className="field">
                     <label>Latitude *</label>
-                    <input
+                    <input className="form-input"
                         type="text"
                         value={latitude}
                         onChange={(e) => setLatitude(e.target.value)}
@@ -108,7 +109,7 @@ function ReportPlantForm() {
 
                 <div className="field">
                     <label>Longitude *</label>
-                    <input
+                    <input className="form-input"
                         type="text"
                         value={longitude}
                         onChange={(e) => setLongitude(e.target.value)}
@@ -120,7 +121,7 @@ function ReportPlantForm() {
 
                 <div className="field">
                     <label>Stad *</label>
-                    <input
+                    <input className="form-input"
                         type="text"
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
@@ -132,8 +133,8 @@ function ReportPlantForm() {
 
                 <div className="field">
                     <label>Antal *</label>
-                    <input
-                        type="number"
+                    <input className="form-input"
+                        type="text"
                         value={count}
                         onChange={(e) => setCount(e.target.value)}
                         placeholder="Hur många växter?"
@@ -144,7 +145,7 @@ function ReportPlantForm() {
 
                 <div className="field">
                     <label>Bild *</label>
-                    <input
+                    <input className="form-input"
                         type="file"
                         accept="image/*"
                         onChange={(e) => setPhoto(e.target.files[0])}
@@ -156,7 +157,7 @@ function ReportPlantForm() {
                 {generalError && <div className="error">{generalError}</div>}
                 {success && <div className="success">{success}</div>}
 
-                <button type="submit" className="report-btn" disabled={isSubmitting}>
+                <button type="submit" className="form-btn" disabled={isSubmitting}>
                     {isSubmitting ? "Skickar..." : "Skicka rapport"}
                 </button>
             </form>
