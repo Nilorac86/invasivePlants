@@ -1,0 +1,57 @@
+
+
+.addPlant-form{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 20px;
+  max-width: 900px;
+  margin: 20px auto;
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding: 20px;
+  align-items: center;
+}
+
+.form-box{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  background-color: #cac2bd;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-box input,
+.form-box textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.addPlantBtn{
+  width: 200px;
+  border-radius: 15px;
+}
+
+.error-msg {
+  color: rgb(2, 2, 2);
+  margin-bottom: 1em;
+}
+.success-msg {
+  color: rgb(94, 141, 94);
+  margin-bottom: 1em;
+}
+.image-preview img {
+  max-width: 200px;
+  margin-top: 1em;
+  border-radius: 4px;
+}

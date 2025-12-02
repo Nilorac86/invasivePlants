@@ -11,6 +11,7 @@ import com.carolin.invasiveplants.Mapper.ReportPlantFormMapping;
 import com.carolin.invasiveplants.Repository.LocationRepository;
 import com.carolin.invasiveplants.Repository.PlantRepository;
 import com.carolin.invasiveplants.Repository.SpeciesRepository;
+import com.carolin.invasiveplants.Repository.UserRepository;
 import com.carolin.invasiveplants.ResponseDTO.ListReportedPlantsResponseDTO;
 import com.carolin.invasiveplants.ResponseDTO.ReportPlantFormResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -34,16 +35,18 @@ public class ReportPlantService {
     private final PlantRepository plantRepository;
     private final LocationRepository locationRepository;
     private final ListReportedPlantsmapper listReportedPlantsmapper;
+    private final UserRepository userRepository;
 
     public ReportPlantService(ReportPlantFormMapping reportPlantFormMapping,
                               SpeciesRepository speciesRepository,
                               PlantRepository plantsRepository,
-                              LocationRepository locationRepository, ListReportedPlantsmapper listReportedPlantsmapper) {
+                              LocationRepository locationRepository, ListReportedPlantsmapper listReportedPlantsmapper, UserRepository userRepository) {
         this.reportPlantFormMapping = reportPlantFormMapping;
         this.speciesRepository = speciesRepository;
         this.plantRepository = plantsRepository;
         this.locationRepository = locationRepository;
         this.listReportedPlantsmapper = listReportedPlantsmapper;
+        this.userRepository = userRepository;
     }
 
     // ############################# LIST REPORTED PLANTS #########################################
@@ -93,6 +96,14 @@ public class ReportPlantService {
         // create and save report with collected data
         Plant report = createPlantReport(count, location, photoBytes, species, user);
         plantRepository.save(report);
+
+        //Give user points for reporting a plant
+        Integer reward = (species.getPointsReport() == null) ? 0 : species.getPointsReport();
+        if(reward > 0){
+            Integer current = (user.getPoints() == null) ? 0 : user.getPoints();
+            user.setPoints(current + reward);
+            userRepository.save(user);
+        }
 
         //return to frontend
         return reportPlantFormMapping.toResponseDTO(report);
@@ -214,6 +225,8 @@ public class ReportPlantService {
         report.setDateTime(LocalDateTime.now());
         return report;
     }
+
+
 
 
 }
