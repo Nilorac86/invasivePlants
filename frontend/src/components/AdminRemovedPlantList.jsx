@@ -9,8 +9,11 @@ function AdminRemovedPlantList ({plants, onApprove, onReject}) {
 
         // If no plants removed
       if (!plants || plants.length === 0) {
-            return <p> Inga borttagna växter har rapporterats </p>
-            
+            return (
+            <div className="no-removed-plants">
+                <p> Inga borttagna växter har rapporterats </p>
+                </div>
+            );
         }
     return (
 
