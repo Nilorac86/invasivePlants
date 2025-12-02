@@ -89,48 +89,64 @@ function RegisterUserForm(){
 
     // The actuall form to register a user with input field and catching errors.
     return (
-    
-        <form className="register-form" onSubmit={handleSubmit}>
+        <div className="form-wrapper">
+        <form className="forms-container" onSubmit={handleSubmit}>
 
+            <div className="field">
+                <label>Förnamn *</label>
             <input name = "firstName" 
             value = {form.firstName} 
-            placeholder="Förnamn"
+            placeholder="Ditt förnamn"
             onChange = {handleChange} />
             {errors.firstName && <p className="error">{errors.firstName}</p>}
+            </div>
 
+            <div className="field">
+                <label>Efternamn *</label>
             <input name = "lastName" 
             value = {form.lastName}
-            placeholder="Efternamn"
+            placeholder="Ditt efternamn"
             onChange={handleChange}/>
             {errors.lastName && <p className="error">{errors.lastName }</p>}
+            </div>
 
+            <div className="field">
+                <label>Email *</label>
             <input name = "email"
             type ="email"
             value = {form.email}
-            placeholder="E-mail"
+            placeholder="exempel@email.com"
             onChange={handleChange}/>
             {errors.email && <p className="error">{errors.email}</p>}
+            </div>
 
+            <div className="field">
+                <label>Lösenord *</label>
             <input name = "password"
             type = "password"
             value = {form.password}
-            placeholder="Lösenord"
+            placeholder="dittLösenord1"
             onChange={handleChange} />
             {errors.password && <p className="error">{errors.password}</p>}
+            </div>
 
+            <div className="field">
+                <label>Telefonnummer *</label>
             <input name = "phoneNumber"
             value = {form.phoneNumber}
-            placeholder="Phonenumber"
+            placeholder="ex. 0707556677"
             onChange={handleChange}/>
             {errors.phoneNumber && <p className="error">{errors.phoneNumber}</p>}
+            </div>
 
-            <button className="register-btn" type="submit" disabled= {isSubmitting}>
+            <button className="form-btn" type="submit" disabled= {isSubmitting}>
                 Registrera
             </button>
 
             {generalError && <p>{generalError}</p>}
             {success && <p>{success}</p>}
         </form>
+        </div>
     
     );
 

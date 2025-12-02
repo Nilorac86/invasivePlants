@@ -2,7 +2,6 @@
 html {
     font-size: 100%;
 }
-
 /* =====================================================
    HEADER (Desktop + Mobile shared styles)
    ===================================================== */
@@ -11,15 +10,18 @@ html {
     justify-content: space-between;
     align-items: center;
     padding: 0.625rem 0.3125rem; /* 10px 5px */
-    background-color: #2d6a4f;
-    color: white;
-    flex-wrap: wrap; /* så att innehåll kan brytas på mindre skärm */
+    background-color: #1e3f2f;
+    color: #fff;
+    flex-wrap: nowrap;
+    border-color: #a0a0a0;
+    border: 2px;
 }
 
 .logo-link {
     text-decoration: none;
-    color: white;
-    font-size: 1.25rem;
+    font-size: 1rem;
+    color: #fff;
+    /*font-size: 1.25rem;*/
 }
 
 .logo-link:hover {
@@ -40,7 +42,7 @@ html {
 }
 
 .nav-link {
-    color: white;
+    color: #fff;
     border: none;
     padding: 0.4rem 0.75rem;
     border-radius: 0.25rem;
@@ -70,7 +72,7 @@ html {
 /* Login button */
 .loginbtn{
     padding: 0.5rem 1rem;
-    background-color: #ad898c;
+    background-color: rgba(149, 213, 178, 0.25);
     border: 1px solid black;
     color: white;
     border-radius: 4px;
@@ -80,12 +82,12 @@ html {
 }
 
 .loginbtn:hover{
-    background-color: #906a6d;
+    background-color: #ad898c;
 }
 
 .logout-btn {
     padding: 0.5rem 1rem;
-    background-color: #dc3545;
+    background-color: rgba(149, 213, 178, 0.25);
     color: white;
     border: none;
     border-radius: 4px;
@@ -149,13 +151,13 @@ html {
 
 /* Add a dark background on topnav links and the dropdown button on hover */
 .topnav a:hover, .dropdown:hover .dropbtn {
-    background-color: #555;
+    background-color: rgba(149, 213, 178, 0.25);
     color: white;
 }
 
 /* Add a grey background to dropdown links on hover */
 .dropdown-content a:hover {
-    background-color: #ddd;
+    background-color: rgba(149, 213, 178, 0.25);
     color: black;
 }
 
@@ -181,6 +183,7 @@ html {
     padding: 0.8rem 1rem;
     font-size: 1.4rem;
     cursor: pointer;
+    float: right;
 }
 
 /* Mobile dropdown menu */
@@ -213,15 +216,15 @@ html {
 .mobile-login,
 .mobile-logout {
     width: 100%;
-    padding: 0.875rem 1rem; /* 14px 16px */
+    padding: 0.875rem 0.5rem; /* 14px 16px */
     border: none;
-    background-color: #ad898c;
+    background-color: rgba(149, 213, 178, 0.25);
     color: white;
     cursor: pointer;
 }
 
 .mobile-logout {
-    background-color: #dc3545;
+    background-color: rgba(149, 213, 178, 0.25);
 }
 
 .mobile-login:hover,
@@ -248,6 +251,12 @@ html {
     /* Show mobile elements */
     .mobile-only {
         display: block;
+        width: 25%;
+    }
+
+    .mobile-only-dropdown {
+        display: block;
+        width: 100%;
     }
 
     /* Allow absolute mobile menu positioning */

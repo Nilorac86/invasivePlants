@@ -80,10 +80,10 @@ function RemovePlantForm() {
     };
 
  return (
-        <div className="report-form">
+        <div className="form-wrapper">
             <h2>Rapportera borttagen växt</h2>
 
-            <form onSubmit={handleSubmit} className="report-form-container">
+            <form onSubmit={handleSubmit} className="forms-container">
 
                 <div className="field">
                     <label>Växtnamn</label>
@@ -120,7 +120,7 @@ function RemovePlantForm() {
                 {generalError && <div className="error">{generalError}</div>}
                 {success && <div className="success">{success}</div>}
 
-                <button type="submit" className="report-btn" disabled={isSubmitting}>
+                <button type="submit" className="form-btn" disabled={isSubmitting}>
                     {isSubmitting ? "Skickar..." : "Markera borttagen"}
                 </button>
             </form>
