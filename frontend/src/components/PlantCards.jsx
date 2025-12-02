@@ -8,8 +8,9 @@ function PlantCards({ data, isLoggedIn }) {
     console.log("isLoggedIn in PlantCards:", isLoggedIn);
 
   const handleMoreInfo = (plant) => {
-    alert(`More info about ${plant.speciesName}`);
+    //alert(`More info about ${plant.speciesName}`);
     // or navigate to another page, open a modal, etc.
+    navigate(`/plants/${plant.id}`); // Navigate to detailpage of species.
   };
 
     const handleReport = (plant) => {
