@@ -1,6 +1,6 @@
 // List of all reported plants for all users to see
 
-//import "./ListReportedPlants.css";
+import "./ListReportedPlants.css";
 import { useNavigate } from "react-router-dom";
 
 

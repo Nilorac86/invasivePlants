@@ -1,4 +1,4 @@
-
+import "./SpeciesDetail.css"
 
 
 function SpeciesDetail({ species }) {
