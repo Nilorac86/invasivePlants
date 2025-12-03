@@ -59,7 +59,7 @@
   padding: 8px 20px; /* button size */
   background-color: #4d6a7c; /* button color */
   color: white; /* text color */
- /*  border: 2 solid black; */
+  border: 2 solid black;
   border-radius: 10px;
   cursor: pointer; /* pointer on hover */
   font-weight: bold;
