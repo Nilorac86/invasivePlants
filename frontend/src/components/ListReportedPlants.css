@@ -59,7 +59,7 @@
   padding: 8px 20px; /* button size */
   background-color: #4d6a7c; /* button color */
   color: white; /* text color */
-  border: 2 solid black;
+ /*  border: 2 solid black; */
   border-radius: 10px;
   cursor: pointer; /* pointer on hover */
   font-weight: bold;
@@ -71,19 +71,22 @@
 }
 
 /* Remove Report Button */
-
 .report-remove-btn {
-  background-color: white;
-  color: #1b6b57;            
-  border: 1px solid #1b6b57;
+ /*  background-color: white; */
+ background-color:#1e3f2f ;           
+  /* border: 1px solid #1b6b57; */
   padding: 5px 10px;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.8rem;
   margin-top: 8px;
   align-self: flex-end;      /* Right cornor for button */
+  height: 30px;
+  color: white;
+
 }
 
 .report-remove-btn:hover {
-  background-color: #e8f4f1;
+  /* background-color: #e8f4f1; */
+  background-color: #227a5a;
 }

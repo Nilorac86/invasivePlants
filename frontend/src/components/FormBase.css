@@ -94,7 +94,8 @@ input[type="file"] {
 }
 
 .form-btn:hover {
-    background: #2c5282;
+    /* background: #2c5282; */
+    background-color: #227a5a;
 }
 
 /* ====== Small Screen responsiveness ====== */

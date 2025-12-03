@@ -13,7 +13,7 @@ function PlantCardsPage({ isLoggedIn }) {
 
   return (
     <div className="App">
-      <h2>Invasiva Växter</h2>
+      <h2>Invasiva växter</h2>
       {data ? <PlantCards data={data}  isLoggedIn={isLoggedIn} /> : "Laddar..."}
     </div>
   );

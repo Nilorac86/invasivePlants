@@ -56,27 +56,37 @@
   flex: 1;
 }
 
+.more-info-btn{
+  margin-right: 10px;   /* space to the right */
+  margin-top: 20px;
+}
+
 .more-info-btn,
 .report-btn {
   padding: 8px 20px; /* button size */
-  background-color: #4d6a7c; /* button color */
+  /* background-color: #4d6a7c; */ /* button color */
+  background-color: #1E3F2F !important;
   color: white; /* text color */
   border: 2 solid black;
   border-radius: 10px;
   cursor: pointer; /* pointer on hover */
   font-weight: bold;
   transition: background-color 0.2s ease;
+  width: 9rem;
 }
 
 .more-info-btn:hover,
 .report-btn:hover {
-  background-color: #30534f; /* darker on hover */
+  /* background-color: #30534f; */ /* darker on hover */
+  background-color: #227a5a !important ;
+  
 }
+
 
 .report-btn.disabled {
     background-color: #cccccc;
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.4;
 }
 
 .report-btn.disabled:hover {
