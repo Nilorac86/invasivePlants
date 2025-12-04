@@ -43,7 +43,7 @@ och skapa motivation hos användare att bidra till bekämpningen.
 
 2. Växtens detaljsida
    ![Växtdetaljer](./assets/screenshots/vaxtDetaljer.png)
-   - från växtlistan kan kan man klicka sig vidare på more info i växtens kort för att komma till detaljsida. 
+   - från växtlistan kan man klicka sig vidare på "more info" i växtens kort för att komma till detaljsida. 
    - På detaljsida finns information om en invasiv växt så som namn, beskrivning, spridnings status, bild samt biologiska karaktärsdrag
    och information om specifik borttagning.
 
@@ -93,12 +93,12 @@ och skapa motivation hos användare att bidra till bekämpningen.
 
 - Kort innehåller: växtnamn, bild, plats, datum.
 
-- Inloggade användare kan ta bort sina egna rapporter.
+- Inloggade användare trycka på remove report för att komma till formuläret för att ta bort växt.
 
 ---
 
-7. Rapportera borttagning av växt
-   
+7. Rapportera borttagning av växt formulär
+
 
 - Tillgängligt via respektive rapporterad post.
 
@@ -118,7 +118,7 @@ och skapa motivation hos användare att bidra till bekämpningen.
 ![Belöningar – profilsida](./assets/screenshots/rewards.png)
 - Admin kan lägga till belöningar med: namn, beskrivning, antal, kostnad i poäng
 
-- Belöningar sparas och uppdaterar sidan automatiskt.
+- Belöningar sparas och sidan uppdateras automatiskt.
 
 - Användare kan se sina tillgängliga poäng och växla dem mot belöningar (endast om tillräckliga poäng finns).
 
