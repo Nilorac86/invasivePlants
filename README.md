@@ -180,7 +180,7 @@ Visar användarens:
 
 - 🌐 Fetch API – kommunikation med backend
 
-- 🎨 CSS / Tailwind (valfritt) – styling och layout
+- 🎨 CSS – styling och layout
 
 ## Backend
 
